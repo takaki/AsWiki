@@ -50,7 +50,8 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   c = cgi.sval('c')
   c =  c.to_s == '' ? 'v' : CGI::escapeHTML(c)
   name = cgi.sval('p')
-  name = name.to_s == '' ? $TOPPAGENAME : CGI::escapeHTML(name)
+  # name = name.to_s == '' ? $TOPPAGENAME : CGI::escapeHTML(name)
+  name = name.to_s == '' ? $TOPPAGENAME : name
   $pname = name
   begin
     case c

@@ -13,9 +13,10 @@ module AsWiki
       count = (av[1] || 100 ).to_i
       data = {:data =>
 	@repository.attrlist.sort{|a,b| b[1] <=> a[1]}.map{
-	  |l| wikilink(l[0]) + " " + l[1].to_s}
+	  |l| Amrita::noescape{[wikilink(l[0])," " ,l[1]].to_s}}
       }
       load_template.expand(@view, data)
+      @view = Amrita::noescape{@view}
     end
   end
   class AllPagesPlugin < Plugin
@@ -24,6 +25,7 @@ module AsWiki
     def onview(line, b, e, av)
       data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)}}
       load_template.expand(@view, data)
+      @view = Amrita::noescape{@view}
     end
   end
 end

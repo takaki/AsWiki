@@ -80,9 +80,9 @@ module AsWiki
 	  node << Node.new('Hr')
 	  next_token
 	when :PLUGIN  
-	  node << Amrita::noescape{plugin}
+	  node << plugin
 	when :PLUGIN_BEGIN
-	  node << Amrita::noescape{plugin_block}
+	  node << plugin_block
 	when :PRE_BEGIN   
 	  node << preblock
 	when :TABLE_BEGIN 

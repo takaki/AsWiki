@@ -14,8 +14,8 @@ module AsWiki
     def onpost(session)
       pname = session['pname']
       number = session['number'].to_i + 1
-      poster = (session['poster'] =! '' ? session['poster'] : "名無しさん")
-      name = (session['mail'] =! '' ? 
+      poster = (session['poster'] != '' ? session['poster'] : "名無しさん")
+      name = (session['mail'] != '' ? 
 		"[mailto:#{session['mail']} #{poster}]" :
 		"[[#{poster}]]")
       t = Time.now
@@ -37,10 +37,10 @@ module AsWiki
       session['number'] = av[1].to_i
       data = {
 	:_session_id => session.session_id,
-	:md5sum =>  Digest::MD5::new(@repository.load($pname).to_s)
+	:md5sum =>  Digest::MD5::new(@repository.load($pname).to_s).to_s
       }
-      form = load_template.expand(data)
-      @view = form.to_s
+      load_template.expand(@view, data)
+      @view = Amrita::noescape{@view}
     end
     private
     def weekstr(i)

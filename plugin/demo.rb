@@ -17,7 +17,7 @@ module AsWiki
   class PrintblockPlugin < Plugin
     Name = 'printblock'
     def onview(line, b, e, av=[])
-      @view = line.map{|l| b=b+1 ;"#{b-1}: #{l}<br>\n" }.to_s 
+      @view = line.map{|l| b=b+1 ; ["#{b-1}: #{l}", Amrita::e(:br),"\n"] }
     end
   end
 end
@@ -37,9 +37,9 @@ module AsWiki
       session['begin'] = b
       session['end'] = e
       data = {:session_id => session.session_id,
-	:md5sum =>  Digest::MD5::new(@repository.load($pname).to_s)}
-      @view = ''
+	:md5sum =>  Digest::MD5::new(@repository.load($pname).to_s).to_s}
       load_template.expand(@view, data)
+      @view = Amrita::noescape{@view}
     end
   end
 end

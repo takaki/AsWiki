@@ -34,15 +34,16 @@ module AsWiki
       files =  page.select{|key,value| value == $pname}.collect{|key,val| key}
       item = files.sort{|a,b| name[a] <=> name[b]}.collect{|f| {
 	  :dllink => $CGIURL + "?c=download;num=#{f}", 
-	  :name => CGI::escapeHTML( name[f]) ,
+	  # :name => CGI::escapeHTML( name[f]) ,
+	  :name => name[f],
 	  :rmlink => $CGIURL + "?c=delete;p=#{$pname};num=#{f}", 
 	} }
 
       data ={:_session_id => session.session_id,
 	:item => item
       }
-      form = load_template.expand(data)
-      @view = form.to_s
+      load_template.expand(@view, data)
+      @view = Amrita::noescape{@view}
     end
   end
 end

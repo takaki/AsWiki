@@ -1,11 +1,3 @@
-2003-03-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/util.rb: fixed cgiurl.
-
-2003-02-17  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/pagedata.rb: use amulet.
-
 2003-02-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 1.1.3

@@ -6,14 +6,11 @@ require "aswiki/i18n/#{$LANG}"
 require 'aswiki/util'
 require 'aswiki/revlink'
 
-# require 'amrita/amulet'
-
 module AsWiki
   class PageData
     include AsWiki::Util
-    include AsWiki::I18N
     include Amrita::ExpandByMember
-
+    include AsWiki::I18N
     def initialize(name)
       @name = name
       @r = AsWiki::Repository.new
@@ -35,7 +32,6 @@ module AsWiki
       # @theme = { :href => File.dirname($CGIURL) + "/default.css" }
       @theme = { :href => File.dirname($CGIURL) +  "/default.css" }
     end
-
     attr_reader :searchpage
     attr_reader :theme
     attr_accessor :sb
@@ -58,7 +54,6 @@ module AsWiki
       data.extend PageParts.const_get(parts)
       return data
     end
-
     def menubar
       return parts_extend('Menubar')
     end

@@ -5,10 +5,7 @@ require 'strscan'
 require 'uri/common'
 
 require 'amrita/parts'
-require 'amrita/amulet'
-
 require 'aswiki/scanner'
-
 
 module AsWiki 
   class Node
@@ -16,7 +13,6 @@ module AsWiki
     end
 
     def Node::load_parts_template
-      return if PartsModule::const_defined?(:WikiName)
       pt = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,'Node.html')]
       pt.expand_attr = true
       pt.install_parts_to(PartsModule)
@@ -24,6 +20,7 @@ module AsWiki
 
     def initialize(template)
       @data = []
+      # compact_space = false
       extend PartsModule.const_get(template)
     end
 

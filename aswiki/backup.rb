@@ -51,7 +51,7 @@ module AsWiki
   end
 
   class NullBackup
-    def initialize(basedir=nil)
+    def initialize(basedir)
     end
     public
 

@@ -1,4 +1,4 @@
-#! /usr/bin/ruby 
+#! /usr/bin/ruby1.6 
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2 or later.
 
@@ -15,18 +15,13 @@ require 'aswiki/pagedata'
 require 'aswiki/cgi'
 require 'aswiki/node'
 
-require 'amrita/vm'
-require 'amrita/accel'
-require 'amrita/v1api'
-
 if $USEATTACH
   require 'aswiki/attachdb'
 end
 
 require 'digest/md5'
 require 'amrita/template'
-require 'amrita/v1api'
-
+require 'amrita/format'
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
   include AsWiki::Util
@@ -62,14 +57,12 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     }
   rescue Exception
     pd = AsWiki::PageData.new('Program Error: ' + $!.class.to_s)
-    pd.body = Amrita::e(:pre){
-      Amrita::e(:code) {
-	$!.to_s + "\n" +  $!.backtrace.join("\n")
+    pd.body = Amrita::pre { Amrita::e(:code) {
+	$!.to_s + "\n" +  $!.backtrace.join("\n") # XXX pre
       }
     } 
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       AsWiki::Page.new('Error', pd).to_s
     }
   end    
-  exit(0)
 end

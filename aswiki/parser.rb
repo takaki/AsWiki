@@ -13,9 +13,6 @@ require 'aswiki/util'
 require 'aswiki/plugin'
 require "aswiki/i18n/#{$LANG}"
 
-require 'amrita/accel'
-require 'amrita/amulet'
-
 module AsWiki
   class Parser
 #    include Obaq::HtmlGen
@@ -29,7 +26,7 @@ module AsWiki
     TEXTLINE = WORD + TAG + [:EOL] + ESCAPE
     PLAINTEXT = TEXTLINE + DECORATION
     ELEMENT = PLAINTEXT + [:UL, :OL]
-    D_TAG = {:EM => :Em ,  :STRONG => :Strong}
+    D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
 
     def initialize(scanner, name='')
       @name = name
@@ -47,8 +44,6 @@ module AsWiki
 				   ['eeol',0]], @name)}]
       @lastbol = 1
       
-      # @parts = Node::parts
-
       @tree = parse
     end
     attr_reader :tree, :tocdata
@@ -245,7 +240,7 @@ module AsWiki
       return {:col => col}
     end
     def paragraph
-      node = Noew.new('Paragraph')
+      node = Node.new('Paragraph')
       node << plaintext
       return node
     end
@@ -389,9 +384,7 @@ module AsWiki
     end
     def preblock
       next_token
-      # ret = Amrita::e(:pre, :class=>"code") { Amrita::CompactSpace.new(false) { textblock(:PRE_END).join  } } # XXX use template ???
-      # ret = @parts[:pre][textblock(:PRE_END).join]
-      Amrita::e(:pre, :class=>'code') [textblock(:PRE_END).join]
+      ret = Amrita::e(:pre, :class=>"code") { Amrita::CompactSpace.new(false) { textblock(:PRE_END).join  } } # XXX use template ???
       next_token
       return ret 
     end

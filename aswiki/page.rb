@@ -8,7 +8,6 @@ module AsWiki
   class Page
     def initialize(pagetype, data)
       PageData::load_parts_template(pagetype)
-      # data.amulet_load(pagetype)
       tmplfile = File.join($DIR_TEMPLATE, 'PageBase.html')
       template = Amrita::TemplateFileWithCache[tmplfile]
       template.expand_attr = true

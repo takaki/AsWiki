@@ -51,6 +51,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    :edit => "#{$CGIURL}?c=e&p=#{name}",
 	    :recentpages => "#{$CGIURL}?c=v&p=RecentPages",
 	    :allpages => "#{$CGIURL}?c=v&p=AllPages",
+	    :rawpage => "#{$CGIURL}?c=r&p=#{name}",
 	    :lastmodified => $repository.mtime(name),
 	    :wikilinks => p.wikilinks,
 	  }
@@ -65,6 +66,16 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     when 'e'
       c = $repository.load(name)
       page = WWiki::editpage(name, c)
+      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+	page.to_s
+      }
+    when 'r'
+      c = $repository.load(name)
+      data = {
+	:title => 'Raw data of ' + name ,
+	:content => c.to_s
+      }
+      page = WWiki::Page.new('Raw', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }

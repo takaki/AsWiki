@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 17)
+(Project-Version aswiki 0 18)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 16)
+(Parent-Version aswiki 0 17)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Sat, 18 May 2002 23:39:26 +0900")
+(Checkin-Time "Fri, 24 May 2002 22:31:35 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -25,7 +25,7 @@
 ;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
 ;; to version 0.1(w), by takaki:
 
-  (test/testWWiki__Scanner.rb (aswiki/2_testWWiki_ 1.4 664))
+  (test/testWWiki__Scanner.rb (aswiki/2_testWWiki_ 1.5 664))
 
 ;; Files added by populate at Wed, 03 Apr 2002 14:59:48 +0900,
 ;; to version 0.2(w), by takaki:
@@ -54,13 +54,13 @@
 ;; Files added by populate at Mon, 08 Apr 2002 00:17:39 +0900,
 ;; to version 0.5(w), by takaki:
 
-  (test/testWWiki__Repository.rb (aswiki/15_testWWiki_ 1.4 664))
+  (test/testWWiki__Repository.rb (aswiki/15_testWWiki_ 1.5 664))
   (wwiki/repository.rb (aswiki/16_repository 1.7 664))
 
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (wwiki.cgi (aswiki/17_wwiki.cgi 1.10 755))
+  (wwiki.cgi (aswiki/17_wwiki.cgi 1.11 755))
   (text/SamplePage (aswiki/18_SampleText 1.3 644))
   (template/Node/Hr.html (aswiki/19_HrNode.htm 1.1 664))
   (template/Node/Pre.html (aswiki/20_PreNode.ht 1.1 664))
@@ -76,17 +76,17 @@
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.6 664))
+  (TODO (aswiki/29_TODO 1.7 664))
   (template/Node/Table.html (aswiki/30_TableNode. 1.1 664))
   (template/Node/Dl.html (aswiki/31_DlNode.htm 1.1 664))
-  (template/Page/View.html (aswiki/32_ViewPage.h 1.5 664))
+  (template/Page/View.html (aswiki/32_ViewPage.h 1.6 664))
   (wwiki/page.rb (aswiki/33_page.rb 1.7 664))
 
 ;; Files added by populate at Wed, 10 Apr 2002 23:11:24 +0900,
 ;; to version 0.8(w), by takaki:
 
   (wwiki.conf (aswiki/34_wwiki.conf 1.1 664))
-  (template/Page/Edit.html (aswiki/35_EditPage.h 1.4 664))
+  (template/Page/Edit.html (aswiki/35_EditPage.h 1.5 664))
   (template/Page/Error.html (aswiki/36_ErrorPage. 1.2 664))
   (template/Node/Blank.html (aswiki/37_BlankNode. 1.1 664))
   (template/Node/Plaintext.html (aswiki/38_PlaintextN 1.1 664))

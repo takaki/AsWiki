@@ -36,8 +36,8 @@ class TestWWiki__Repository < RUNIT::TestCase
     assert_equal(@fname.sort, @c.namelist.sort)
   end
 
-  def test_read
-    assert_equal(["1\n"],@c.read('test'))
+  def test_load
+    assert_equal(["1\n"],@c.load('test'))
   end
 
   def test_save

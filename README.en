@@ -45,4 +45,8 @@ I running AsWiki web site at
 http://www.assist.media.nagoya-u.ac.jp/ASDP/. But it is writen in
 Japanse. So I prepare AsWiki website talk in English.
 
-== to use namazu
+== how to use namazu
+* create directory namazu for Namazu index file
+* edit aswiki.conf to uncomment 'search.rb' in plugin configuration.
+* edit template file.
+

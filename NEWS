@@ -1,0 +1,4 @@
+= NEWS
+== What's New in 1.x
+* use PATH_INFO as pagename (CGI argument 'p' is left to keep  backward 
+  compatibility).

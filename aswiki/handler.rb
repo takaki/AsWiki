@@ -152,7 +152,7 @@ module AsWiki
       rescue Errno::ENOENT
       end
       @repository.save(name, body)
-      AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',name]]))
+      AsWiki::redirectpage(cgi, cgiurl([['c','v']],name))
     end
   end
 
@@ -168,7 +168,7 @@ module AsWiki
       cgi.params.each{|key, value| session[key] = value}
       plugin = AsWiki::Plugin::PluginTableByType[session['plugin']].new(name)
       plugin.onpost(session)
-      AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',session['pname']]]))
+      AsWiki::redirectpage(cgi, cgiurl([['c','v']],session['pname']))
     end
   end
 
@@ -182,7 +182,7 @@ module AsWiki
       session = CGI::Session.new(cgi ,{'tmpdir' => $DIR_SESSION}) # XXX
       plugin = AsWiki::Plugin::PluginTableByType[session['plugin']].new(name)
       plugin.onpost(session, cgi['file'])
-      AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',session['pname']]]))
+      AsWiki::redirectpage(cgi, cgiurl([['c','v']],session['pname']))
     end
   end
 
@@ -212,7 +212,7 @@ module AsWiki
       num  = cgi.value('num')[0]
       adb = AsWiki::AttachDB.new
       adb.deletefile(num)
-      AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',name]]))
+      AsWiki::redirectpage(cgi, cgiurl([['c','v']],name))
     end
   end
 
@@ -289,7 +289,7 @@ module AsWiki
 	:data => @repository.attrlist.sort{|a,b| b[1] <=> a[1]}[0,count].map{|l| 
 	  {
 	    :title => l[0],
-	    :link  => cgiurl([['c','v'],['p',l[0]]]),
+	    :link  => cgiurl([['c','v']],l[0]),
 	    :description => timestr(l[1]),
 	  }
 	}

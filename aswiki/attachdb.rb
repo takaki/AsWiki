@@ -82,7 +82,7 @@ module AsWiki
 	      :id     => "##{f}",
 	      :dllink => cgiurl([['c','download'],['num',f]]), 
 	      :name   => name[f],
-	      :rmlink => cgiurl([['c','delete'],['p',pname],['num',f]]),
+	      :rmlink => cgiurl([['c','delete'],['num',f]], pname),
 	    }
 	  }
 	}

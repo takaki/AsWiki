@@ -16,7 +16,7 @@ module AsWiki
     def initialize(cgi, name)
       super
       if name =~ /[^:]+:[^:]+/
-	iname, iwiki = name.split(':') 
+	iname, iwiki = name.split(':', 2) 
 	iwdb = AsWiki::InterWikiDB.new
 	url = iwdb.url(iname)
 	AsWiki::redirectpage(cgi,  "#{url}#{iwiki}")

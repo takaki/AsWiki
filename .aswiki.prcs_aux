@@ -23,7 +23,7 @@
 (aswiki/plugin.rb 1470 1041991281 41_plugin.rb 1.18)
 (aswiki/i18n/en.rb 1090 1041168011 b/27_en.rb 1.1)
 (template/Page/View.html 1275 1043930087 32_ViewPage.h 1.39)
-(aswiki/handler.rb 8274 1055086051 b/20_handler.rb 1.14.1.1)
+(aswiki/handler.rb 8277 1059570270 b/20_handler.rb 1.14.1.2)
 (aswiki/scanner.rb 3498 1042811807 6_scanner.rb 1.22)
 (plugin/demo.rb 1482 1041991281 40_demo.rb 1.19)
 (text/SamplePage 795 1037881914 18_SampleText 1.5)

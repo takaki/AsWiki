@@ -18,14 +18,14 @@ module AsWiki
       @title    = $TITLE + ': ' + name
 
       pname = @name
-      @edit        = cgiurl([['c', 'e'], ['p', pname]])
-      @toppage     = cgiurl([['c', 'v'], ['p', $TOPPAGENAME]])
-      @recentpages = cgiurl([['c', 'v'], ['p', 'RecentPages']])
-      @allpages    = cgiurl([['c', 'v'], ['p', 'AllPages']])
-      @rawpage     = cgiurl([['c', 'r'], ['p', pname]])
-      @historypage = cgiurl([['c', 'h'], ['p', pname]])
-      @diffpage    = cgiurl([['c', 'd'], ['p', pname]])
-      @helppage    = cgiurl([['c', 'v'], ['p', 'HelpPage']])
+      @edit        = cgiurl([['c', 'e']], pname)
+      @toppage     = cgiurl([['c', 'v']], $TOPPAGENAME)
+      @recentpages = cgiurl([['c', 'v']], 'RecentPages')
+      @allpages    = cgiurl([['c', 'v']], 'AllPages')
+      @rawpage     = cgiurl([['c', 'r']], pname)
+      @historypage = cgiurl([['c', 'h']], pname)
+      @diffpage    = cgiurl([['c', 'd']], pname)
+      @helppage    = cgiurl([['c', 'v']], 'HelpPage')
 
       # @theme = { :href => "#$THEME/#$THEME.css" }
     end
@@ -85,21 +85,21 @@ module AsWiki
       backup = AsWiki::Backup.new
       return backup.rlog(@name).map{|l| 
 	{ :revision => {
-	    :url=> cgiurl([['c','h'], ['p',@name], ['rev',l[0]]]),
+	    :url=> cgiurl([['c','h'], ['rev',l[0]]],@name),
 	    :rev => l[0]
 	  },
 	  :historyraw => {
-	    :url=> cgiurl([['c','hr'], ['p',@name], ['rev',l[0]]]),
+	    :url=> cgiurl([['c','hr'], ['rev',l[0]]],@name),
 	    :rev => l[0]
 	  },
 	  :diffline => l[2].to_s,
 	  :timestamp => timestr(l[1]),
-	  :tonew => {:url =>  cgiurl([['c', 'd'], ['p', @name], ['rn',0],
-				       ['ro',l[0]]]),
+	  :tonew => {:url =>  cgiurl([['c', 'd'], ['rn',0],
+                                      ['ro',l[0]]], @name),
 	    :text => "current - #{l[0]}"},
 	  :toold => l[0] != 1 ?  {
-	    :url => cgiurl([['c','d'], ['p', @name], ['rn', l[0]],
-			     ['ro', l[0]-1]]),
+	    :url => cgiurl([['c','d'], ['rn', l[0]],
+                            ['ro', l[0]-1]], @name),
 	    :text => "new #{l[0]} old #{l[0]-1}" }  : 'not avail'
 	}
       }

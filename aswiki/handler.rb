@@ -144,7 +144,6 @@ module AsWiki
 	  cs  = c[bol-1...eol]
 	  raise AsWiki::SaveConflict.new(name, AsWiki::merge(cs, bl, false))
 	end
-
 	bol = (cgi.value('ebol')[0] or 1).to_i
 	eol = (cgi.value('eeol')[0] or c.size).to_i
 	c[bol-1...eol] = body.to_s
@@ -152,7 +151,7 @@ module AsWiki
       rescue Errno::ENOENT
       end
       @repository.save(name, body)
-      AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',name]]))
+      AsWiki::redirectpage(cgi, cgiurl([['c','v']],name))
     end
   end
 
@@ -168,7 +167,7 @@ module AsWiki
       cgi.params.each{|key, value| session[key] = value}
       plugin = AsWiki::Plugin::PluginTableByType[session['plugin']].new(name)
       plugin.onpost(session)
-      AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',session['pname']]]))
+      AsWiki::redirectpage(cgi, cgiurl([['c','v']],session['pname']))
     end
   end
 
@@ -182,7 +181,7 @@ module AsWiki
       session = CGI::Session.new(cgi ,{'tmpdir' => $DIR_SESSION}) # XXX
       plugin = AsWiki::Plugin::PluginTableByType[session['plugin']].new(name)
       plugin.onpost(session, cgi['file'])
-      AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',session['pname']]]))
+      AsWiki::redirectpage(cgi, cgiurl([['c','v']],session['pname']))
     end
   end
 
@@ -212,7 +211,7 @@ module AsWiki
       num  = cgi.value('num')[0]
       adb = AsWiki::AttachDB.new
       adb.deletefile(num)
-      AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',name]]))
+      AsWiki::redirectpage(cgi, cgiurl([['c','v']],name))
     end
   end
 
@@ -289,7 +288,7 @@ module AsWiki
 	:data => @repository.attrlist.sort{|a,b| b[1] <=> a[1]}[0,count].map{|l| 
 	  {
 	    :title => l[0],
-	    :link  => cgiurl([['c','v'],['p',l[0]]]),
+	    :link  => cgiurl([['c','v']],l[0]),
 	    :description => timestr(l[1]),
 	  }
 	}
@@ -298,7 +297,7 @@ module AsWiki
       @str = ''
       template.expand(@str, data)
 
-      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/rss'}){
+      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/rss+xml'}){
 	@str
       }
     end

@@ -43,8 +43,7 @@ module AsWiki
       data ={:_session_id => session.session_id,
 	:item => item
       }
-      load_template.expand(@view, data)
-      @view = Amrita::noescape{@view}
+      @view = load_template.expand_tree(data)
     end
   end
 end

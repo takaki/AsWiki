@@ -2,6 +2,7 @@
 # This program is distributed under the GNU GPL 2.
 
 require 'aswiki/repository'
+require 'aswiki/node'
 
 module AsWiki
   class Plugin
@@ -28,21 +29,23 @@ module AsWiki
       cmd = av[0]
       if pc = PluginTable[cmd]
 	p = pc.new(@name)
-	p.onview(line, b, e, av)
-	return p
+	v = p.onview(line, b, e, av)
+	return v
+	# return p
       else
 	return line.to_s
       end
     end
-    def to_s
-      return @view
-    end
+#    def to_s
+#      STDERR.puts @view.type
+#      return @view
+#    end
     private
     def load_template(filename=self.type::Name)
       tmplfile = File.join('template', 'plugin', filename + '.html')
       tmpl = Amrita::TemplateFile.new(tmplfile)
       tmpl.expand_attr = true
-      tmpl
+      return tmpl
     end
   end
 end

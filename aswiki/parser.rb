@@ -23,26 +23,35 @@ module AsWiki
     PLAINTEXT = TEXTLINE + DECORATION 
     ELEMENT = PLAINTEXT + [:UL, :OL]
     D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
+
+    class DummyNode < Node
+      def expand
+      end
+    end
     
-    def initialize(str,name='')
+    def initialize(str,name='', maketree=true)
       @name = name
       @s = Scanner.new(str)
-      @wikinames = []
+      @rawwikinames = []
       @plugin = AsWiki::Plugin.new(@name)
-      
+      @nodeclass =  maketree ? Node : DummyNode
+
       @tree = parse
     end
-    attr_reader :tree, :wikinames
+    attr_reader :tree
+    def wikinames
+      @rawwikinames.collect{|n|
+	expandwikiname(n,@name)
+      }
+    end
 
     private 
-
-    
     def next_token
       @token = @s.next_token
     end
     def parse
       @line = 1
-      node = Node.new('Root')
+      node = @nodeclass.new('Root')
       next_token
       while true
 	case @token[0]
@@ -62,7 +71,7 @@ module AsWiki
 	when :HN_BEGIN    
 	  node << hn
 	when :HR          
-	  node << Node.new('Hr').expand
+	  node << @nodeclass.new('Hr').expand
 	  next_token
 	when :PLUGIN  
 	  node << plugin
@@ -96,7 +105,7 @@ module AsWiki
     end
     def hn
       level = @token[1].size
-      node = Node.new("H#{level}")
+      node = @nodeclass.new("H#{level}")
       next_token
       node << textline
       return node.expand
@@ -129,7 +138,7 @@ module AsWiki
     end
 
     def dl
-      node = Node.new('Dl')
+      node = @nodeclass.new('Dl')
       while true
 	next_token
 	node << { :title => textline,  :doc => element}
@@ -143,7 +152,7 @@ module AsWiki
       return node.expand
     end
     def ul
-      node = Node.new('Ul')
+      node = @nodeclass.new('Ul')
       indent = @token[1].size
       next_token
       node << catch(:ulend) do
@@ -159,7 +168,7 @@ module AsWiki
       return node.expand
     end
     def ol
-      node = Node.new('Ol')
+      node = @nodeclass.new('Ol')
       indent = @token[1].size
       next_token
       while true
@@ -173,7 +182,7 @@ module AsWiki
       return node.expand
     end
     def table
-      node = Node.new('Table')
+      node = @nodeclass.new('Table')
       while true
 	case @token[0]
 	when :TABLE_BEGIN
@@ -207,12 +216,12 @@ module AsWiki
       return {:col => col}
     end
     def paragraph
-      node = Node.new('Paragraph')
+      node = @nodeclass.new('Paragraph')
       node << plaintext
       return node.expand
     end
     def plaintext
-      node = Node.new('Plaintext')
+      node = @nodeclass.new('Plaintext')
       while true
 	case @token[0]
 	when *TEXTLINE
@@ -228,7 +237,7 @@ module AsWiki
       return node.expand
     end
     def element(indent=0)
-      node = Node.new('Element')
+      node = @nodeclass.new('Element')
       while true
 	case @token[0]
 	when *PLAINTEXT
@@ -263,7 +272,7 @@ module AsWiki
     end
     def decorate(tag)
       next_token
-      node = Node.new(D_TAG[tag])
+      node = @nodeclass.new(D_TAG[tag])
       node  << textline
       if @token[0] == tag 
 	next_token
@@ -274,17 +283,17 @@ module AsWiki
     end
 
     def textline
-      node = Node.new('Textline')
+      node = @nodeclass.new('Textline')
       while true
 	case @token[0]
 	when :OTHER, :SPACE, :WORD
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
-	  @wikinames << @token[1]
+	  @rawwikinames << @token[1]
 	  node << wikilink(@token[1], @name)
 	when :WIKINAME2
 	  name = @token[1][2..-3]
-	  @wikinames << name 
+	  @rawwikinames << name 
 	  node << wikilink(name, @name)
 	when :URI
 	  node << Amrita::e(:a, Amrita::a(:href, @token[1])){@token[1]}
@@ -332,7 +341,7 @@ module AsWiki
       return node
     end
     def preblock
-      node = Node.new('Pre')
+      node = @nodeclass.new('Pre')
       next_token
       # node << Amrita::CompactSpace.new {textblock(:PRE_END).join}
       node << textblock(:PRE_END).join

@@ -17,8 +17,7 @@ module AsWiki
 	    [wikilink(l[0])," " , timestr(l[1])].to_s}
 	}
       }
-      load_template.expand(@view, data)
-      @view = Amrita::noescape{@view}
+      @view = load_template.expand_tree(data)
     end
   end
   class AllPagesPlugin < Plugin
@@ -28,8 +27,7 @@ module AsWiki
       data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)},
 	:total => @repository.namelist.length
       }
-      load_template.expand(@view, data)
-      @view = Amrita::noescape{@view}
+      @view = load_template.expand_tree(data)
     end
   end
   class MetaPagesPlugin < Plugin
@@ -37,8 +35,7 @@ module AsWiki
     include AsWiki::Util
     def onview(line, b, e, av)
       data = {:data => MetaPages.keys.sort.collect{|k| wikilink(k)}}
-      load_template.expand(@view, data)
-      @view = Amrita::noescape{@view}
+      @view = load_template.expand_tree(data)
     end
   end
   class OrphanedPagesPlugin < Plugin
@@ -56,14 +53,12 @@ module AsWiki
 
       data = {:data => (@r.namelist - @checked.keys).sort.collect{|f|
 	  wikilink(f)}}
-      load_template.expand(@view, data)
-      @view = Amrita::noescape{@view}
+      @view = load_template.expand_tree(data)
     end
     private 
     def markandsweep(page)
       @checked[page] = true
-      AsWiki::PageData.new(page).wikinames.collect {|l|
-	expandwikiname(l,page)}.each{|n|
+      AsWiki::PageData.new(page, false).wikinames.uniq.each{|n|
 	if @r.exist?(n) and not @queue.key?(n) and not @checked.key?(n)
 	  @queue[n] = true
 	end
@@ -81,8 +76,7 @@ module AsWiki
       @r = AsWiki::Repository.new('.')
       pages = {}
       @r.namelist.each{|p|
-	AsWiki::PageData.new(p).wikinames.collect{|l| 
-	  expandwikiname(l,p)}.each{|n|
+	AsWiki::PageData.new(p,false).wikinames.uniq.each{|n|
 	  if n !~ /\A\w+:[A-Z]\w+(?!:)/
 	    pages[n] = true
 	  end
@@ -90,9 +84,7 @@ module AsWiki
       }
       data = {:data => (pages.keys - @r.namelist).sort.collect{|f|
 	  wikilink(f)}}
-      load_template.expand(@view, data)
-      @view = Amrita::noescape{@view}
-
+      @view = load_template.expand_tree(data)
     end
   end
   class PluginListPlugin < Plugin
@@ -103,8 +95,7 @@ module AsWiki
 	  p::Name
 	}.sort
       }
-      load_template.expand(@view, data)
-      @view = Amrita::noescape{@view}
+      @view = load_template.expand_tree(data)
     end
   end
 end

@@ -7,15 +7,14 @@ module AsWiki
   class PageData
     include AsWiki::Util
     include Amrita::ExpandByMember
-    def initialize(name)
+    def initialize(name, maketree=true)
       @name = name
       @r = AsWiki::Repository.new('.')
       c = @r.load(name)
-      @p = AsWiki::Parser.new(c.to_s, name)
+      @p = AsWiki::Parser.new(c.to_s, name, maketree)
       # @tree = @p.tree
       @wikinames = @p.wikinames
       @contents = @p.tree
-
       @title = name
       @edit        = "#{$CGIURL}?c=e;p=#{AsWiki::escape(name)}"
       @toppage     = "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}"
@@ -34,7 +33,7 @@ module AsWiki
     end
     def wikilinks
       return Amrita::noescape{ @p.wikinames.delete_if{|w|
-	  w =~ /:[^:]/ }.map{|l| expandwikiname(l, @name)}.uniq.map{|l| 
+	  w =~ /:[^:]/ }.uniq.map{|l| 
 	  [l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
 	  "#{wikilink(CGI::escapeHTML(l[0]),@name)}(#{modified(l[1])})\n" }}
     end

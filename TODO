@@ -1,14 +1,12 @@
 -*- outline -*-
 
 * High
+  - imgだけはinline?
   - toc
-  - plugin#load_templateの改善
-  - attache escape
   - #minibbs
   - #minimemo
   - #nikki?
   - mergeの導入
-  - lastmodified: format, (127d) 
   - session_id を渡す目的でCGI.newをしない
   - attach brushup
   - AttachManager transaction
@@ -19,9 +17,10 @@
   - Page templateの統合  
   - w3m-elでpostできない?
   - graphviz 用出力(趣味やね)
-  - 高速化 Parserは十分早い。だが，Amritaの展開が問題。
+  
 
 * Low
+  - Amritaの展開が問題。
   - デフォルトで./をつけるページ，付けないページ
 
 * idea
@@ -29,6 +28,9 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - plugin#load_templateの改善
+  - lastmodified: format, (127d) 
+  - attache escape
   - 遅延評価は意味がなし。parseの中でElementを展開すること。
   - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 

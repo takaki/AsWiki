@@ -90,10 +90,9 @@ module AsWiki
       end
     end
     def wikilink(name, base='')
-      ename = expandwikiname(name, base)
       repository = AsWiki::Repository.new
-      link = AsWiki::escape(ename)
-      if repository.exist?(ename) || name =~ /[^:]+:[^:]+/ || 
+      link = AsWiki::escape(name)
+      if repository.exist?(name) || name =~ /[^:]+:[^:]+/ || 
 	  MetaPages.has_key?(name)
 	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")
 			 ){

@@ -16,7 +16,7 @@ require 'aswiki/pagedata'
 require 'digest/md5'
 require 'amrita/template'
 
-# default value
+# default value. if you think change them, use 'aswiki.conf'.
 $TOPPAGENAME = 'IndexPage'
 $TIMEFORMAT  ="%F %T %z"
 $BASEDIR     = '.'

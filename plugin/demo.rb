@@ -40,8 +40,7 @@ module AsWiki
       # session.close
       data = {:session_id => session.session_id,
 	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s}
-      load_template.expand(@view, data)
-      @view = Amrita::noescape{@view}
+      @view = load_template.expand_tree(data)
     end
   end
 end

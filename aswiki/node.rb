@@ -5,13 +5,9 @@ require 'strscan'
 require 'uri/common'
 require 'delegate'
 
-require 'aswiki/scanner'
-
-# require 'obaq/htmlgen'
-# require 'obaq/htmlparser'
-# require 'obaq/htmlcompiler'
-
 require 'amrita/template'
+
+require 'aswiki/scanner'
 
 module Amrita
   class TemplateFile

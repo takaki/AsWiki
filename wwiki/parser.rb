@@ -311,7 +311,7 @@ module WWiki
 	when :ENDPERIOD
 	  node << E(:br)
 	when :EOL
-	  node << ' '
+	  node << "\n"
 	  eol
 	  break
 	else

@@ -56,6 +56,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    :allpages => "#{$CGIURL}?c=v;p=AllPages",
 	    :rawpage => "#{$CGIURL}?c=r;p=#{WWiki::escape(name)}",
 	    :diffpage => "#{$CGIURL}?c=d;p=#{WWiki::escape(name)}",
+	    :helppage => "#{$CGIURL}?c=v;p=HelpPage",
 	    :lastmodified => repository.mtime(name),
 	    :wikilinks => p.wikilinks,
 	  }

@@ -26,7 +26,9 @@ its output html.
 * bdb         http://www.ruby-lang.org/en/raa-list.rhtml?id=49
 === to use RSS
 * REXML       http://www.ruby-lang.org/en/raa-list.rhtml?id=405
-	
+=== to use Namazu
+* search-namazu http://raa.ruby-lang.org/project/search-namazu/
+
 == Download
 * http://sourceforge.net/project/showfiles.php?group_id=68271
 * http://www.assist.media.nagoya-u.ac.jp/download/aswiki/
@@ -42,3 +44,5 @@ its output html.
 I running AsWiki web site at
 http://www.assist.media.nagoya-u.ac.jp/ASDP/. But it is writen in
 Japanse. So I prepare AsWiki website talk in English.
+
+== to use namazu

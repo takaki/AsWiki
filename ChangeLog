@@ -1,10 +1,9 @@
 2004-06-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* aswiki.cgi: changed plugin list is explicitly defined.
+	* aswiki.cgi: plugin list definition policy is explicitly describe
+	in config file.
 
 	* aswiki/handler.rb: added difference detection routine
-	
-	* aswiki: backport from 1.1.3
 	
 
 2003-09-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
@@ -13,7 +12,7 @@
 	
 2003-07-31  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* aswiki/handler.rb: InterWikiName (thx. HoLY)
+	* aswiki/handler.rb: fixed InterWikiName handling bug. (thx. HoLY)
 
 2003-06-10  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 	

@@ -1,6 +1,7 @@
 require 'rubyunit'
-require 'aswiki/conf.rb'
+require 'aswiki/config.rb'
 require 'aswiki/parser.rb'
+load 'aswiki.conf'
 
 class TestAsWiki__Parser < RUNIT::TestCase
   def test_tree

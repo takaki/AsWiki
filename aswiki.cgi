@@ -29,11 +29,6 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   Amrita::TemplateFileWithCache::set_cache_dir($DIR_CACHE)
   AsWiki::Node::load_parts_template
   repository = AsWiki::Repository.new
-#  Dir.glob("#$DIR_PLUGIN/*.rb").delete_if {|p| 
-#    p == "#$DIR_PLUGIN/attach.rb" and $USEATTACH == false
-#  }.each{|p| 
-#    require p.untaint  
-#  }n
   $plugin_list.each{|p| 
     require "#$DIR_PLUGIN/#{p}".untaint  
   }

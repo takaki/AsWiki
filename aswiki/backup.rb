@@ -50,5 +50,19 @@ module AsWiki
     end
   end
 
-  Backup = RCSBackup
+  class NullBackup
+    def initialize(basedir)
+    end
+    public
+
+    def ci(name)
+    end
+  end
+  
+  
+  if $USEBACKUP
+    Backup = RCSBackup
+  else
+    Backup = NullBackup
+  end
 end

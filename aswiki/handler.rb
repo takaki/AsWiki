@@ -59,7 +59,9 @@ module AsWiki
   end
 
   class HistoryHandler < Handler
-    HandlerTable['h'] = self      
+    if $USEBACKUP
+      HandlerTable['h'] = self      
+    end
     def initialize(cgi, name)
       super
       rev = cgi.value('rev')[0].to_i
@@ -80,7 +82,9 @@ module AsWiki
   end
 
   class HistoryRawHandler < Handler
-    HandlerTable['hr'] = self      
+    if $USEBACKUP
+      HandlerTable['hr'] = self      
+    end
     def initialize(cgi, name)
       super
       rev = cgi.value('rev')[0].to_i
@@ -101,7 +105,9 @@ module AsWiki
   end
 
   class DiffHandler < Handler
-    HandlerTable['d'] = self      
+    if $USEBACKUP
+      HandlerTable['d'] = self      
+    end
     def initialize(cgi, name)
       super
       revnew = cgi.value('rn')[0].to_i
@@ -159,7 +165,9 @@ module AsWiki
   end
 
   class AttachHandler < Handler
-    HandlerTable['attach'] = self      
+    if $USEATTACH
+      HandlerTable['attach'] = self      
+    end
     def initialize(cgi, name)
       super
       cgi['_session_id'][0] = cgi.value('_session_id')[0] # XXXX cgi/session bug
@@ -171,7 +179,9 @@ module AsWiki
   end
 
   class DownloadHandler < Handler
-    HandlerTable['download'] = self      
+    if $USEATTACH
+      HandlerTable['download'] = self      
+    end
     def initialize(cgi, name)
       super
       num  = cgi.value('num')[0]
@@ -186,7 +196,9 @@ module AsWiki
   end
 
   class DeleteHandler < Handler # XXX plugin onpost?
-    HandlerTable['delete'] = self      
+    if $USEATTACH
+      HandlerTable['delete'] = self      
+    end
     def initialize(cgi, name)
       super
       num  = cgi.value('num')[0]

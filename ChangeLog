@@ -1,5 +1,10 @@
 2002-12-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* aswiki/handler.rb: add config parameter of use RCS backup.
+	add config parameter of use Attach plugin.
+
+	* aswiki/attachdb.rb: add attach file size limit parameter.
+
 	* aswiki/plugin.rb, template/plugin/*, plugin/* : use parts
 	template.	
 

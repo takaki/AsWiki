@@ -15,6 +15,11 @@ module AsWiki
       @page = @env.open_db(BDB::Btree, "page", nil, BDB::CREATE)
     end
     def savefile(pname, attachedfile)
+      size = attachedfile.stat.size 
+      if size > $ATTACH_SIZE_LIMIT
+	raise AsWikiError, "Attach file size (#{size}) is too large. \n" +
+	  "Limit is #$ATTACH_SIZE_LIMIT."
+      end
       begin
 	@env.begin(@file, @time, @mime, @name, @page){|txn, db|
 	  file, time, mime, name, page = db

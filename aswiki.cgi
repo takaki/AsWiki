@@ -5,8 +5,10 @@
 $TOPPAGENAME = 'IndexPage'
 $TIMEFORMAT  ="%F/%T %z"
 $BASEDIR     = '.'
+$USEBACKUP   = true
 $USEATTACH   = true
 $LANG        = 'ja'
+$ATTACH_SIZE_LIMIT =  1024 * 1024 * 10
 # $SAFE = 1
 
 load ('aswiki.conf')
@@ -46,8 +48,8 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   AsWiki::Node::load_parts_template unless defined? $aswiki_parts_template_loaded
   $aswiki_parts_template_loaded = true
   repository = AsWiki::Repository.new('.')
-  Dir.glob('plugin/*.rb').select {|p| 
-    $USEATTACH or p != 'plugin/attach.rb' # XXX
+  Dir.glob('plugin/*.rb').delete_if {|p| 
+    p == 'plugin/attach.rb' and $USEATTACH == false
   }.each{|p| 
     require p.untaint  
   }

@@ -7,4 +7,5 @@
 
 mkdir RCS
 mkdir attr
+mkdir session
 mkdir text

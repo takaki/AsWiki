@@ -1,3 +1,11 @@
+2002-07-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* wwiki.cgi: Sessionを保存するディレクトリをattrからsessionに変更。
+
+2002-07-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* wwiki/scanner.rb: tableを||から|に変更
+
 2002-04-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* 記録をさぼっていたがまた書きはじめる。

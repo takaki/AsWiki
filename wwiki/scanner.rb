@@ -41,7 +41,8 @@ module WWiki
 	    q.push [:HN_BEGIN, tmp]
 	  elsif tmp = sc.scan(/\A---- *$/)
 	    q.push [:HR, tmp]
-	  elsif tmp = sc.scan(/\A *\|\|/)
+	  # elsif tmp = sc.scan(/\A *\|\|/)
+	  elsif tmp = sc.scan(/\A *\|/)
 	    q.push [:TABLE_BEGIN, tmp]
 	  elsif tmp = sc.scan(/\A\{\{\{ *$/)
 	    q.push [:PRE_BEGIN, tmp]
@@ -76,9 +77,11 @@ module WWiki
 	  q.push [:ENDPERIOD, tmp]
 	elsif tmp = sc.scan(/\A[ \t\r\f]+/)
 	  q.push [:SPACE, tmp]
-	elsif tmp = sc.scan(/\A\|\| *$/)
+	# elsif tmp = sc.scan(/\A\|\| *$/)
+	elsif tmp = sc.scan(/\A\| *$/)
 	  q.push [:TABLE_END, tmp]
-	elsif tmp = sc.scan(/\A\|\|/)
+	# elsif tmp = sc.scan(/\A\|\|/)
+	elsif tmp = sc.scan(/\A\|/)
 	  q.push [:TABLE, tmp]
 	elsif tmp = sc.scan(/\A\[\S+ +\S+?\]/)
 	  q.push [:MOINHREF, tmp]
@@ -101,6 +104,5 @@ module WWiki
       return q
     end
   end
-    
 end
 

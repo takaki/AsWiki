@@ -29,7 +29,7 @@ module WWiki
       @repository.save(pname, file.to_s)
     end
     def onview(line, b, e, av=[])
-      session = CGI::Session.new(CGI::new, {'tmpdir' => 'attr'})
+      session = CGI::Session.new(CGI::new, {'tmpdir' => 'session'})
       session['pname'] = $pname
       session['plugin'] = self.type
       session['begin'] = b

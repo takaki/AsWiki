@@ -14,6 +14,8 @@ require 'wwiki/backup'
 
 require 'digest/md5'
 
+require 'amrita/template'
+
 # $SAFE = 1
 
 metapage = {
@@ -52,6 +54,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  c = repository.load(name)
 	  p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
 	  data = {:title => name, 
+	    # :content => Amrita::noescape{p.tree.to_s},
 	    :content => p.tree.to_s,
 	    :edit => "#{$CGIURL}?c=e;p=#{WWiki::escape(name)}",
 	    :toppage => "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}",
@@ -112,7 +115,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       cgi.out({'Status' => '302 REDIRECT', 
 		'Location' => "#{$CGIURL}?c=v;p=#{WWiki::escape(name)}"}){''}
     when 'post'
-      session = CGI::Session.new(cgi ,{'tmpdir' => 'attr'})
+      session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
       if cgi['md5sum'][0] != 
 	  Digest::MD5::new(repository.load(session['pname']).to_s).to_s
 	raise WWiki::TimestampMismatchError

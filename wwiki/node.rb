@@ -11,28 +11,25 @@ require 'obaq/htmlgen'
 require 'obaq/htmlparser'
 require 'obaq/htmlcompiler'
 
+# require 'amrita/template'
+
 module WWiki 
-  class Node # < DelegateClass(Array)
-    # class Node  < DelegateClass(Array)
-    # include Obaq::HtmlCompiler
+  class Node
     def initialize(template)
       @node = []
-      # super([])
       tmplfile = File.join('template', 'Node', template + '.html')
       @template = Obaq::HtmlParser.parse_file(tmplfile)
+      # @tmpl = Amrita::TemplateFile.new(tmplfile)
     end
     def <<(item)
       @node << item
     end
     def to_s
-      # data = {:data => Obaq::noescape{@node.to_s}}
-      # data = {:data => @node}
       data = {:data => @node}
       tree = @template.expand(data)
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false
       f.deleteln = false
-      # return tree.to_a
       return f.format(tree)
     end
   end

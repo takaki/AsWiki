@@ -6,7 +6,7 @@ require 'obaq/htmlparser'
 require 'wwiki/util'
 require 'digest/md5'
 
-require 'amrita/template'
+# require 'amrita/template'
 
 
 module WWiki
@@ -23,16 +23,17 @@ module WWiki
   class Page
     def initialize(template ,data)
       tmplfile = File.join('template','Page', template + '.html')
+
       template = Obaq::HtmlParser.parse_file(tmplfile)
       @tree = template.expand(data)
+      @data = data
     end
-    attr_accessor :tree
+    # attr_accessor :tree
     def to_s
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false
       f.deleteln = false
       return  f.format(@tree)
-      # return @tree
     end
   end
 end

@@ -40,7 +40,9 @@ module AsWiki
       session['number'] = av[1].to_i
       data = {
 	:_session_id => session.session_id,
-	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s
+	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s,
+	:msg_2chbbs_from => msg_2chbbs_from,
+	:msg_2chbbs_write => msg_2chbbs_write,
       }
       @view = load_template.expand_tree(data)
     end

@@ -24,6 +24,7 @@ end
 module AsWiki
   class ListPlugin < Plugin
     Name = 'list'
+    include I18N
     def onpost(session)
       pname = session['pname']
       file = @repository.load(pname)
@@ -38,8 +39,12 @@ module AsWiki
       session['begin'] = b
       session['end'] = e
       # session.close
-      data = {:session_id => session.session_id,
-	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s}
+      data = {
+	:session_id => session.session_id,
+	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s,
+	:msg_list_item => msg_list_item,
+	:msg_list_add => msg_list_add,
+      }
       @view = load_template.expand_tree(data)
     end
   end

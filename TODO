@@ -1,37 +1,36 @@
 -*- outline -*-
 
 * High
+  - RSS
   - page initialize and publish
   - pre problem(amrita 待ち)
   - RCSの選択
   - session_id を渡す目的でCGI.newをしない
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
-  - history の raw page
   - $BASEDIRは必要か
-  - AutomaticLinkは表示だけか。むやみとlinkしてもね。
   - UnitTestを手抜きするな。とくに日本語。
   - ci でtextname Backupをmoduleにしてしまえばいい。include
-  - imgだけはinline?
-  - mod_ruby
   
 * Low
+  - imgだけはinline?
+  - mod_ruby
   - outer link list?
-  - menuのcss fixed
   - 逆リンク…普通にやると全検索になるから…
   - mergeの導入(plugin)
   - Namazuで検索? Wiki内でする必要は?
   - w3m-elでpostできない?
   - -w
   - Nora or CGIKit
-  - graphviz 用出力(趣味やね)
-  - Amritaの展開が問題。
-  - デフォルトで./をつけるページ，付けないページ
 
 * idea
+  - AutomaticLinkは表示だけか。むやみとlinkしてもね。
+  - menuのcss fixed
+  - graphviz 用出力(趣味やね)
   - ページに対する属性。継承?
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - history の raw page
   - toc
   - Page templateの統合  
   - 決め打ち日本語の問題(plugin)。

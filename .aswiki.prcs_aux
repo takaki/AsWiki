@@ -6,6 +6,7 @@
 (test/testWWiki__Repository.rb 1232 1031495922 15_testWWiki_ 1.6)
 (template/plugin/notcreatedpages.html 65 1035509892 b/9_notcreated 1.2)
 (aswiki/repository.rb 1163 1035509743 16_repository 1.15)
+(THANKS 71 1035897637 b/18_THANKS 1.1)
 (test/testWWiki__Scanner.rb 3009 1031495922 2_testWWiki_ 1.7)
 (aswiki/interwiki.rb 552 1031495555 51_interwiki. 1.4)
 (template/plugin/metapages.html 28 1032705566 b/11_metapages. 1.1)

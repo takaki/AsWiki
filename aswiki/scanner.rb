@@ -65,7 +65,8 @@ module AsWiki
 	    q.push [:URI, tmp]
 	  end
 	# elsif tmp = sc.scan(/\A([A-Z][a-z]+){2,}\b/)
-	elsif tmp = sc.scan(/\A([A-Z]+[a-z]+){2,}\b/)
+	# elsif tmp = sc.scan(/\A([A-Z]+[a-z]+){2,}\b/)
+	elsif tmp = sc.scan(/\A([A-Z][a-z0-9]*){2,}\b/)
 	  q.push [:WIKINAME1, tmp]
 	elsif tmp = sc.scan(/\A\[\[\S+?\]\]/)
 	  q.push [:WIKINAME2, tmp]

@@ -1,5 +1,7 @@
 2002-11-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* aswiki/scanner.rb: wikiname regexp change.
+
 	* release: 0.72
 
 	* plugin/demo.rb: i18n

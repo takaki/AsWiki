@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 72)
+(Project-Version aswiki 0 73)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 71)
+(Parent-Version aswiki 0 72)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Tue, 26 Nov 2002 00:19:57 +0900")
+(Checkin-Time "Wed, 27 Nov 2002 21:26:47 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -31,9 +31,9 @@
 ;; to version 0.2(w), by takaki:
 
   
-  (ChangeLog (aswiki/4_ChangeLog 1.40 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.41 664))
   (aswiki/node.rb (aswiki/5_node.rb 1.28 664))
-  (aswiki/scanner.rb (aswiki/6_scanner.rb 1.15 664))
+  (aswiki/scanner.rb (aswiki/6_scanner.rb 1.16 664))
 
 ;; Files added by populate at Thu, 04 Apr 2002 10:35:33 +0900,
 ;; to version 0.3(w), by takaki:
@@ -86,7 +86,7 @@
 ;; to version 0.8(w), by takaki:
 
   (aswiki.conf (aswiki/34_wwiki.conf 1.8 664))
-  (template/Page/Edit.html (aswiki/35_EditPage.h 1.23 664))
+  (template/Page/Edit.html (aswiki/35_EditPage.h 1.24 664))
   (template/Page/Error.html (aswiki/36_ErrorPage. 1.15 664))
   
   

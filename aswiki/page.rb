@@ -10,7 +10,8 @@ require 'amrita/template'
 module WWiki
   def WWiki::editpage(name, content)
     data = {:title => name, 
-      :content => CGI::escapeHTML(content.to_s),
+      # :content => CGI::escapeHTML(content.to_s),
+      :content => content.to_s,
       :name => name,
       :md5sum => Digest::MD5::new(content.to_s).to_s,
       :helppage => "#{$CGIURL}?c=v;p=HelpPage",

@@ -37,7 +37,7 @@ module WWiki
       return @wikinames.delete_if{|w| w =~ /:[^:]/ }.map{|l| 
 	expandwikiname(l, $pname)}.uniq.map{|l| 
 	[l, repository.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
-	"#{wikilink(l[0])}(#{modified(l[1])})\n" }
+	"#{wikilink(CGI::escapeHTML(l[0]))}(#{modified(l[1])})\n" }
     end
     private 
     def modified(t)

@@ -70,9 +70,9 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  page  = WWiki::Page.new('Ro',data)
 	elsif repository.exist?(name)
 	  c = repository.load(name)
-	  p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
+	  p = WWiki::Parser.new(c.to_s)
+	  # p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
 	  data = {:title => name, 
-	    # :content => Amrita::noescape{p.tree.to_s},
 	    :content => Amrita::noescape{p.tree.to_s},
 	    :edit => "#{$CGIURL}?c=e;p=#{WWiki::escape(name)}",
 	    :toppage => "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}",

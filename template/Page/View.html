@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
-<span class="MenuBar">
+<div class="MenuBar">
 <a href="@edit"><span id="msg_edit">edit</span></a>
 <a href="@recentpages"><span id="msg_recentpages">recentpages</span></a>
 <a href="@allpages"><span id="msg_allpages">allpages</span></a>
@@ -9,20 +9,23 @@
 <a href="@rawpage"><span id="msg_rawpage">rawpage</span></a>
 <a href="@toppage"><span id="msg_toppage">toppage</span></a>
 <a href="@helppage"><span id="msg_helppage">helppage</span></a>
-</span>
+</div>
 
-<span class="PageTitle">
+<div class="PageTitle">
 <H1><span id=title></span></h1>
-</span>
+</div>
 
-<span class="PageHeader">
-</span>
+<div class="PageHeader">
+<ol>
+<li id="tableofcontents"><a href="@number"><span id="text"></span></a></li>
+</ol>
+</div>
 
-<span class="PageBody">
+<div class="PageBody">
 <span id="body"></span>
-</span>
+</div>
 
-<span class="PageFooter">
+<div class="PageFooter">
 <span id="msg_lastmodified">lastmodified</span>: 
 <span id=lastmodified></span><br>
 WikiLinks:
@@ -30,4 +33,4 @@ WikiLinks:
 <span id=pname></span>
 (<span id=modified></span>) 
 </span>
-</span>
+</div>

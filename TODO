@@ -12,7 +12,6 @@
   - UnitTestを手抜きするな。とくに日本語。
   - ci でtextname Backupをmoduleにしてしまえばいい。include
   - imgだけはinline?
-  - toc
   - mod_ruby
   
 * Low
@@ -32,6 +31,7 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - toc
   - Page templateの統合  
   - 決め打ち日本語の問題(plugin)。
   - できるだけAmrita::eは使わない。

@@ -1,3 +1,7 @@
+2002-11-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/parser.rb: table of contents.
+
 2002-11-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.66

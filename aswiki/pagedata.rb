@@ -60,6 +60,9 @@ module AsWiki
       def initialize(pd)
 	super(pd, 'PageHeader')
       end 
+      def tableofcontents
+	@pd.tableofcontents
+      end
       def logtable
 	@name = @pd.name
 	
@@ -159,10 +162,13 @@ module AsWiki
       PageFooter.new(self)
     end 
 
-      def lastmodified
-	timestr(timestamp)
-      end
+    def lastmodified
+      timestr(timestamp)
+    end
 
+    def tableofcontents
+      @p.tocdata 
+    end
     def wikilinks
       @p.wikinames.delete_if{|w| w =~ /:[^:]/ }.uniq.map{|l| 
 	[l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|

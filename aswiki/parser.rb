@@ -31,10 +31,12 @@ module AsWiki
       @plugin = AsWiki::Plugin.new(@name)
       
       # @nodeclass =  maketree ? Node : DummyNode
+      @tocdata = []
+      @tocnum  = 0
 
       @tree = parse
     end
-    attr_reader :tree
+    attr_reader :tree, :tocdata
     def wikinames
       @rawwikinames.collect{|n|
 	expandwikiname(n,@name)
@@ -103,7 +105,14 @@ module AsWiki
       level = @token[1].size
       node = Node.new("H#{level}")
       next_token
-      node << textline
+      ret = textline
+      if level == 2
+	@tocnum = @tocnum + 1
+	@tocdata << {:number => "##{@tocnum}", :text => ret}
+	node << {:number => @tocnum, :text=> ret}
+      else
+	node << {:number => nil, :text=> ret}
+      end
       return node
     end
     def plugin_block

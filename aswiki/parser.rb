@@ -115,8 +115,8 @@ module AsWiki
       lineno = @line
       node = Node.new("H#{level}")
       next_token
-      # ret = textline
-      ret = plaintext
+      ret = textline
+      # ret = plaintext
       if level == 2
 	@tocnum = @tocnum + 1
 	@tocdata[-1][:partialedit] = cgiurl([['c', 'e'], ['p', @name],

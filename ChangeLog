@@ -1,5 +1,11 @@
 2003-01-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* release: 0.91
+
+	* aswiki/parser.rb: fixed hn bug.
+
+	* release: 0.90
+
 	* aswiki/attachdb.rb: fixed querybynum return include nil Hash.
 
 2003-01-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>

@@ -2,7 +2,6 @@
 
 * High
   - escape at hn
-  - attach display bug gsub
 
 * Low
   - rewrite orphand page plugin
@@ -20,6 +19,7 @@
   - UnitTestを手抜きするな。とくに日本語。
 
 * idea
+  - attach display bug gsub
   - pre pre bug ???
   - partial edit link bug
   - type -> class

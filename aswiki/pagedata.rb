@@ -34,10 +34,11 @@ module AsWiki
 
       # @theme = { :href => File.dirname($CGIURL) + "/default.css" }
       @theme = { :href => File.dirname($CGIURL) +  "/default.css" }
-
     end
+
     def amulet_load(pagetype)
-      @am = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
+      # @am = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
+      @am = Amrita::TemplateFile.new(File.join($DIR_TEMPLATE,"Page/#{pagetype}.html"))
       @am.define_amulet(:Menubar, :Pagetitle, :Pageheader, :Pagebody, :Pagefooter)
     end
 
@@ -60,7 +61,6 @@ module AsWiki
       return data
     end
     def menubar
-      # return parts_extend('Menubar')
       return @am.create_amulet(:Menubar, self)
     end
     def pagetitle

@@ -13,6 +13,9 @@ require 'aswiki/util'
 require 'aswiki/plugin'
 require "aswiki/i18n/#{$LANG}"
 
+require 'amrita/accel'
+require 'amrita/amulet'
+
 module AsWiki
   class Parser
 #    include Obaq::HtmlGen
@@ -26,7 +29,7 @@ module AsWiki
     TEXTLINE = WORD + TAG + [:EOL] + ESCAPE
     PLAINTEXT = TEXTLINE + DECORATION
     ELEMENT = PLAINTEXT + [:UL, :OL]
-    D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
+    D_TAG = {:EM => :Em ,  :STRONG => :Strong}
 
     def initialize(scanner, name='')
       @name = name
@@ -275,7 +278,7 @@ module AsWiki
 	  elsif indent < @token[1].size
 	    node << ul
 	  elsif indent > @token[1].size
-	    throw :ulend, node
+	    throw :ulend, @parts[:Element][node]
 	  else
 	    raise RangeError
 	  end
@@ -305,7 +308,7 @@ module AsWiki
       else                
 	node << syntax_error
       end
-      return @parts.create_amulet(D_TAG[tag].intern,node)
+      return @parts.create_amulet(D_TAG[tag], node)
     end
 
     def textline

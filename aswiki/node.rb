@@ -12,9 +12,11 @@ require 'aswiki/scanner'
 
 module AsWiki 
   class Node
+    
     def Node::parts
-      @pt = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,'Node.html')]
-      @pt.define_amulet(:Dl=>Node, :Em=>Node, 
+      if not defined? NodeParts
+	eval "NodeParts = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,'Node.html')]"
+	NodeParts.define_amulet(:Dl=>Node, :Em=>Node, 
 			:H2=>Node, :H3=>Node, :H4=>Node, :H5=>Node, :H6=>Node,
 			:Ol=>Node, :Paragraph=>Node, 
 			:Strong=>Node, :Table=>Node, :Root=>Node,  
@@ -25,7 +27,8 @@ module AsWiki
 			:Diffout=>Node,
 			:pre=>Node
 			)
-      return @pt
+      end
+      return NodeParts
     end
 
 

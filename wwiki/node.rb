@@ -12,11 +12,12 @@ module WWiki
   class Node< DelegateClass(Array)
     def initialize
       super([])
+      @tmplfile = File.join('template',self.type.to_s.split('::')[-1] +
+			    '.html')
     end
     def to_s
-      tmplfile = File.join('template',self.type.to_s.split('::')[-1] + '.html')
-      template = Obaq::HtmlParser.parse_file(tmplfile)
-      data = {:list => self.to_a}
+      template = Obaq::HtmlParser.parse_file(@tmplfile)
+      data = {:data => self.to_a}
       tree = template.expand(data)
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false
@@ -70,6 +71,18 @@ module WWiki
   class HrNode < Node
   end
   class WikinameNode < Node
+  end
+  class PreNode < Node
+  end
+  class DlNode < Node
+  end
+  class HrNode < Node
+  end
+  class HNNode < Node
+    def initialize(level)
+      super()
+      @tmplfile = File.join('template',"HN#{level}Node.html")
+    end
   end
 end
 

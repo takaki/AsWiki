@@ -65,8 +65,8 @@ module WWiki
 	  q.push [:WIKINAME1, tmp]
 	elsif tmp = sc.scan(/\A\[\[\S+?\]\]/)
 	  q.push [:WIKINAME2, tmp]
-	elsif tmp = sc.scan(/\A={1,6} *$/)
-	  q.push [:HN_END, tmp]
+#	elsif tmp = sc.scan(/\A={1,6} *$/)
+#	  q.push [:HN_END, tmp]
 	elsif tmp = sc.scan(/\A +\.$/)
 	  q.push [:ENDPERIOD, tmp]
 	elsif tmp = sc.scan(/\A[ \t\r\f]+/)
@@ -78,9 +78,9 @@ module WWiki
 	elsif tmp = sc.scan(/\A\[\S+ +\S+?\]/)
 	  q.push [:MOINHREF, tmp]
 	elsif tmp = sc.scan(/\A'''/)
-	  q.push [:S_DELIM, tmp]
+	  q.push [:STRONG, tmp]
 	elsif tmp = sc.scan(/\A''/)
-	  q.push [:E_DELIM, tmp]
+	  q.push [:EM, tmp]
 	elsif tmp = sc.scan(/\A[\w:]+/)
 	  q.push [:WORD, tmp]
 	elsif tmp = sc.scan(/\A[#{C128}-#{C255}]+/)

@@ -9,10 +9,12 @@ module WWiki
   class Parser
     WORD  = [:SPACE, :OTHER, :WORD]
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
-    DECORATION = [:E_DELIM, :S_DELIM]
+    DECORATION = [:EM, :STRONG]
     TEXTLINE = WORD + TAG + [:EOL]
     PARAGRAPH = TEXTLINE + DECORATION 
     TEXT = PARAGRAPH + [:UL, :OL]
+    D_TAG = {:EM => EmNode,  :STRONG => StrongNode}
+
     def initialize(str)
       @s = Scanner.new(str)
       @tree = parse
@@ -40,7 +42,7 @@ module WWiki
 	when :HN_BEGIN    
 	  node << hn
 	when :HR          
-	  node << HrNode
+	  node << HrNode.new
 	  next_token
 	when :PLUGIN  
 	  node << plugin
@@ -73,20 +75,10 @@ module WWiki
       return nil
     end
     def hn
-      node = nil
-      text = nil
       level = @token[1].size
+      node = HNNode.new(level)
       next_token
-      text << textline
-      if @token[0] == :HN_END 
-	if level != @token[1].scan('=').size then text << @token[1]  end
-	node << "<h#{level}>" << text << "</h#{level}>"
-	next_token
-      else
-	if level >= 3  then node << "<h#{level}>" << text << "</h#{level}>"
-	else                node << text
-	end
-      end
+      node << textline
       return  node
     end
     def plugin_block
@@ -135,12 +127,14 @@ module WWiki
       node = UlNode.new
       indent = @token[1].size
       next_token
-      while true
-	case @token[0]
-	when *TEXT
-	  node << text(indent)
-	else
-	  break
+      node << catch(:ulend) do
+	while true
+	  case @token[0]
+	  when *TEXT
+	    node << text(indent)
+	  else
+	    break
+	  end
 	end
       end
       return node 
@@ -212,10 +206,10 @@ module WWiki
 	case @token[0]
 	when *TEXTLINE
 	  node << textline
-	when :S_DELIM
-	  node << decorate(:B_DELIM)
-	when :E_DELIM
-	  node << decorate(:I_DELIM)
+	when :STRONG
+	  node << decorate(:STRONG)
+	when :EM
+	  node << decorate(:EM)
 	else
 	  break
 	end
@@ -235,7 +229,7 @@ module WWiki
 	  elsif indent < @token[1].size
 	    node << ul
 	  elsif indent > @token[1].size
-	    break
+	    throw :ulend, node # XXX ???
 	  else
 	    raise
 	  end
@@ -258,12 +252,12 @@ module WWiki
     end
     def decorate(tag)
       next_token
-      node = nil << D_TAG[tag][0] << paragraph
+      node = D_TAG[tag].new
+      node  << textline
       if @token[0] == tag 
-	node << D_TAG[tag][1]
 	next_token
       else                
-	node << D_TAG[tag][1] << syntax_error
+	node << syntax_error
       end
       return node 
     end
@@ -301,7 +295,7 @@ module WWiki
       return node
     end
     def textblock(endtag)
-      node = nil
+      node = []
       line = ""
       while true
 	case @token[0]
@@ -313,6 +307,7 @@ module WWiki
 	  line = ""
 	  eol 
 	when endtag 
+	  next_token
 	  break
 	else line << @token[1] 
 	  next_token
@@ -321,20 +316,9 @@ module WWiki
       return node
     end
     def preblock
-      node = nil << "<pre>"  
+      node = PreNode.new
       next_token
-      node += textblock(:PRE_END)
-      while true
-	case @token[0] 
-	when :PRE_END 
-	  node << "</pre>"
-	  next_token
-	  break
-	when :EOF
-	  break
-	else syntax_error
-	end
-      end
+      node << textblock(:PRE_END).to_s
       return node 
     end
     def eol

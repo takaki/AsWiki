@@ -40,7 +40,7 @@ class TestWWiki__Parser < RUNIT::TestCase
   1. 11
 "]
     p = WWiki::Parser.new(s)
-    # print p.tree.to_s
+    print p.tree.to_s
   end
 
 end

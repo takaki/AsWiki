@@ -1,9 +1,10 @@
 -*- outline -*-
 
 * High
+  - edit link (h2)
+  - amrita 1.8
   - regexp 0200-
   - search namazu
-  - PATH_INFO
   - tdiary theme
   - retry
 
@@ -24,6 +25,7 @@
   - UnitTestを手抜きするな。とくに日本語。
 
 * idea
+  - autoload ??
   - tdiary plugin?
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - XML-RPC?
@@ -39,5 +41,6 @@
   - graphviz 用出力(趣味やね)
 
 * done
+  - PATH_INFO
 
 * abandoned

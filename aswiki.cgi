@@ -21,13 +21,13 @@ end
 
 require 'digest/md5'
 require 'amrita/template'
-require 'amrita/format'
+# require 'amrita/format'
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
   include AsWiki::Util
   Dir::chdir $BASEDIR
   Amrita::TemplateFileWithCache::set_cache_dir($DIR_CACHE)
-  AsWiki::Node::load_parts_template
+  # AsWiki::Node::load_parts_template
   repository = AsWiki::Repository.new
   Dir.glob("#$DIR_PLUGIN/*.rb").delete_if {|p| 
     p == "#$DIR_PLUGIN/attach.rb" and $USEATTACH == false
@@ -57,7 +57,12 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     }
   rescue Exception
     pd = AsWiki::PageData.new('Program Error: ' + $!.class.to_s)
-    pd.body = Amrita::pre { Amrita::e(:code) {
+    # pd.body = Amrita::pre { Amrita::e(:code) {
+    # $!.to_s + "\n" +  $!.backtrace.join("\n") # XXX pre
+    #}
+    #} 
+    pd.body = Amrita::e(:pre){
+      Amrita::e(:code) {
 	$!.to_s + "\n" +  $!.backtrace.join("\n") # XXX pre
       }
     } 

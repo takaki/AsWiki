@@ -6,11 +6,14 @@ require "aswiki/i18n/#{$LANG}"
 require 'aswiki/util'
 require 'aswiki/revlink'
 
+require 'amrita/amulet'
+
 module AsWiki
   class PageData
     include AsWiki::Util
     include Amrita::ExpandByMember
     include AsWiki::I18N
+    include Amrita::Amulet
     def initialize(name)
       @name = name
       @r = AsWiki::Repository.new
@@ -31,7 +34,13 @@ module AsWiki
 
       # @theme = { :href => File.dirname($CGIURL) + "/default.css" }
       @theme = { :href => File.dirname($CGIURL) +  "/default.css" }
+
     end
+    def amulet_load(pagetype)
+      @am = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
+      @am.define_amulet(:Menubar, :Pagetitle, :Pageheader, :Pagebody, :Pagefooter)
+    end
+
     attr_reader :searchpage
     attr_reader :theme
     attr_accessor :sb
@@ -44,30 +53,27 @@ module AsWiki
 
     module PageParts    
     end
-    def PageData::load_parts_template(pagetype)
-      pt = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
-      pt.expand_attr = true
-      pt.install_parts_to(PageParts)
-    end
+
     def parts_extend(parts)
       data = self.clone
       data.extend PageParts.const_get(parts)
       return data
     end
     def menubar
-      return parts_extend('Menubar')
+      # return parts_extend('Menubar')
+      return @am.create_amulet(:Menubar, self)
     end
     def pagetitle
-      return parts_extend('Pagetitle')
+      return @am.create_amulet(:Pagetitle, self)
     end
     def pageheader
-      return parts_extend('Pageheader')
+      return @am.create_amulet(:Pageheader, self)
     end
     def pagebody
-      return parts_extend('Pagebody')
+      return @am.create_amulet(:Pagebody, self)
     end
     def pagefooter
-      return parts_extend('Pagefooter')
+      return @am.create_amulet(:Pagefooter, self)
     end
     
     def parsefile

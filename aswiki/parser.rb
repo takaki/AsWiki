@@ -45,6 +45,7 @@ module AsWiki
       @lastbol = 1
       
       @tree = parse
+      @nodefactory = NodeFactory.new
     end
     attr_reader :tree, :tocdata
     def wikinames

@@ -4,24 +4,29 @@
 require 'strscan'
 require 'uri/common'
 
-require 'amrita/parts'
+# require 'amrita/parts'
+require 'amrita/amulet'
+
 require 'aswiki/scanner'
 
+
 module AsWiki 
+  class NodeFactory
+    def initialize
+      @pt = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,'Node.html')]
+      @pt.define_amulte(:Dl, :Em, :H2, :H3, :H4, :H5, :H6, :Ol, :Paragraph, 
+		       :Strong, :Table, :Root,  :Textline, :Plaintext, 
+		       :Element, :Ul, :Hr, :Url, :Moinhfer, :MoinhrefImg, :Br)
+    end
+    def get_node(id, data)
+      @pt.create_amulte(:id, *data)
+    end
+  end
   class Node
-    module PartsModule
-    end
-
-    def Node::load_parts_template
-      pt = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,'Node.html')]
-      pt.expand_attr = true
-      pt.install_parts_to(PartsModule)
-    end
-
     def initialize(template)
       @data = []
       # compact_space = false
-      extend PartsModule.const_get(template)
+      # extend PartsModule.const_get(template)
     end
 
     def <<(item)

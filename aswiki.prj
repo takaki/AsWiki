@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 1.1 3)
+(Project-Version aswiki 1.1 4)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 1.1 2)
+(Parent-Version aswiki 1.1 3)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Tue, 04 Feb 2003 23:47:18 +0900")
+(Checkin-Time "Sun, 16 Feb 2003 12:36:41 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -20,7 +20,7 @@
 ;; to version 0.0(w), by takaki:
 
   (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.10 664))
-  (aswiki/parser.rb (aswiki/1_parser.rb 1.43 664))
+  (aswiki/parser.rb (aswiki/1_parser.rb 1.44 664))
 
 ;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
 ;; to version 0.1(w), by takaki:
@@ -32,7 +32,7 @@
 
   
   (ChangeLog (aswiki/4_ChangeLog 1.64 664))
-  (aswiki/node.rb (aswiki/5_node.rb 1.31 664))
+  (aswiki/node.rb (aswiki/5_node.rb 1.32 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.22 664))
 
 ;; Files added by populate at Thu, 04 Apr 2002 10:35:33 +0900,
@@ -60,7 +60,7 @@
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (aswiki.cgi (aswiki/17_wwiki.cgi 1.59 755))
+  (aswiki.cgi (aswiki/17_wwiki.cgi 1.60 755))
   (text/SamplePage (aswiki/18_SampleText 1.5 644))
   
   
@@ -76,11 +76,11 @@
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.55 664))
+  (TODO (aswiki/29_TODO 1.56 664))
   
   
   (template/Page/View.html (aswiki/32_ViewPage.h 1.40 664))
-  (aswiki/page.rb (aswiki/33_page.rb 1.33 664))
+  (aswiki/page.rb (aswiki/33_page.rb 1.34 664))
 
 ;; Files added by populate at Wed, 10 Apr 2002 23:11:24 +0900,
 ;; to version 0.8(w), by takaki:
@@ -163,7 +163,7 @@
 ;; Files added by populate at Mon, 23 Sep 2002 09:27:09 +0900,
 ;; to version 0.42(w), by takaki:
 
-  (aswiki/pagedata.rb (aswiki/b/13_pagedata.r 1.28 664))
+  (aswiki/pagedata.rb (aswiki/b/13_pagedata.r 1.29 664))
 
 
 ;; Files added by populate at Tue, 01 Oct 2002 13:18:06 +0900,

@@ -2,6 +2,7 @@
 # This program is distributed under the GNU GPL 2 or later.
 
 require 'aswiki/exception'
+require 'aswiki/interwiki'
 
 module AsWiki
   HandlerTable = {}

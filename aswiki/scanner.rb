@@ -30,12 +30,15 @@ module AsWiki
 	    q.push [:PLUGIN_END, tmp]
 	  elsif tmp = sc.scan(/\A#.+$/)
 	    q.push [:PLUGIN, tmp]
-	  elsif tmp = sc.scan(/\A +\*/)
+	  # elsif tmp = sc.scan(/\A +\*/)
+	  elsif tmp = sc.scan(/\A *\*/)
 	    q.push [:UL, tmp]
 	  # elsif tmp = sc.scan(/\A +\d+\./)
-	  elsif tmp = sc.scan(/\A +\(\d+\)/)
+	  # elsif tmp = sc.scan(/\A +\(\d+\)/)
+	  elsif tmp = sc.scan(/\A *\(\d+\)/)
 	    q.push [:OL, tmp]
-	  elsif tmp = sc.scan(/\A +\+ */)
+	  # elsif tmp = sc.scan(/\A +\+ */)
+	  elsif tmp = sc.scan(/\A *\+ */)
 	    q.push [:DL, tmp]
 	  elsif tmp = sc.scan(/\A={2,6}/)
 	    q.push [:HN_BEGIN, tmp]

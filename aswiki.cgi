@@ -179,7 +179,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	page.to_s
       }
     end
-  rescue AsWiki::RuntimeError
+  rescue AsWiki::AsWikiError
     data = {:title => $!.type.to_s , :body => $!.message + "\n"}
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       AsWiki::Page.new('Error', data).to_s

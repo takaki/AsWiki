@@ -2,11 +2,11 @@
 # This program is distributed under the GNU GPL 2.
 
 module AsWiki
-  class RuntimeError < RuntimeError
+  class AsWikiError < RuntimeError
   end
-  class TimestampMismatch < AsWiki::RuntimeError
+  class TimestampMismatch < AsWiki::AsWikiError
   end
-  class EditPageCall < AsWiki::RuntimeError
+  class EditPageCall < AsWiki::AsWikiError
     def initialize(pname, body=nil, message=nil)
       @pname = pname
       @body  = body

@@ -82,8 +82,8 @@ module AsWiki
 	  end
 	}
       }
-      data = {:data => (pages.keys - @r.namelist).sort.collect{|f|
-	  wikilink(f)}}
+      plist = (pages.keys - @r.namelist).sort.collect{|f| wikilink(f)}
+      data = {:data => plist, :total => plist.length}
       @view = load_template.expand_tree(data)
     end
   end

@@ -1,6 +1,7 @@
 -*- outline -*-
 
 * High
+  - session_id を渡す目的でCGI.newをしない
   - 逆リンク…普通にやると全検索になるから…
   - nora
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
@@ -16,7 +17,6 @@
   - mergeの導入(plugin)
   - #minimemo
   - #nikki?
-  - session_id を渡す目的でCGI.newをしない
   - mod_ruby
   - Namazuで検索
   - Page templateの統合  

@@ -4,6 +4,16 @@
 require 'aswiki/repository'
 require 'aswiki/node'
 
+module Amrita
+  class TemplateFile
+    def expand_tree(model)
+      setup_template if need_update?
+      context = setup_context
+      return @template.expand(model, context)
+    end
+  end
+end
+
 module AsWiki
   class Plugin
     PluginList = []

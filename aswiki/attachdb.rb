@@ -34,14 +34,16 @@ module AsWiki
     end
     def loadfile(num)
       begin
+	ret = {}
 	@env.begin(@file, @time, @mime, @name){|txn, db|
 	  file, time, mime, name = db
-	  return {:mtime => Time.at(time[num].to_i),
+	  ret =  {:mtime => Time.at(time[num].to_i),
 	      :type => mime[num],
 	      :body => file[num],
-	      :filename => name[num]
+	    :filename => name[num]
 	  }
 	}
+	return ret
       rescue BDB::LockDead
 	txn.abort
 	raise 
@@ -65,9 +67,10 @@ module AsWiki
     end
     def listfile(pname)
       begin
+	ret = []
 	@env.begin(@page, @name){|txn, db|
 	  page, name = db
-	  return page.select{|key,value| value == pname}.map{|key,val| key}.
+	  ret = page.select{|key,value| value == pname}.map{|key,val| key}.
 	    sort{|a,b| name[a] <=> name[b]}.collect{|f| 
 	    {
 	      :dllink => cgiurl([['c','download'],['num',f]]), 
@@ -76,6 +79,7 @@ module AsWiki
 	    }
 	  }
 	}
+	return ret
       rescue BDB::LockDead
 	txn.abort
 	raise 

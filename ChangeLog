@@ -1,4 +1,19 @@
+2002-11-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/parser.rb: remove Amrita::e. use parts template.
+
+	* aswiki/handler.rb: handler class.
+
+	* aswiki.cgi: use handler table insted of case-when clause.
+
 2002-11-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki.cgi: all process use PageData instead of Page.
+	
+	* aswiki/i18n/ja.rb: make i18n framework, but prepare Japanese
+	message catalog only.
+
+	* aswiki/plugin.rb: use compiler.
 
 	* aswiki.cgi: MetaPages => $metapages
 
@@ -16,7 +31,7 @@
 
 2002-10-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* aswiki: merge parts template patch (tnx Taku).
+	* aswiki/node.rb: merge parts template patch (tnx Taku).
 
 2002-10-11  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 

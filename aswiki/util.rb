@@ -13,7 +13,8 @@ module AsWiki
   end
   def AsWiki::redirectpage(cgi, url)
     cgi.out({'Status' => '302 REDIRECT',
-	      'Location' => url}){''}
+	      'Location' => url}){ (Node.new('Url') << 
+				    {:url => url, :text => url}).to_s}
   end
 
   def AsWiki::merge(a,b, tag=true)
@@ -67,11 +68,8 @@ module AsWiki
   end
   def AsWiki::diffout(s,sign, tag, lineno, class_)
     if tag
-      return Amrita::e(:div, Amrita::a(:class, class_)){
-	Amrita::e(:code){
-	  "#{lineno} #{sign} #{s.chomp}"
-	}
-      }, "\n"
+      return Node.new('Diffout') << { :class => class_, 
+	:text =>  "#{lineno} #{sign} #{s.chomp}"}
     else
       case sign.to_s
       when '='
@@ -109,13 +107,12 @@ module AsWiki
       link = name
       if repository.exist?(name) || name =~ /[^:]+:[^:]+/ || 
 	  $metapages.has_key?(name)
-	return Amrita::e(:a, Amrita::a(:href,cgiurl([['c','v'],['p',link]]))
-			 ){
-	  name}
+	return Node.new('WikiName') << {:url => cgiurl([['c','v'],['p',link]]),
+	  :text => name}
       else
-	return Amrita::e(:a, Amrita::a(:href, cgiurl([['c','v'],['p',link]])),
-			 Amrita::a(:class, "notexist")){
-	  name + "?"}
+	return Node.new('WikiNameNE') << 
+	  { :url => cgiurl([['c','v'],['p',link]]),
+	  :text => name + "?"}
       end
     end
     def timestr(t)

@@ -1,14 +1,10 @@
 -*- outline -*-
 
 * High
+  - -w
   - page 統合
-  - i18n
-  - factory
   - session に Nameで保存
-  - plugin compile
   - menuのcss fixed
-  - bug expand_attr compact_space
-  - できるだけAmrita::eは使わない。
   - pre problem(amrita 待ち)
   - RCSの選択
   - session_id を渡す目的でCGI.newをしない
@@ -42,6 +38,11 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - できるだけAmrita::eは使わない。
+  - factory
+  - bug expand_attr compact_space
+  - plugin compile
+  - i18n framework
   - img: mailto 
   - AttachManager transaction
   - attach brushup

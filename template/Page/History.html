@@ -8,28 +8,29 @@
 <link href="default.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<a href="@recentpages">最近の変更</a>
-<a href="@allpages">全部</a>
-<a href="@toppage">トップ</a>
-<a href="@helppage">ヘルプ</a>
+<a href="@recentpages"><span id="msg_recentpages">recentpages</span></a>
+<a href="@allpages"><span id="msg_allpages">allpages</span></a>
+<a href="@toppage"><span id="msg_toppage">toppage</span></a>
+<a href="@helppage"><span id="msg_helppage">helppage</span></a>
 <H1><span id=title></span></h1>
-(第<span id=revision></span>版,更新日時: <span id=lastmodified></span>)
+(<span id="msg_ver_pre">Ver.</span><span id=revision></span><span id="msg_ver_post"></span>,
+<span id="msg_modified_time">modifiedtime</span>: <span id=lastmodified></span>)
 <hr>
 <table class="history" border="1">
 <tbody>
 <tr>
-<th>版</th>
-<th>差分</th>
-<th>更新日時</th>
-<th>最新版との差分</th>
-<th>直前との差分</th>
+<th><span id="msg_version">version</span></th>
+<th><span id="msg_diff">diff</span></th>
+<th><span id="msg_modified_time">modifiedtime</span></th>
+<th><span id="msg_diff_from_current">diff from current</span></th>
+<th><span id="msg_diff_from_previous">diff from previous</span></th>
 </tr>
 <tr id="logtable">
-<td id="revision"></td>
+<td id="revision"><a href="@url"><span id="rev"></span></a></td>
 <td id="diffline"></td>
 <td id="timestamp"></td>
-<td id="tonew"></td>
-<td id="toold"></td>
+<td id="tonew"><a href="@url"><span id="text"></span></a></td>
+<td id="toold"><a href="@url"><span id="text"></span></a></td>
 </tr>
 </tbody>
 </table>
@@ -38,7 +39,7 @@
 <hr>
 <div class="copyright">
 Powered by <a href="http://www.assist.media.nagoya-u.ac.jp/ASDP/">AsWiki</a>
-$ProjectVersion: 0.60 $
+$ProjectVersion: 0.61 $
 Copyright (c) 2002 <a href="mailto:takaki@assist.media.nagoya-u.ac.jp">
 TANIGUCHI Takaki</a>
 </div>

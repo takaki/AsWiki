@@ -23,11 +23,12 @@ module AsWiki
       @historypage = cgiurl([['c', 'h'], ['p', name]])
       @diffpage    = cgiurl([['c', 'd'], ['p', name]])
       @helppage    = cgiurl([['c', 'v'], ['p', 'HelpPage']])
+
     end
     attr_reader :tree, :wikinames
-    attr_reader :title,:edit,:recentpages,:toppage,:allpages,:rawpage,
-      :diffpage,:helppage,:body, :historypage
-    attr_accessor :revision, :timestamp
+    attr_reader :edit,:recentpages,:toppage,:allpages,:rawpage,
+      :diffpage,:helppage, :historypage, :name
+    attr_accessor :revision, :timestamp, :body, :md5sum, :title
     def parsefile
       c = @r.load(@name)
       @timestamp = @r.mtime(@name)
@@ -42,7 +43,6 @@ module AsWiki
       @body = @p.tree
     end
 
-
     def lastmodified
       timestr(@timestamp)
     end
@@ -56,25 +56,17 @@ module AsWiki
     def logtable
       backup = AsWiki::Backup.new('.')
       logtable = backup.rlog(@name).map{|l| 
-	{:revision => Amrita::e(:a, Amrita::a(:href, cgiurl([['c','h'],
-							      ['p',@name],
-							      ['rev',l[0]]]
-							    ))){l[0]},
+	{ :revision => {:url=> cgiurl([['c','h'], ['p',@name], ['rev',l[0]]]),
+	    :rev => l[0]},
 	  :diffline => l[2].to_s,
 	  :timestamp => timestr(l[1]),
-	  :tonew => Amrita::e(:a, Amrita::a(:href, 
-					    cgiurl([['c', 'd'],
-						     ['p', @name],
-						     ['rn',0],
-						     ['ro',l[0]]])
-					    )){"current - #{l[0]}"},
-	  :toold => l[0] != 1 ? 
-	  Amrita::e(:a, Amrita::a(:href,
-				  cgiurl([['c','d'],
-					   ['p', @name],
-					   ['rn', l[0]],
-					   ['ro', l[0]-1]])
-				  )){"new #{l[0]} old #{l[0]-1}"}  : 'not avail'
+	  :tonew => {:url =>  cgiurl([['c', 'd'], ['p', @name], ['rn',0],
+				       ['ro',l[0]]]),
+	    :text => "current - #{l[0]}"},
+	  :toold => l[0] != 1 ?  {
+	    :url => cgiurl([['c','d'], ['p', @name], ['rn', l[0]],
+			     ['ro', l[0]-1]]),
+	    :text => "new #{l[0]} old #{l[0]-1}" }  : 'not avail'
 	}
       }
     end

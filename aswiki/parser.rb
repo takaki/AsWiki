@@ -292,22 +292,22 @@ module AsWiki
 	  @rawwikinames << name 
 	  node << wikilink(name, @name)
 	when :URI
-	  node << Amrita::e(:a, Amrita::a(:href, @token[1])){@token[1]}
-	  # tn = Node.new('Url')
-	  # tn << {:url=>@token[1],:text=>@token[1]}
-	  # node << tn
+	  tn = Node.new('Url')
+	  tn << {:url=>@token[1],:text=>@token[1]}
+	  node << tn
 	when :MOINHREF
 	  url, key = @token[1][1..-2].split
 	  if /\Aimg:(http|https)/ =~ url  # XXX
-	    node << Amrita::e(:img, Amrita::a(:src,$1 + $'), #' this commet is for emacs ruby-mode 
-			      Amrita::a(:alt,key))
+	    tn = Node.new('MoinhrefImg')
+	    tn << {:url => $1 + $', :alt => key}
+	    node << tn
 	  else
-	    node << Amrita::e(:a, Amrita::a(:href,url),
-			      Amrita::a(:class, 'external')
-			      ){key}
+	    tn = Node.new('Moinhref')
+	    tn << {:url => url, :text => key}
+	    node << tn
 	  end
 	when :ENDPERIOD
-	  node << Amrita::e(:br)
+	  node << Node.new('Br')
 	when :EOL
 	  node << "\n"
 	  eol

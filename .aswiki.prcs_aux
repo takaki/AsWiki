@@ -55,7 +55,7 @@
 (plugin/attach.rb 1243 1041991281 b/5_attach.rb 1.18)
 (aswiki.cgi 1968 1087957187 17_wwiki.cgi 1.57.1.3)
 (text/InterWikiName 219 1039921794 45_InterWikiN 1.4)
-(Makefile 309 1087957187 b/2_setup.sh 1.12.1.2)
+(Makefile 308 1087958056 b/2_setup.sh 1.12.1.3)
 (template/RSS.xml 562 1055086051 b/22_RSS.xml 1.1.1.1)
 (aswiki.conf 408 1087957187 34_wwiki.conf 1.15.1.1)
 (plugin/core.rb 3359 1043930087 44_core.rb 1.26)

@@ -1,3 +1,11 @@
+2003-07-31  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/handler.rb: InterWikiName (thx. HoLY)
+
+2003-06-10  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+	
+	* aswiki: backport path_info.
+	
 2003-01-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 1.0.1

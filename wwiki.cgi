@@ -8,6 +8,7 @@ require 'wwiki/parser'
 require 'wwiki/page'
 require 'wwiki/exception'
 require 'wwiki/interwiki'
+require 'wwiki/backup'
 
 require 'digest/md5'
 
@@ -24,7 +25,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   cgi = CGI.new
   c = cgi['c'][0]
   c =  c.to_s == '' ? 'v' : c
-  name = cgi['p'][0]
+  name, = cgi['p']
   name = name.to_s == '' ? $TOPPAGENAME : name
   $pname = name
   begin
@@ -46,12 +47,13 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	elsif repository.exist?(name)
 	  c = repository.load(name)
 	  p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
-	  data = {:title => WWiki::unescape(name), 
+	  data = {:title => name, 
 	    :content => p.tree.to_s,
 	    :edit => "#{$CGIURL}?c=e&p=#{name}",
 	    :recentpages => "#{$CGIURL}?c=v&p=RecentPages",
 	    :allpages => "#{$CGIURL}?c=v&p=AllPages",
 	    :rawpage => "#{$CGIURL}?c=r&p=#{name}",
+	    :diffpage => "#{$CGIURL}?c=d&p=#{name}",
 	    :lastmodified => repository.mtime(name),
 	    :wikilinks => p.wikilinks,
 	  }
@@ -73,7 +75,19 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       c = repository.load(name)
       data = {
 	:title => 'Raw data of ' + name ,
-	:content => c.to_s
+	:content => CGI::escapeHTML(c.to_s)
+      }
+      page = WWiki::Page.new('Raw', data)
+      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+	page.to_s
+      }
+    when 'd'
+      backup = WWiki::Backup.new('.')
+      cn  = repository.load(name)
+      co, = backup.getrecentbackupdataandmtime(WWiki::escape(name))
+      data = {
+	:title => 'Diff of ' + name ,
+	:content => CGI::escapeHTML(WWiki::diff(co,cn).to_s)
       }
       page = WWiki::Page.new('Raw', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){

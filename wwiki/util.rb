@@ -1,4 +1,5 @@
 require 'cgi'
+require 'diff'
 
 module WWiki
   def WWiki::escape(s)
@@ -7,6 +8,66 @@ module WWiki
   def WWiki::unescape(s)
     return CGI::unescape(s)
   end
+  def WWiki::diff(a,b)
+    d = Diff.new(a,b)
+    f = []
+
+    d.diffs.each{|x| 
+      x.each{|e| 
+	f << e
+      }
+    }
+
+    c = []
+    ai = 0
+    bi = 0
+    i = 0
+    r = []
+    while x = f.shift
+      if x[0] == '+'
+	while bi < x[1]
+	  if b[bi] != a[ai]
+	    raise 'not match'
+	  end
+	  # print "#{bi} = #{b[bi]}"
+	  r << "#{bi} = #{b[bi]}"
+	  ai += 1
+	  bi += 1
+	end
+	# print  "#{bi} #{x[0]} #{x[2]}"
+	r << "#{bi} #{x[0]} #{x[2]}"
+	bi += 1
+      elsif x[0] == '-'
+	while ai < x[1]
+	  if b[bi] != a[ai]
+	    raise 'not match'
+	  end
+	  # print  "#{bi} = #{b[bi]}"
+	  r << "#{bi} = #{b[bi]}"
+	  ai += 1
+	  bi += 1
+	end
+	# print  "#{bi} #{x[0]} #{x[2]}"
+	r << "#{bi} #{x[0]} #{x[2]}"
+	ai += 1
+      else
+	raise '???'
+      end
+    end
+
+    while ai < a.size
+      if b[bi] != a[ai]
+	raise 'not match'
+      end
+      # print  "#{bi} = #{b[bi]}\n"
+      r << "#{bi} = #{b[bi]}"
+      ai += 1
+      bi += 1
+    end
+    return r
+
+  end
+  
   module Util
     def expandwikiname(wikiname, base)
       if wikiname.index('.') 

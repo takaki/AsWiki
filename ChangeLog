@@ -1,5 +1,16 @@
 2002-12-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* releaseL 0.80
+
+	* plugin/core.rb: NotCreatedPages; hide interwikiname.
+
+	* aswiki/util.rb: fix Util#wikilink strong wikiname expand bug.
+
+	* aswiki/pagedata.rb: fix PageData#wikilinks strong wikiname
+	expand bug. 
+
+	* aswiki/handler.rb: typo at RSSHandler class name define
+
 	* release: 0.79
 
 	* aswiki/plugin.rb: load_parts methods argument turn change.

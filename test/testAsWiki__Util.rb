@@ -35,6 +35,8 @@ class TestAsWiki__Util < RUNIT::TestCase
     assert_equal('d', @c.expandwikiname('//d','a//b//c'))
     assert_equal('d//e', @c.expandwikiname('//d//e','a//b//c'))
 
+    assert_equal('a//c', @c.expandwikiname('c','a//b'))
+
     assert_equal('c', @c.expandwikiname('c','a//'))
   end
 

@@ -137,14 +137,16 @@ module AsWiki
     end
     def wikilink(name, base='')
       repository = AsWiki::Repository.new
-      link = name
-      if repository.exist?(name) || name =~ /[^:]+:[^:]+/ || 
-	  $metapages.has_key?(name)
-	return Node.new('WikiName') << {:url => cgiurl([['c','v'],['p',link]]),
+      link  = name
+      elink = expandwikiname(link, base)
+      if repository.exist?(elink) || elink =~ /[^:]+:[^:]+/ || 
+	  $metapages.has_key?(elink)
+	return Node.new('WikiName') << {
+	  :url => cgiurl([['c','v'],['p', elink]]),
 	  :text => name}
       else
-	return Node.new('WikiNameNE') << 
-	  { :url => cgiurl([['c','v'],['p',link]]),
+	return Node.new('WikiNameNE') << { 
+	  :url => cgiurl([['c','v'],['p', elink]]),
 	  :text => name }
       end
     end

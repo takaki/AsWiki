@@ -242,7 +242,7 @@ module AsWiki
     end
   end
 
-  class RawHandler < Handler
+  class RSSHandler < Handler
     if $USERSS
       HandlerTable['rss'] = self      
     end

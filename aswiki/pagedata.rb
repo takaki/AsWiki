@@ -45,7 +45,7 @@ module AsWiki
 	super(pd, 'PageTitle')
       end 
       def title
-	$TITLE + ': ' + @pd.title
+	@pd.title
       end
       def revision 
 	@pd.revision
@@ -135,7 +135,7 @@ module AsWiki
       @name = name
       @r = AsWiki::Repository.new('.')
 
-      @title    = name
+      @title    = $TITLE + ': ' + name
     end
     attr_reader :tree, :wikinames,:name
     attr_accessor :revision, :timestamp, :body, :md5sum, :title,
@@ -178,7 +178,8 @@ module AsWiki
     def wikilinks
       @p.wikinames.delete_if{|w| w =~ /:[^:]/ }.uniq.map{|l| 
 	[l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
-	{:pname => wikilink(CGI::escapeHTML(l[0]), @name) ,
+	{ # :pname => wikilink(CGI::escapeHTML(l[0]), @name) ,
+	  :pname => wikilink(CGI::escapeHTML(l[0])),  #, @name) ,
 	  :modified =>  modified(l[1])  }}
     end
 

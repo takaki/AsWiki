@@ -91,7 +91,9 @@ module AsWiki
 	  end
 	}
       }
-      plist = (pages.keys - @r.namelist).sort.collect{|f| wikilink(f)}
+      plist = (pages.keys - @r.namelist).sort.delete_if {|f| 
+	f =~ /[^:]+:[^:]+/
+      }.collect{|f| wikilink(f)}
       @data = {:data => plist, :total => plist.length}
       # @view = load_template.expand_tree(data)
       load_parts

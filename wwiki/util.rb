@@ -24,7 +24,8 @@ module WWiki
     end
     def wikilink(name)
       link = WWiki::escape(expandwikiname(name, $pname))
-      if $repository.exist?(name) || name =~ /[^:]+:[^:]+/
+      repository = WWiki::Repository.new
+      if repository.exist?(name) || name =~ /[^:]+:[^:]+/
 	return e(:a, {:href =>"#{$CGIURL}?c=v&p=#{link}"}){
 	  WWiki::unescape(name)}
       else

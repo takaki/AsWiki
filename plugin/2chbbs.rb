@@ -20,10 +20,10 @@ module WWiki
 		     weekstr(t.wday), t.hour, t.min)
       data = "\n#{number}: Ì¾Á°: #{name} Åê¹ÆÆü: #{time} .\n" +
 	session['textdata'] + "\n"
-      file = $repository.load(pname)
+      file = @repository.load(pname)
       file[session['begin'].to_i-1, 0 ] = data
       file[session['begin'].to_i] = "#2chbbs #{number}\n"
-      $repository.save(pname, file.to_s)
+      @repository.save(pname, file.to_s)
     end
     def onview(line, b, e, av=[])
       session = CGI::Session.new(CGI::new, {'tmpdir' => 'attr'})
@@ -37,7 +37,7 @@ module WWiki
 			      :value => session.session_id}),
 	  e(:input, {:type => 'hidden', :name => 'c', :value => 'post'}),
 	  e(:input, {:type => 'hidden', :name => 'md5sum', :value => 
-	      Digest::MD5::new($repository.load($pname).to_s)})
+	      Digest::MD5::new(@repository.load($pname).to_s)})
 
 	]}
       form = load_template.expand(data)

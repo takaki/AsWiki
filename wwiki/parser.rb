@@ -30,8 +30,9 @@ module WWiki
     end
     attr_reader :tree, :wikinames
     def wikilinks
+      repository = WWiki::Repository.new
       return @wikinames.uniq. delete_if{|w| w =~ /:[^:]/ }.map{|l| 
-	[l, $repository.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
+	[l, repository.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
 	"#{wikilink(l[0])}(#{modified(l[1])})\n" }
     end
     private 

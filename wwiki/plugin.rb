@@ -9,6 +9,7 @@ module WWiki
       PluginList.each{|p|
 	PluginTable[p::Name] = p
       }
+      @repository = WWiki::Repository.new
     end
     def onview(line, b, e)
       l = line[0]

@@ -18,7 +18,7 @@ metapage = {
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
   load ('wwiki.conf')
-  $repository = WWiki::Repository.new('.')
+  repository = WWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p}
   include Obaq::HtmlGen
   cgi = CGI.new
@@ -43,8 +43,8 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  p = WWiki::Parser.new(metapage[name])
 	  data = {:title => name, :content => p.tree.to_s, }
 	  page  = WWiki::Page.new('Ro',data)
-	elsif $repository.exist?(name)
-	  c = $repository.load(name)
+	elsif repository.exist?(name)
+	  c = repository.load(name)
 	  p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
 	  data = {:title => WWiki::unescape(name), 
 	    :content => p.tree.to_s,
@@ -52,7 +52,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    :recentpages => "#{$CGIURL}?c=v&p=RecentPages",
 	    :allpages => "#{$CGIURL}?c=v&p=AllPages",
 	    :rawpage => "#{$CGIURL}?c=r&p=#{name}",
-	    :lastmodified => $repository.mtime(name),
+	    :lastmodified => repository.mtime(name),
 	    :wikilinks => p.wikilinks,
 	  }
 	  page = WWiki::Page.new('View', data)
@@ -64,13 +64,13 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	}
       end
     when 'e'
-      c = $repository.load(name)
+      c = repository.load(name)
       page = WWiki::editpage(name, c)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
     when 'r'
-      c = $repository.load(name)
+      c = repository.load(name)
       data = {
 	:title => 'Raw data of ' + name ,
 	:content => c.to_s
@@ -83,17 +83,17 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       content = cgi['content'][0] # XXX
       begin
 	if cgi['md5sum'][0] != 
-	    Digest::MD5::new($repository.load(name).to_s).to_s
+	    Digest::MD5::new(repository.load(name).to_s).to_s
 	  raise WWiki::TimestampMismatchError
 	end
       rescue Errno::ENOENT
       end
-      $repository.save(name, content)
+      repository.save(name, content)
       cgi.out({'Status' => '302 REDIRECT', 'Location' => "#{$CGIURL}?c=v&p=#{name}"}){''}
     when 'post'
       session = CGI::Session.new(cgi ,{'tmpdir' => 'attr'})
       if cgi['md5sum'][0] != 
-	  Digest::MD5::new($repository.load(session['pname']).to_s).to_s
+	  Digest::MD5::new(repository.load(session['pname']).to_s).to_s
 	raise WWiki::TimestampMismatchError
       end
       cgi.params.each{|key, value| session[key] = value}

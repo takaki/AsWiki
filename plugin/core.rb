@@ -11,7 +11,7 @@ module WWiki
     def onview(line, b, e, av)
       count = (av[1] || 100 ).to_i
       data = {:data =>
-	$repository.attrlist.sort{|a,b| b[1] <=> a[1]}.map{
+	@repository.attrlist.sort{|a,b| b[1] <=> a[1]}.map{
 	  |l| wikilink(l[0]) + " " + l[1].to_s}
       }
       @view = load_template.expand(data).to_s
@@ -21,7 +21,7 @@ module WWiki
     Name = 'allpages'
     include WWiki::Util
     def onview(line, b, e, av)
-      data = {:data => $repository.namelist.sort.collect{|f| wikilink(f)}}
+      data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)}}
       @view = load_template.expand(data).to_s
     end
   end

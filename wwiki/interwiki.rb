@@ -5,7 +5,8 @@ module WWiki
     def initialize
       @url = {}
       @code = {}
-      c = $repository.load('InterWikiName')
+      repository = WWiki::Repository.new
+      c = repository.load('InterWikiName')
       r = /\s+\*\s*\[(\S+)\s+(\S+)\]\s*(\S+)?/
       c.each {|l|
 	if m = r.match(l)

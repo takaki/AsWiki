@@ -27,9 +27,12 @@ its output html.
 === to use RSS
 * REXML       http://www.ruby-lang.org/en/raa-list.rhtml?id=405
 	
+== Download
+* http://sourceforge.net/project/showfiles.php?group_id=68271
+* http://www.assist.media.nagoya-u.ac.jp/download/aswiki/
+
 == Install
-* down load from
-http://www.assist.media.nagoya-u.ac.jp/download/aswiki/
+* down load source tar-ball
 * extract tar ball
 * run 'make setup'
 * edit aswiki.conf. I am sure what you need edit only $CGIURL.

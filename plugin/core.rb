@@ -98,6 +98,33 @@ module AsWiki
       return self
     end
   end
+  class PageLinkCount < Plugin
+    Name = 'pagelinkcount'
+    def onview(line, b, e, av)
+      @r = AsWiki::Repository.new('.')
+      pages = {}
+      @r.namelist.each{|p|
+	AsWiki::Parser.new(@r.load(p).to_s, p).wikinames.uniq.
+	  delete_if{|n| n =~ /\A\w+:[A-Z]\w+(?!:)/}.each{|n|
+	  if pages.has_key?(n)
+	    pages[n] << p
+	  else
+	    pages[n] = [p]
+	  end
+	}
+      }
+      plist = pages.map{|k,v| {
+	  :linkcount => v.size,
+	  :plink  => wikilink(k),
+	  :pages => v.sort.map{|p| [wikilink(p)," "] }
+	}
+      }.sort{|a,b| b[:linkcount] <=> a[:linkcount]}
+      @data = {:data => plist}
+      load_parts
+      return self
+    end
+    
+  end
 
   class PluginListPlugin < Plugin
     Name = 'pluginlist'

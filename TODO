@@ -5,7 +5,6 @@
   
 * Low
   - subsubsection toc?
-  - LinkCountPage
   - rcs keyword
   - inline escape
   - pre problem(amrita 待ち)
@@ -29,6 +28,7 @@
   - graphviz 用出力(趣味やね)
 
 * done
+  - LinkCountPage
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
   - imgだけはinline?
   - 空白の入り方がどうも?

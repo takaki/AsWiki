@@ -1,3 +1,11 @@
+2002-12-09  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.82
+
+	* plugin/core.rb: add linkcountpage plugin.
+
+	* aswiki/handler.rb: make RSS link URL escaped.
+
 2002-12-06  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* plugin/core.rb: set default value of recentpages show page 100.

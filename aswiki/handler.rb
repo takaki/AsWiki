@@ -266,7 +266,7 @@ module AsWiki
 	:data => @repository.attrlist.sort{|a,b| b[1] <=> a[1]}[0,count].map{|l| 
 	  {
 	    :title => l[0],
-	    :link  => "#{$CGIURL}?c=v;p=#{l[0]}",
+	    :link  => cgiurl([['c','v'],['p',l[0]]]),
 	    :description => timestr(l[1]),
 	  }
 	}

@@ -25,6 +25,7 @@ $metapages = {
   'OrphanedPages' => '#orphanedpages',
   'NotCreatedPages' => '#notcreatedpages',
   'PluginList' => '#pluginlist',
+  'PageLinkCount' => '#pagelinkcount',
 }
 
 require 'cgi'

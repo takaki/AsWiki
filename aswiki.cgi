@@ -15,6 +15,9 @@ require 'aswiki/pagedata'
 require 'aswiki/cgi'
 require 'aswiki/node'
 
+require 'amrita/vm'
+require 'amrita/accel'
+
 if $USEATTACH
   require 'aswiki/attachdb'
 end

@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 1.1 9)
+(Project-Version aswiki 1.1 10)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 1.1 8)
+(Parent-Version aswiki 1.1 9)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 19 Feb 2003 01:08:49 +0900")
+(Checkin-Time "Thu, 20 Feb 2003 23:17:30 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$" "COPYING" "CVS/"))
 (Project-Keywords)
@@ -32,7 +32,7 @@
 
   
   (ChangeLog (aswiki/4_ChangeLog 1.66 664))
-  (aswiki/node.rb (aswiki/5_node.rb 1.35 664))
+  (aswiki/node.rb (aswiki/5_node.rb 1.36 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.22 664))
 
 ;; Files added by populate at Thu, 04 Apr 2002 10:35:33 +0900,
@@ -60,7 +60,7 @@
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (aswiki.cgi (aswiki/17_wwiki.cgi 1.60 775))
+  (aswiki.cgi (aswiki/17_wwiki.cgi 1.61 775))
   (text/SamplePage (aswiki/18_SampleText 1.5 664))
   
   
@@ -80,7 +80,7 @@
   
   
   (template/Page/View.html (aswiki/32_ViewPage.h 1.41 664))
-  (aswiki/page.rb (aswiki/33_page.rb 1.35 664))
+  (aswiki/page.rb (aswiki/33_page.rb 1.36 664))
 
 ;; Files added by populate at Wed, 10 Apr 2002 23:11:24 +0900,
 ;; to version 0.8(w), by takaki:
@@ -163,7 +163,7 @@
 ;; Files added by populate at Mon, 23 Sep 2002 09:27:09 +0900,
 ;; to version 0.42(w), by takaki:
 
-  (aswiki/pagedata.rb (aswiki/b/13_pagedata.r 1.31 664))
+  (aswiki/pagedata.rb (aswiki/b/13_pagedata.r 1.32 664))
 
 
 ;; Files added by populate at Tue, 01 Oct 2002 13:18:06 +0900,

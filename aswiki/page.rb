@@ -7,14 +7,13 @@ require 'aswiki/pagedata'
 module AsWiki
   class Page
     def initialize(pagetype, data)
-      # PageData::load_parts_template(pagetype)
       data.amulet_load(pagetype)
       tmplfile = File.join($DIR_TEMPLATE, 'PageBase.html')
       template = Amrita::TemplateFile.new(tmplfile)
 #      template = Amrita::TemplateFileWithCache[tmplfile]
 #      template.expand_attr = true
 #      template.pre_format = true
-      template.use_compiler = true
+#       template.use_compiler = true
 
       @str = ''
       # template.set_hint_by_sample_data(data)

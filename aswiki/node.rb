@@ -15,8 +15,9 @@ module AsWiki
     
     def Node::parts
       if not defined? NodeParts
-	eval "NodeParts = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,'Node.html')]"
-	NodeParts.define_amulet(:Dl=>Node, :Em=>Node, 
+	# XXX
+	$NodeParts = Amrita::TemplateFile.new(File.join($DIR_TEMPLATE,'Node.html'))
+	$NodeParts.define_amulet(:Dl=>Node, :Em=>Node, 
 			:H2=>Node, :H3=>Node, :H4=>Node, :H5=>Node, :H6=>Node,
 			:Ol=>Node, :Paragraph=>Node, 
 			:Strong=>Node, :Table=>Node, :Root=>Node,  
@@ -28,7 +29,7 @@ module AsWiki
 			:pre=>Node
 			)
       end
-      return NodeParts
+      return $NodeParts
     end
 
 

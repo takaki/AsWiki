@@ -11,9 +11,9 @@ require 'amrita/amulet'
 module AsWiki
   class PageData
     include AsWiki::Util
-    include Amrita::ExpandByMember
     include AsWiki::I18N
-    include Amrita::Amulet
+    include Amrita::ExpandByMember
+
     def initialize(name)
       @name = name
       @r = AsWiki::Repository.new
@@ -37,8 +37,8 @@ module AsWiki
     end
 
     def amulet_load(pagetype)
-      @am = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
-      # @am = Amrita::TemplateFile.new(File.join($DIR_TEMPLATE,"Page/#{pagetype}.html"))
+      # @am = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
+      @am = Amrita::TemplateFile.new(File.join($DIR_TEMPLATE,"Page/#{pagetype}.html"))
       @am.define_amulet(:Menubar, :Pagetitle, :Pageheader, :Pagebody, :Pagefooter)
     end
 
@@ -52,14 +52,6 @@ module AsWiki
       :pagetype
     attr_accessor :ebol, :eeol
 
-    module PageParts    
-    end
-
-    def parts_extend(parts)
-      data = self.clone
-      data.extend PageParts.const_get(parts)
-      return data
-    end
     def menubar
       return @am.create_amulet(:Menubar, self)
     end

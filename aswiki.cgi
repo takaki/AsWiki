@@ -3,7 +3,8 @@
 # This program is distributed under the GNU GPL 2 or later.
 
 $TOPPAGENAME = 'IndexPage'
-$TIMEFORMAT  ="%F/%T %z"
+# $TIMEFORMAT  ="%F/%T %z"
+$TIMEFORMAT = "%Y-%m-%d/%H:%M:%S %z"
 $BASEDIR     = '.'
 $USEBACKUP   = true
 $USEATTACH   = true

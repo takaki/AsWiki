@@ -14,12 +14,15 @@ module AsWiki
       tmplfile = File.join('template','PageBase.html')
       template = Amrita::TemplateFileWithCache[tmplfile]
       # template = Amrita::TemplateFile.new(tmplfile)
-      template.expand_attr = true
       template.pre_format = true
       # template.use_compiler = true
+      template.expand_attr = true
+      # template.asxml = true
       
       @str = ''
-      model = { :pagedata => 
+      model = { 
+	:title => data.title,
+	:pagedata => 
 	MergeTemplateFile.new("template/Page/#{pagetype}.html") do 
 	  data
 	end

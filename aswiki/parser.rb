@@ -319,11 +319,13 @@ module AsWiki
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
 	  @rawwikinames << @token[1]
-	  node << wikilink(@token[1], @name)
+	  # node << wikilink(@token[1], @name) # XXX
+	  node << wikilink(expandwikiname(@token[1], @name))
 	when :WIKINAME2
 	  name = @token[1][2..-3]
 	  @rawwikinames << name 
-	  node << wikilink(name, @name)
+	  # node << wikilink(name, @name) # XXX
+	  node << wikilink(expandwikiname(name, @name))
 	when :URI
 	  tn = Node.new('Url')
 	  tn << {:url=>@token[1],:text=>@token[1]}

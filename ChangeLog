@@ -1,3 +1,16 @@
+2002-12-28  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.87
+
+	* aswiki/parser.rb: expand wikiname namespace when format
+	contents.
+
+	* aswiki/handler.rb: SaveHandler; fix no need return add tail bug.
+
+2002-12-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* template/plugin/linkpagecount.html: fix class attribute typo
+
 2002-12-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.86
@@ -14,7 +27,7 @@
 	* aswiki/parser.rb: Parser#hn; partial edit. toc begin 0 (page
 	top).
 
-	* template/Page/Raw.html: fux duplicate print bug
+	* template/Page/Raw.html: fix duplicate print bug
 
 2002-12-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 

@@ -134,7 +134,7 @@ module AsWiki
     def initialize(cgi, name)
       super
       body = cgi.value('body')[0]
-      if body[-1] != "\n"; body << "\n" ;end
+      if body[-1,1] != "\n"; body << "\n" ;end
       begin
 	c = @repository.load(name)
 	if cgi.value('md5sum')[0] !=  Digest::MD5::new(c.to_s).to_s

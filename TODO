@@ -1,34 +1,38 @@
 -*- outline -*-
 
 * High
-  - english catalogue
-  - name space expand allways
+  - reverse link (save time hook)
+  - english message catalogue
 
 * Low
+  - attach ; attachment -> pathname
   - automatic img link?
   - pre pre bug
-  - moinhref rel uri?
   - subsubsection toc?
   - rcs keyword proble
   - pre problem(amrita 待ち)
   - session_id を渡す目的でCGI.newをしない
   - page initialize and publish
   - ci でtextname Backupをmoduleにしてしまえばいい。include
-  - UnitTestを手抜きするな。とくに日本語。
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - mod_ruby
   - w3m-elでpostできない?
-  - -w
-  - Nora or CGIKit
 
 * idea
+  - UnitTestを手抜きするな。とくに日本語。
+  - -w
+  - Nora or CGIKit
+  - moinhref; rel uri?
+  - static HTML converter
+  - view only cgi
   - outer link list?
-  - 逆リンク…普通にやると全検索になるから…
   - AutomaticLinkは表示だけか。むやみとlinkしてもね。
   - menuのcss fixed
   - graphviz 用出力(趣味やね)
 
 * done
+  - name space expand allways
+  - print edit line.n - line.m
   - partial edit
   - MergeTemplate?
   - 0 size delete ?(gc)

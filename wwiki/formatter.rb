@@ -2,23 +2,33 @@ require 'strscan'
 require 'uri/common'
 
 module WWiki
-  class Parser
-    WORD  = [:SPACE, :OTHER, :WORD]
-    TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
-    DECORATION = [:B_DELIM, :I_DELIM]
-    NORMALTEXT = WORD + TAG + [:EOL]
-    TEXT = NORMALTEXT + DECORATION 
-    D_TAG = {:B_DELIM => ["<string>", "</string>"], 
-      :I_DELIM => ["<em>","</em>"]}
-
-    PAT_URI =  /\A#{URI::REGEXP::PATTERN::X_ABS_URI}/xn
-    def initialize(name, content) # String, String
-      @name = name
-      @wikilinks = []
-      @q = scan(content)
-      @line = 1
-      tree = parse()
+  class Node
+    def to_s
+      return @text
     end
+  end
+  class WordNode
+    def initialize(text)
+      @text = text
+    end
+  end
+  WORD  = [:SPACE, :OTHER, :WORD]
+  TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
+  DECORATION = [:B_DELIM, :I_DELIM]
+  NORMALTEXT = WORD + TAG + [:EOL]
+  TEXT = NORMALTEXT + DECORATION 
+  PAT_URI =  /\A#{URI::REGEXP::PATTERN::X_ABS_URI}/xn
+  C128 = [128].pack('C')
+  C255 = [255].pack('C')
+
+  class Scanner
+    def initialize(content)
+      @q = scan(content)
+    end
+    def next_token
+      return @q.shift
+    end
+    private
     def scan(f)
       q = [] 
       sc = StringScanner.new(f.to_s)
@@ -34,7 +44,7 @@ module WWiki
 	    q.push [:PLUGIN, tmp]
 	  elsif tmp = sc.scan(/\A\s+\*/)
 	    q.push [:UL, tmp]
-	  elsif tmp = sc.scan(/\A\s+\(\d+\)\s+/)
+	  elsif tmp = sc.scan(/\A\s+\(\d+\)/)
 	    q.push [:OL, tmp]
 	  elsif tmp = sc.scan(/\A\s+\+\s*/)
 	    q.push [:DL, tmp]
@@ -55,18 +65,19 @@ module WWiki
 	  elsif tmp = sc.scan(/\A[ \t\r\f]*$/) 
 	    q.push [:BLANK, tmp]
 	  end
+	  next
 	end
 	if tmp = sc.scan(/\A\n/)
 	  q.push [:EOL, tmp] 
 	  bol=true
+	elsif tmp = sc.scan(/\A\w+:[A-Z]\w+(?!:)/)
+	  q.push [:INTERWIKINAME, tmp]
 	elsif tmp = sc.scan(PAT_URI) 
 	  if URI::extract(tmp, ['http','https','ftp','news','mailto',]) != []
 	    q.push [:URI, tmp]
 	  else
 	    q.push [:OTHER, tmp]
 	  end
-	elsif tmp = sc.scan(/\A\w+:[A-Z]\w+(?!:)/)
-	  q.push [:INTERWIKINAME, tmp]
 	elsif tmp = sc.scan(/\A([A-Z][a-z]+){2,}/)
 	  q.push [:WIKINAME1, tmp]
 	elsif tmp = sc.scan(/\A\[\[\S+?\]\]/)
@@ -87,23 +98,33 @@ module WWiki
 	  q.push [:B_DELIM, tmp]
 	elsif tmp = sc.scan(/\A''/)
 	  q.push [:I_DELIM, tmp]
-	elsif tmp = sc.scan(/\A[\w:]+/n)
+	elsif tmp = sc.scan(/\A[\w:]+/)
 	  q.push [:WORD, tmp]
-	elsif tmp = sc.scan(/\A\S/)
+	elsif tmp = sc.scan(/\A[#{C128}-#{C255}]+/)
+	  q.push [:OTHER, tmp]
+	elsif tmp = sc.scan(/\A\S/e)
 	  q.push [:OTHER, tmp]
 	else
-	  p line, tmp
+	  STDERR.puts sc.rest.inspect
 	  raise 'must not happen'
 	end
       end
       q.push [ :EOF, nil]
       return q
     end
-
-    private 
-    def next_token
-      @token = @q.shift
+  end
+    
+  class Formatter
+    def initialize(name, content) # String, String
+      @name = name
+      @wikilinks = []
+      @q = scan(content)
+      @line = 1
+      # @tree = parse()
     end
+    attr_reader :tree
+    private 
+
     def parse
       node = []
       next_token
@@ -371,7 +392,7 @@ module WWiki
       while true
 	case @token[0]
 	when :OTHER, :SPACE, :WORD
-	  node << @token[1]
+	  node << WordNode(@token[1])
 	when :WIKINAME1,:INTERWIKINAME
 	  @wikilinks << @token[1]
 	  node << wikihref(@token[1])

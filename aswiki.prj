@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 1)
+(Project-Version aswiki 0 2)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version -*- -*- -*-)
+(Parent-Version aswiki 0 1)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 01 Apr 2002 12:57:23 +0900")
+(Checkin-Time "Mon, 01 Apr 2002 23:26:57 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -19,8 +19,13 @@
 ;; Files added by populate at Mon, 01 Apr 2002 12:57:05 +0900,
 ;; to version 0.0(w), by takaki:
 
-  (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.1 664))
-  (wwiki/parser.rb (aswiki/1_parser.rb 1.1 664))
+  (test/testWWiki__Formatter.rb (aswiki/0_testWWiki_ 1.2 664))
+  (wwiki/formatter.rb (aswiki/1_parser.rb 1.2 664))
+
+;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
+;; to version 0.1(w), by takaki:
+
+  (test/testWWiki__Scanner.rb (aswiki/2_testWWiki_ 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,5 +1,5 @@
 require 'rubyunit'
-require '../wwiki/formatter.rb'
+require 'wwiki/scanner.rb'
 
 class TestWWiki__Scanner < RUNIT::TestCase
 
@@ -38,8 +38,8 @@ class TestWWiki__Scanner < RUNIT::TestCase
       [":ABC", [[:WORD, ":ABC"]]],
       [" ** [http://www/ www]", [[:UL, " *"],[:OTHER, '*'],[:SPACE, ' '],[:MOINHREF, "[http://www/ www]"] ]],
       ["{[}]", [[:OTHER, "{"],[:OTHER, "["],[:OTHER, "}"],[:OTHER, "]"],]],
-      # ["日本語WikiName", [[:OTHER, "日本語"], [:WIKINAME1, "WikiName"]]],
-      # ["WikiName日本", [[:WIKINAME1,"WikiName"],[:OTHER, "日本"]]],
+      ["日本語WikiName", [[:OTHER, "日本語"], [:WIKINAME1, "WikiName"]]],
+      ["WikiName日本", [[:WIKINAME1,"WikiName"],[:OTHER, "日本"]]],
       ["日本語[[foo]]", [[:OTHER, "日本語"], [:WIKINAME2, "[[foo]]"]]],
       ["@@@[[foo]]", [[:OTHER, "@"], [:OTHER, "@"], [:OTHER, "@"], [:WIKINAME2, "[[foo]]"]]],
       ]
@@ -56,7 +56,8 @@ class TestWWiki__Scanner < RUNIT::TestCase
       while i =  s.next_token
 	q << i
       end
-      assert_equal(r, q[0..-3])}
+      assert_equal(r, q[0..-3])
+    }
   end
 
   def test_s_new

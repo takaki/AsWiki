@@ -1,132 +1,29 @@
 require 'strscan'
 require 'uri/common'
+require 'delegate'
+
+require 'wwiki/scanner'
+require 'wwiki/node'
 
 module WWiki
-  class Node
-    def to_s
-      return @text
-    end
-  end
-  class WordNode
-    def initialize(text)
-      @text = text
-    end
-  end
-  WORD  = [:SPACE, :OTHER, :WORD]
-  TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
-  DECORATION = [:B_DELIM, :I_DELIM]
-  NORMALTEXT = WORD + TAG + [:EOL]
-  TEXT = NORMALTEXT + DECORATION 
-  PAT_URI =  /\A#{URI::REGEXP::PATTERN::X_ABS_URI}/xn
-  C128 = [128].pack('C')
-  C255 = [255].pack('C')
-
-  class Scanner
-    def initialize(content)
-      @q = scan(content)
-    end
-    def next_token
-      return @q.shift
-    end
-    private
-    def scan(f)
-      q = [] 
-      sc = StringScanner.new(f.to_s)
-      bol = true
-      while sc.rest? do
-	if bol
-	  bol = false
-	  if    tmp = sc.scan(/\A#begin .*$/)
-	    q.push [:PLUGIN_BEGIN, tmp]
-	  elsif tmp = sc.scan(/\A#end\s*$/)
-	    q.push [:PLUGIN_END, tmp]
-	  elsif tmp = sc.scan(/\A#.+$/)
-	    q.push [:PLUGIN, tmp]
-	  elsif tmp = sc.scan(/\A\s+\*/)
-	    q.push [:UL, tmp]
-	  elsif tmp = sc.scan(/\A\s+\(\d+\)/)
-	    q.push [:OL, tmp]
-	  elsif tmp = sc.scan(/\A\s+\+\s*/)
-	    q.push [:DL, tmp]
-	  elsif tmp = sc.scan(/\A\s+\S+?::\s*/)
-	    q.push [:DL2, tmp]
-	  elsif tmp = sc.scan(/\A={1,6}/)
-	    q.push [:HN_BEGIN, tmp]
-	  elsif tmp = sc.scan(/\A----\s*$/)
-	    q.push [:HR, tmp]
-	  elsif tmp = sc.scan(/\A\s*\|\|/)
-	    q.push [:TABLE_BEGIN, tmp]
-	  elsif tmp = sc.scan(/\A\{\{\{\s*$/)
-	    q.push [:PRE_BEGIN, tmp]
-	  elsif tmp = sc.scan(/\A\}\}\}\s*$/)
-	    q.push [:PRE_END, tmp]
-	  elsif tmp = sc.scan(/\A\.$/)
-	    q.push [:ENDPERIOD, tmp]
-	  elsif tmp = sc.scan(/\A[ \t\r\f]*$/) 
-	    q.push [:BLANK, tmp]
-	  end
-	  next
-	end
-	if tmp = sc.scan(/\A\n/)
-	  q.push [:EOL, tmp] 
-	  bol=true
-	elsif tmp = sc.scan(/\A\w+:[A-Z]\w+(?!:)/)
-	  q.push [:INTERWIKINAME, tmp]
-	elsif tmp = sc.scan(PAT_URI) 
-	  if URI::extract(tmp, ['http','https','ftp','news','mailto',]) != []
-	    q.push [:URI, tmp]
-	  else
-	    q.push [:OTHER, tmp]
-	  end
-	elsif tmp = sc.scan(/\A([A-Z][a-z]+){2,}/)
-	  q.push [:WIKINAME1, tmp]
-	elsif tmp = sc.scan(/\A\[\[\S+?\]\]/)
-	  q.push [:WIKINAME2, tmp]
-	elsif tmp = sc.scan(/\A={1,6}\s*$/)
-	  q.push [:HN_END, tmp]
-	elsif tmp = sc.scan(/\A\s+\.$/)
-	  q.push [:ENDPERIOD, tmp]
-	elsif tmp = sc.scan(/\A[ \t\r\f]+/)
-	  q.push [:SPACE, tmp]
-	elsif tmp = sc.scan(/\A\|\|\s*$/)
-	  q.push [:TABLE_END, tmp]
-	elsif tmp = sc.scan(/\A\|\|/)
-	  q.push [:TABLE, tmp]
-	elsif tmp = sc.scan(/\A\[\S+\s+\S+?\]/)
-	  q.push [:MOINHREF, tmp]
-	elsif tmp = sc.scan(/\A'''/)
-	  q.push [:B_DELIM, tmp]
-	elsif tmp = sc.scan(/\A''/)
-	  q.push [:I_DELIM, tmp]
-	elsif tmp = sc.scan(/\A[\w:]+/)
-	  q.push [:WORD, tmp]
-	elsif tmp = sc.scan(/\A[#{C128}-#{C255}]+/)
-	  q.push [:OTHER, tmp]
-	elsif tmp = sc.scan(/\A\S/e)
-	  q.push [:OTHER, tmp]
-	else
-	  STDERR.puts sc.rest.inspect
-	  raise 'must not happen'
-	end
-      end
-      q.push [ :EOF, nil]
-      return q
-    end
-  end
-    
-  class Formatter
-    def initialize(name, content) # String, String
-      @name = name
-      @wikilinks = []
-      @q = scan(content)
-      @line = 1
-      # @tree = parse()
+  class Parser
+    WORD  = [:SPACE, :OTHER, :WORD]
+    TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
+    DECORATION = [:B_DELIM, :I_DELIM]
+    NORMALTEXT = WORD + TAG + [:EOL]
+    TEXT = NORMALTEXT + DECORATION 
+    def initialize(str)
+      @s = Scanner.new(str)
+      @tree = parse
     end
     attr_reader :tree
     private 
-
+    def next_token
+      @token = @s.next_token
+    end
     def parse
-      node = []
+      @line = 1
+      node = RootNode.new()
       next_token
       while true
 	if TEXT.include?(@token[0]) then node << text
@@ -141,13 +38,12 @@ module WWiki
 	  when :EOL         
 	    eol  
 	    node << "\n"
-	    
 	  when :HN_BEGIN    
 	    node << hn
 	  when :HR          
-	    node << "<hr>\n"  
+	    node << HrNode
 	    next_token
-	  when :PLUGIN      
+	  when :PLUGIN  
 	    node << plugin
 	  when :PLUGIN_BEGIN
 	    node << plugin_block
@@ -156,7 +52,7 @@ module WWiki
 	  when :TABLE_BEGIN 
 	    node << table
 	  when :UL          
-	    node << ul.to_s
+	    node << ul
 	  when :OL          
 	    node << ol
 	  when :EOF         
@@ -169,7 +65,7 @@ module WWiki
       return node
     end
     def blank
-      node = []
+      node = nil
       next_token
       while true
 	case  @token[0]
@@ -184,8 +80,8 @@ module WWiki
       return node  << "<p>"
     end
     def hn
-      node = []
-      text = []
+      node = nil
+      text = nil
       level = @token[1].size
       next_token
       text << textline
@@ -201,7 +97,7 @@ module WWiki
       return  node
     end
     def plugin_block
-      node  = []
+      node  = nil
       block = [] << (@token[1]+"\n")
       block_b = @line
       if :EOL == next_token[0] then eol else node << syntax_error end
@@ -228,27 +124,8 @@ module WWiki
       return @plugins.onview(@session, [node.to_s], @line, 0)
     end
 
-    def dl2
-      node = [] << "<dl>" 
-      while true
-	node << "<dt>" << @token[1].split('::')[0].strip << "</dt>" 
-	next_token
-	node << "<dd>" << text << "</dd>"
-	case @token[0]
-	when :DL2
-	  next_token
-	  next
-	when :EOF
-	  break
-	when :EOL
-	  eol
-	else  break
-	end
-      end
-      return node << "</dl>"
-    end
     def dl
-      node = [] << "<dl>" 
+      node = nil << "<dl>" 
       while true
 	next_token
 	node << "<dt>" << textline << "</dt>" <<"<dd>" << text  << "</dd>"
@@ -262,12 +139,16 @@ module WWiki
       return node 
     end
     def ul
-      node = [] << "<ul>\n"
+      node = UlNode.new
       depth = @token[1].size
       while true
+	# treat ul as textelement
 	if @token[0] == :UL
-	  if depth <= @token[1].size
+	  if depth == @token[1].size
+	    next_token
 	    node << li(depth)
+	  elsif depth >= @token[1].size
+	    node << ul
 	  else
 	    break
 	  end
@@ -275,20 +156,27 @@ module WWiki
 	  break
 	end
       end
-      return node  << "</ul>\n"
+      return node 
     end
     def li(depth)
-      node = []
-      next_token
-      node << "<li>" << text  
-      if @token[0] == :UL && depth < @token[1].size
-	node << ul
+      node = LiNode.new
+      while true
+	if TEXT.include?(@token[0])
+	  node << text
+	elsif :UL == @token[0]
+	  if depth < @token[1].size
+	    node << ul
+	  else
+	    break
+	  end
+	else
+	  break
+	end
       end
-      node << "</li>\n"
-      return  node 
+      return node
     end
     def ol
-      node = [] << "<ol>"
+      node = nil << "<ol>"
       depth = @token[1].size
       next_token
       while true
@@ -305,7 +193,7 @@ module WWiki
       return node << "</li>" << "</ol>"
     end
     def table
-      node = [] << "<table>" 
+      node = nil << "<table>" 
       while true
 	case @token[0]
 	when :TABLE_BEGIN
@@ -323,7 +211,7 @@ module WWiki
       return node
     end
     def table_tr
-      node = []
+      node = nil
       node << "<tr>"
       while true
 	node << table_td
@@ -338,7 +226,7 @@ module WWiki
       return node << "</tr>\n"
     end
     def table_td
-      node = []
+      node = nil
       while true
 	node << "<td>" << text << "</td>"
 	case @token[0]
@@ -352,9 +240,8 @@ module WWiki
       return node
     end    
     def text
-      node = []
+      node = TextNode.new
       while true
-	
 	node << normaltext
 	case @token[0]
 	when :B_DELIM
@@ -367,7 +254,7 @@ module WWiki
       return node
     end
     def normaltext
-      node = []
+      node = NormaltextNode.new
       while true
 	if NORMALTEXT.include?(@token[0]) then node << textline
 	else break
@@ -377,7 +264,7 @@ module WWiki
     end
     def decorate(tag)
       next_token
-      node = [] << D_TAG[tag][0] << normaltext
+      node = nil << D_TAG[tag][0] << normaltext
       if @token[0] == tag 
 	node << D_TAG[tag][1]
 	next_token
@@ -388,18 +275,16 @@ module WWiki
     end
 
     def textline
-      node = []
+      node = TextlineNode.new
       while true
 	case @token[0]
 	when :OTHER, :SPACE, :WORD
-	  node << WordNode(@token[1])
+	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
-	  @wikilinks << @token[1]
-	  node << wikihref(@token[1])
+	  node << WikinameNode.new # (@token[1])
 	when :WIKINAME2
 	  name = @token[1][2..-3]
-	  @wikilinks << name
-	  node << wikihref(name)
+	  node << WikinameNode.new # (name)
 	when :URI
 	  node << ahref(@token[1],CGI::escapeHTML(@token[1]))
 	when :MOINHREF
@@ -422,7 +307,7 @@ module WWiki
       return node
     end
     def textblock(endtag)
-      node = []
+      node = nil
       line = ""
       while true
 	case @token[0]
@@ -442,7 +327,7 @@ module WWiki
       return node
     end
     def preblock
-      node = [] << "<pre>"  
+      node = nil << "<pre>"  
       next_token
       node += textblock(:PRE_END)
       while true

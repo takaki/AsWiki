@@ -1,16 +1,15 @@
 -*- outline -*-
 
 * High
-  - cannot parse next
-(1) A
-   * c
-(2) B
 
 * Low
+  - parser
+(1) a
+* b
+(2) c
   - recentpage unlimited
   - search
   - tdiary theme
-  - PATH_INFO
   - extention of InterWikiName
   - rewrite orphand page plugin
   - attach ; attachment -> pathname

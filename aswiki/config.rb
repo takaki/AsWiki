@@ -37,3 +37,11 @@ $metapages = {
   'SearchPage' => '#search',
 }
 
+
+$plugin_list = ($plugin_list or [
+  '2chbbs.rb',
+#  'attach.rb',
+  'core.rb',
+  'demo.rb',
+#  'search.rb',
+])

@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 96)
+(Project-Version aswiki 0 97)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 95)
+(Parent-Version aswiki 0 96)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 28 Jul 2004 15:20:11 +0900")
+(Checkin-Time "Wed, 28 Jul 2004 15:31:32 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$" "COPYING" "CVS/"))
 (Project-Keywords)
@@ -31,7 +31,7 @@
 ;; to version 0.2(w), by takaki:
 
   
-  (ChangeLog (aswiki/4_ChangeLog 1.62.1.5 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.62.1.6 664))
   (aswiki/node.rb (aswiki/5_node.rb 1.37 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.22 664))
 
@@ -262,21 +262,5 @@
   ; (COPYING () :symlink)
 
 )
-(Merge-Parents
-  (branch.1.0.6 incomplete
-    (test/testParser.rb test/testWWiki__Parser.rb test/testWWiki__Parser.rb r) (aswiki/parser.rb aswiki/parser.rb aswiki/parser.rb m))
-  (branch.1.0.6 incomplete
-    (test/testScanner.rb test/testWWiki__Scanner.rb test/testWWiki__Scanner.rb r) (ChangeLog ChangeLog ChangeLog m))
-  (branch.1.0.6 incomplete
-    (aswiki.cgi aswiki.cgi aswiki.cgi m) 
-  )
-  (branch.1.0.6 complete
-    (template/Page/View.html template/Page/View.html template/Page/View.html r) (aswiki.conf aswiki.conf aswiki.conf m)
-    (aswiki/util.rb aswiki/util.rb aswiki/util.rb m) (Makefile Makefile Makefile m)
-    (README.en README.en README.en m) (() COPYING COPYING n)
-    (aswiki/pagedata.rb aswiki/pagedata.rb aswiki/pagedata.rb m) (THANKS THANKS THANKS m)
-    (aswiki/handler.rb aswiki/handler.rb aswiki/handler.rb m) (template/PageBase.html template/PageBase.html template/PageBase.html m)
-    (aswiki/config.rb aswiki/config.rb aswiki/config.rb m) 
-  )
-)
+(Merge-Parents)
 (New-Merge-Parents)

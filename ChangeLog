@@ -1,75 +1,3 @@
-2003-05-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/backup.rb: RCSBackup#rlog; bug fiexed (thanks, Mike Limaye).
-
-	* aswiki/util.rb: diffout; bug fixed (thanks, Mike Limaye).
-
-2003-05-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/backup.rb: RCSBackup#rlog; bug fiexed (thanks, Mike Limaye).
-
-	* aswiki/util.rb: diffout; bug fixed (thanks, Mike Limaye).
-
-2003-04-15  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/handler.rb: no change page check on save time.
-
-2003-04-15  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/handler.rb: no change page check on save time.
-
-2003-03-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/util.rb: fixed cgiurl.
-
-2003-03-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/util.rb: fixed cgiurl.
-
-2003-02-17  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/pagedata.rb: use amulet.
-
-2003-02-17  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/pagedata.rb: use amulet.
-
-2003-02-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 1.1.3
-
-	* aswiki/pagedata.rb: changed  css file relative path to absolute
-	path and config parameter.
-
-	* plugin/search.rb: added search plugin
-
-2003-02-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 1.1.3
-
-	* aswiki/pagedata.rb: changed  css file relative path to absolute
-	path and config parameter.
-
-	* plugin/search.rb: added search plugin
-
-2003-02-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/util.rb: use PAHT_INFO for link.
-
-	* release: 1.1.2
-
-2003-02-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/util.rb: use PAHT_INFO for link.
-
-	* release: 1.1.2
-
-2003-01-31  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki.cgi: use PATH_INFO as pagename.
-
-	* release: 1.1.1
-	
 2004-06-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki.cgi: plugin list definition policy is explicitly describe
@@ -77,7 +5,6 @@
 
 	* aswiki/handler.rb: added difference detection routine
 	
-
 2003-09-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 1.0.2
@@ -90,6 +17,39 @@
 	
 	* aswiki: backport path_info.
 	
+2003-05-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/backup.rb: RCSBackup#rlog; bug fiexed (thanks, Mike Limaye).
+
+	* aswiki/util.rb: diffout; bug fixed (thanks, Mike Limaye).
+
+2003-04-15  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/handler.rb: no change page check on save time.
+
+2003-03-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/util.rb: fixed cgiurl.
+
+2003-02-17  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/pagedata.rb: use amulet.
+
+2003-02-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 1.1.3
+
+	* aswiki/pagedata.rb: changed  css file relative path to absolute
+	path and config parameter.
+
+	* plugin/search.rb: added search plugin
+
+2003-02-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/util.rb: use PAHT_INFO for link.
+
+	* release: 1.1.2
+
 2003-01-31  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki.cgi: use PATH_INFO as pagename.
@@ -100,16 +60,6 @@
 
 	* release: 1.0.1
 
-2003-01-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 1.0.1
-
-2003-01-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/attachdb.rb: changed return list sorted order by id.
-
-	* template/Page/View.html: fixed typo.
-	
 2003-01-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/attachdb.rb: changed return list sorted order by id.
@@ -128,35 +78,6 @@
 
 	* aswiki/scanner.rb: add MOINHREFIMG type.
 	if scanner buffer is empty, return EOF. 
-
-2003-01-17  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.93
-
-	* aswiki/util.rb: change AsWiki::redirecpage use Amrita::e to make
-	output string instead of parts Url.
-
-	* aswiki/cgi.rb: renamed FCGI to CGI to fix remove_const
-	CGI::CGI_PARAMS error
-
-	* aswiki/scanner.rb: add MOINHREFIMG type.
-	if scanner buffer is empty, return EOF. 
-
-2003-01-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.92
-
-	* text_en/HelpPage: made pseudo-English(?) Help Page.
-
-	* aswiki/parser.rb: improvement inline escape.
-
-	* release: 0.91
-
-	* aswiki/parser.rb: fixed hn bug.
-
-	* release: 0.90
-
-	* aswiki/attachdb.rb: fixed querybynum return include nil Hash.
 
 2003-01-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -195,27 +116,6 @@
 	AsWiki::Scanner.
 	fixed no h2 tocdata link bug.
 	
-2003-01-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/handler.rb: EditPage; fixed(?) confilic with partial-edit
-	merge bug.
-
-	* aswiki/pagedata.rb: remove dirty trick(require amrita-1.0.2).
-
-	* aswiki/repository.rb: changed #initialize arugment.
-
-	* aswiki/backup.rb: changed #initialize argument.
-
-	* aswiki.cgi: use class insted of type.
-
-	* aswiki/config.rb: set default configuration value.
-
-	* aswiki/scanner.rb: FileScanner; file scan data cached scanner.
-
-	* aswiki/parser.rb: change initialize argument String to
-	AsWiki::Scanner.
-	fixed no h2 tocdata link bug.
-	
 2002-12-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.89
@@ -230,36 +130,6 @@
 	* template/Node/parts.html: WikiNameNE; change '?' position to
 	WikiName previous. Is is advice of `The Wiki Way'.
 	
-2002-12-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.89
-
-	* aswiki/pagedata.rb: #setup; use tricky code to avoid
-	amrita-1.0.1's compiler bug.
-
-	* aswiki/page.rb: use PartsTemplate again.
-
-	* plugin/core.rb: rename PageReferencesPlugin to ReverseLinkList.
-
-	* template/Node/parts.html: WikiNameNE; change '?' position to
-	WikiName previous. Is is advice of `The Wiki Way'.
-	
-2002-12-29  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* plugin/core.rb: rename LinkPageCountPlugin to
-	PageReferencesPlugin.
-
-	* template/plugin/pagereferences.html: rename LinkPageCount to
-	PageReferences.
-
-	* release: 0.88
-
-	* aswiki/i18n/en.rb: new file. I have no motivation, thus its
-	quality is not so high.
-
-	* aswiki/repository.rb: GC conditon change to file size less than
-	equal 1.
-
 2002-12-29  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* plugin/core.rb: rename LinkPageCountPlugin to
@@ -297,52 +167,9 @@
 
 	* aswiki/handler.rb: SaveHandler; fix no need return add tail bug.
 
-2002-12-28  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* plugin/core.rb: LinkPageCount; add reverse link database
-	initialize routine.
-
-	* template/Page/View.html: reverse link
-
-	* aswiki/repository.rb: make save hook to update reverse link
-	database.
-	
-	* aswiki/revlink.rb: implement reverse link, but can not detect
-	deleeted wikilink automatically. Thus to view PageLinkCount for 
-	reflesh link info.
-
-	* release: 0.87
-
-	* aswiki/parser.rb: expand wikiname namespace when format
-	contents.
-
-	* aswiki/handler.rb: SaveHandler; fix no need return add tail bug.
-
 2002-12-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* template/plugin/linkpagecount.html: fix class attribute typo
-
-2002-12-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* template/plugin/linkpagecount.html: fix class attribute typo
-
-2002-12-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.86
-
-	* plugin/demo.rb: LineNoPlugin; new
-
-	* aswiki/handler.rb: EditPage, SavePage; partial edit.
-	SavePage; append return tail of body.
-	
-	* template/Page/Edit.html: partial edit
-
-	* template/Page/View.html: pageheader; partial edit
-
-	* aswiki/parser.rb: Parser#hn; partial edit. toc begin 0 (page
-	top).
-
-	* template/Page/Raw.html: fix duplicate print bug
 
 2002-12-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -373,21 +200,6 @@
 	* aswiki/merge.rb: create merge template base template class
 	MergeTemplateFile
 
-2002-12-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.85
-
-	* aswiki/pagedata.rb: MergeTemplateFile base implement
-
-	* aswiki/page.rb: MergeTemplateFile base implement
-
-	* aswiki/merge.rb: create merge template base template class
-	MergeTemplateFile
-
-2002-12-19  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.84
-
 2002-12-19  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.84
@@ -399,21 +211,6 @@
 	* release: 0.83
 
 	* aswiki/repository.rb: GC (unlink zero size file).
-
-2002-12-15  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/scanner.rb: fix moinhref (regexp match too wide).
-
-	* release: 0.83
-
-	* aswiki/repository.rb: GC (unlink zero size file).
-
-2002-12-14  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/scanner.rb: moinhref allow link label which contain
-	space.
-
-	* aswiki/parser.rb: add escaped text({{ and }}).
 
 2002-12-14  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -432,20 +229,6 @@
 
 	* aswiki/handler.rb: make RSS link URL escaped.
 
-2002-12-09  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* plugin/core.rb: rename PageLinkCount to LinkPageCount.
-
-	* release: 0.82
-
-	* plugin/core.rb: add linkcountpage plugin.
-
-	* aswiki/handler.rb: make RSS link URL escaped.
-
-2002-12-06  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* plugin/core.rb: set default value of recentpages show page 100.
-	
 2002-12-06  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* plugin/core.rb: set default value of recentpages show page 100.
@@ -453,31 +236,6 @@
 2002-12-05  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* plugin/*: return value explicitly
-
-2002-12-05  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* plugin/*: return value explicitly
-
-2002-12-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* releaseL 0.80
-
-	* plugin/core.rb: NotCreatedPages; hide interwikiname.
-
-	* aswiki/util.rb: fix Util#wikilink strong wikiname expand bug.
-
-	* aswiki/pagedata.rb: fix PageData#wikilinks strong wikiname
-	expand bug. 
-
-	* aswiki/handler.rb: typo at RSSHandler class name define
-
-	* release: 0.79
-
-	* aswiki/plugin.rb: load_parts methods argument turn change.
-
-	* aswiki/attachdb.rb: add querybynum method(for attachinclude).
-
-	* plugin/attach.rb: attachinclude plugin.
 
 2002-12-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -510,16 +268,6 @@
 
 	* aswiki/handler.rb: add rss handler.
 
-2002-12-02  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/scanner.rb: WikiName regexp has been config parameter.
-
-	* aswiki/util.rb: expandwikiname support `strong' namespacez.
-
-	* release: 0.76
-
-	* aswiki/handler.rb: add rss handler.
-
 2002-12-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/handler.rb: add config parameter of use RCS backup.
@@ -529,26 +277,6 @@
 
 	* aswiki/plugin.rb, template/plugin/*, plugin/* : use parts
 	template.	
-
-2002-12-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/handler.rb: add config parameter of use RCS backup.
-	add config parameter of use Attach plugin.
-
-	* aswiki/attachdb.rb: add attach file size limit parameter.
-
-	* aswiki/plugin.rb, template/plugin/*, plugin/* : use parts
-	template.	
-
-2002-11-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/scanner.rb: wikiname regexp change.
-
-	* release: 0.72
-
-	* plugin/demo.rb: i18n
-
-	* plugin/2chbbs.rb: i18n.
 
 2002-11-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -570,23 +298,6 @@
 
 	* aswiki/parser.rb: table of contents.
 
-2002-11-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.71
-
-	* aswiki/pagedata.rb: add raw page history view.
-
-	* release: 0.70
-
-	* aswiki/parser.rb: table of contents.
-
-2002-11-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.66
-
-	* aswiki/pagedata.rb: devide page template into page layout
-	template and page parts	template.
-
 2002-11-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.66
@@ -598,33 +309,11 @@
 
 	* plugin/2chbbs.rb: i18n.
 
-2002-11-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* plugin/2chbbs.rb: i18n.
-
 2002-11-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.63
 
 	* aswiki/handler.rb: editpage handler
-
-2002-11-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.63
-
-	* aswiki/handler.rb: editpage handler
-
-2002-11-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.62
-	
-	* Makefile: renamed from setup.sh.
-
-	* aswiki/parser.rb: remove Amrita::e. use parts template.
-
-	* aswiki/handler.rb: handler class.
-
-	* aswiki.cgi: use handler table insted of case-when clause.
 
 2002-11-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -653,25 +342,6 @@
 	not expand.
 	
 
-2002-11-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki.cgi: all process use PageData instead of Page.
-	
-	* aswiki/i18n/ja.rb: make i18n framework, but prepare Japanese
-	message catalog only.
-
-	* aswiki/plugin.rb: use compiler.
-
-	* aswiki.cgi: MetaPages => $metapages
-
-	* aswiki/parser.rb: remove DummyNode.
-	not expand.
-	
-
-2002-10-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki.cgi: MetaPages -> $metapages
-
 2002-10-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki.cgi: MetaPages -> $metapages
@@ -679,14 +349,6 @@
 2002-10-29  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki.cgi: add $USEATTACH to choice attach plugin use or not.
-
-2002-10-29  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki.cgi: add $USEATTACH to choice attach plugin use or not.
-
-2002-10-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/node.rb: merge parts template patch (tnx Taku).
 
 2002-10-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -697,22 +359,9 @@
 	* aswiki/scanner.rb: :UL, :OL and :DL do not need space of begin
 	of line.
 
-2002-10-11  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/scanner.rb: :UL, :OL and :DL do not need space of begin
-	of line.
-
 2002-10-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* plugin/core.rb: NotCreatedPagesPlugin bug fix.
-
-2002-10-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* plugin/core.rb: NotCreatedPagesPlugin bug fix.
-
-2002-10-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/attachdb.rb: deadlock detection.
 
 2002-10-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -728,46 +377,6 @@
 	* aswiki/util.rb: AsWiki::redirectpage
 
 	* aswiki/attachdb.rb: new
-
-2002-10-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.53
-	
-	* aswiki/exception.rb: now, exception class is not included in
-	module AsWiki.
-
-	* aswiki/util.rb: AsWiki::redirectpage
-
-	* aswiki/attachdb.rb: new
-
-2002-10-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.52
-
-	* aswiki.cgi: partially solve TimeStampMismatch problem.
-	edit merge of old file and new file again.
-
-	* aswiki/exception.rb: EditPage. handling edit page call. 
-
-	* aswiki/util.rb: rename AsWiki::diff to AsWiki::merge
-
-	* aswiki/plugin.rb: PluginTalbeByType.
-
-	* release: 0.51
-
-	* aswiki/util.rb: #cgiurl for making cgilink.
-
-	* aswiki.cgi: history feature.
-
-	* aswiki/pagedata.rb: split parse process from initialize.
-
-	* template/Page/History.html: new file
-
-	* release: 0.50
-
-	* aswiki.cgi: :contents => :body
-
-	* aswiki/cgi.rb: CGI wrap class
 
 2002-10-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -811,24 +420,6 @@
 
 	* aswiki/util.rb: create AsWiki::Util#timestr, AsWiki::Util#modified 
 
-2002-09-28  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.49
-	
-	* aswiki/parser.rb: add parse only mode.
-	wikinames is method to return EXPANDED wikinames.
-
-	* release: 0.48
-	
-	* aswiki.cgi: create $TIMEFORMAT.
-
-	* aswiki/util.rb: create AsWiki::Util#timestr, AsWiki::Util#modified 
-
-2002-09-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/backup.rb: remove quotemeta (to use CGI::escape is
-	enough).
-
 2002-09-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/backup.rb: remove quotemeta (to use CGI::escape is
@@ -847,45 +438,9 @@
 
 	* aswiki/pagedata.rb: add edit,toppage, etc to use ExpandByMember
 
-2002-09-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.47
-	
-	* plugin/attach.rb: escape bug fix.
-
-	* aswiki/parser.rb: making html tree process changed top down to
-	botm up.
-
-	* release: 0.46
-
-	* aswiki/pagedata.rb: add edit,toppage, etc to use ExpandByMember
-
 2002-09-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.45
-
-2002-09-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.45
-
-2002-09-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.44
-	
-	* plugin: fix two plugin problem. (same session_id created, so
-	do flock same file).
-
-	* release: 0.43
-
-	* aswiki/util.rb: restart namespace feature.
-	diff output.
-
-	* aswiki.cgi: remove $pname.
-
-	* aswiki/pagedata.rb: new class AsWiki::PageData.
-	to hold pagename, parsetree and misc.
-	
-	* aswiki/util.rb: suspend namespace feature.
 
 2002-09-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -930,43 +485,6 @@
 	
 	* aswiki/util.rb: adjust for libalgorithm-diff-ruby 0.4.
 
-2002-09-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/util.rb: diff page style.
-
-	* release: 0.42
-	
-	* plugin/2chbbs.rb: change output format.
-
-	* plugin/core.rb: new plugin #notcreatedpages.
-	new plugin #orphanedpages.
-	new plugin #metaages.
-	new plugin #pluginlist.
-	
-	* aswiki/node.rb: use Amrita::TemplateFile again, because out put
-	HTML is	very dirty.
-
-	* release: 0.41
-
-	* aswiki/backup.rb: rename Backup#backup to Backup#ci.
-	remove Backup#getrecentbackupdataandmtime.
-	remove Backup#getbackupdattandmtime.
-	
-	* aswiki/util.rb: adjust for libalgorithm-diff-ruby 0.4.
-
-2002-09-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* release: 0.40
-	
-	* aswiki/page.rb: use Amrita::TemplateFileWithCache.
-
-	* aswiki/backup.rb: new methods Backup#rlog.
-	new methods Backup#co.
-	brushup.
-	remove Backup#list_backups.
-	
-	* aswiki/node.rb: use Amrita::TemplateFileWithCache.
-
 2002-09-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.40
@@ -986,22 +504,6 @@
 
 	* default.css: created.
 
-2002-09-20  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* template/Node/Pre.html: add class attribute for CSS.
-
-	* default.css: created.
-
-2002-09-18  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/repository.rb, aswiki/backup.rb: Backup timing
-	changed. It was confusing difference of rcs log timestamp and 
-	real backup time.
-
-	* template/* : add style sheet tag.
-	
-	* release: 0.39
-	
 2002-09-18  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/repository.rb, aswiki/backup.rb: Backup timing
@@ -1017,20 +519,6 @@
 	* aswiki.cgi : fix duplicate escape HTML problem of raw
 	view.
 
-2002-09-16  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki.cgi : fix duplicate escape HTML problem of raw
-	view.
-
-2002-09-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* aswiki/scanner.rb: table tag change from '|' to  '||'.
-	There is no method to place '|' in text.
-
-	* aswiki: rename programe name to AsWiki. and filename too
-
-	* wwiki: change amrita base.
-
 2002-09-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/scanner.rb: table tag change from '|' to  '||'.
@@ -1044,14 +532,6 @@
 
 	* plugin/attach.rb: merge attachlist into attach.
 
-2002-08-10  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* plugin/attach.rb: merge attachlist into attach.
-
-2002-08-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* wwiki.cgi: working  attach feature
-
 2002-08-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* wwiki.cgi: working  attach feature
@@ -1061,24 +541,9 @@
 	* wwiki.cgi: Session save dirctory change from 'attr' to 
 	'session'.
 
-2002-07-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* wwiki.cgi: Session save dirctory change from 'attr' to 
-	'session'.
-
 2002-07-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* wwiki/scanner.rb: table tab change from || to |.
-
-2002-07-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* wwiki/scanner.rb: table tab change from || to |.
-
-2002-04-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* ChangeLog: restart write changelog.
-	
-	* plugin/demo.rb: postのdemo。
 
 2002-04-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
@@ -1092,25 +557,10 @@
 	use DelegateClass.
 	
 
-2002-04-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* wwiki/node.rb: stop use SimpleDelegator becase very slow.
-	use DelegateClass.
-	
-
 2002-04-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* wwiki: begin to make WWiki.
 	
 	* formatter.rb: split Scanner to class.
 	
-
-
-2002-04-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
-
-	* wwiki: begin to make WWiki.
-	
-	* formatter.rb: split Scanner to class.
-	
-
 

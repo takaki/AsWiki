@@ -30,7 +30,7 @@ module AsWiki
       :diffpage,:helppage,:contents
     def lastmodified
       t = @r.mtime(@name)
-      t.strftime("%F %T %z") + " (#{modified(t)})"
+      timestr(t)
     end
     def wikilinks
       return Amrita::noescape{ @p.wikinames.delete_if{|w|
@@ -38,16 +38,5 @@ module AsWiki
 	  [l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
 	  "#{wikilink(CGI::escapeHTML(l[0]),@name)}(#{modified(l[1])})\n" }}
     end
-    def modified(t)
-      return '-' unless t
-      dif = (Time.now - t).to_i
-      dif = dif / 60
-      return "#{dif}m" if dif <= 60
-      dif = dif / 60
-      return "#{dif}h" if dif <= 24
-      dif = dif / 24
-      return "#{dif}d"
-    end
-
   end
 end

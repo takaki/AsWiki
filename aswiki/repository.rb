@@ -23,9 +23,10 @@ module AsWiki
     def save(name, str)
       (open(textname(name),'w') << str.gsub(/\r\n/, "\n")).close
       backup = AsWiki::Backup.new(@basedir)
-      backup.ci(textname(name))
+      # backup.ci(textname(name))
+      backup.ci(name)
     end
-    
+  
     def mtime(name)
       if exist?(name)
 	return File.mtime(textname(name))
@@ -43,9 +44,9 @@ module AsWiki
       return Dir.open(@dir).select{|f| test(?f, File.join(@dir, f))}.
 	map{|f| [AsWiki::unescape(f), File.mtime(File.join(@dir, f))]}
     end
-    private
     def textname(name)
       return File.join(@dir, AsWiki::escape(name))
     end
+    private
   end
 end

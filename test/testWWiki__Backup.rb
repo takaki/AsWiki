@@ -5,28 +5,30 @@ class TestAsWiki__Backup < RUNIT::TestCase
 
   def setup
     STDIN.reopen('/dev/null')
-    @c = AsWiki::Backup.new('test')
-    fname = 'test/text/test'
-    bname = 'test/RCS/test,v'
-    Dir.mkdir('test/RCS')
-    Dir.mkdir('test/text')
+    @c = AsWiki::Backup.new('.')
+    Dir.chdir('test')
+    fname = 'text/test'
+    bname = 'RCS/test,v'
+    Dir.mkdir('RCS')
+    Dir.mkdir('text')
     (open(fname ,'w') << "1\n").close
     system("ci -l -q -zLT -d'2002/01/01 00:00:00' #{fname} #{bname}")
     (open(fname ,'w') << "2\n").close
     system("ci -l -q -zLT -d'2002/01/01 01:00:00' #{fname} #{bname}")
   end
   def teardown
-    Dir.glob('test/RCS/*').each{|f| File.unlink f}
-    Dir.glob('test/text/*').each{|f| File.unlink f}
-    Dir.rmdir('test/RCS')
-    Dir.rmdir('test/text')
+    Dir.glob('RCS/*').each{|f| File.unlink f}
+    Dir.glob('text/*').each{|f| File.unlink f}
+    Dir.rmdir('RCS')
+    Dir.rmdir('text')
+    Dir.chdir('..')
   end
 
   def test_ci
-    fname = 'test/text/testbackup'
-    bname = 'test/RCS/testbackup,v'
+    fname = 'testbackup'
+    bname = 'testbackup,v'
     s = "1\n"
-    (open(fname ,'w') << s).close
+    (open("text/#{fname}" ,'w') << s).close
     @c.ci(fname)
     # system("ci -l -q -zLT -d'2002/01/01 00:00:00' #{fname} #{bname}")
     # @c.ci('test/text/test')
@@ -34,12 +36,12 @@ class TestAsWiki__Backup < RUNIT::TestCase
   end
 
   def test_co
-    fname = 'test/text/testbackup'
-    bname = 'test/RCS/testbackup,v'
+    fname = 'text/testbackup'
+    bname = 'RCS/testbackup,v'
     s = "1\n"
     (open(fname ,'w') << s).close
     system("ci -l -q -zLT -d'2002/01/01 00:00:00' #{fname} #{bname}")
-    @c.co('test/text/test',1)
+    s = @c.co('test',1).to_s
     assert_equal(s, File.readlines("|co -p -q #{bname}").to_s)
   end
 

@@ -11,13 +11,6 @@ module AsWiki
   def AsWiki::unescape(s)
     return CGI::unescape(s)
   end
-  def diffout(s, class_=nil)
-    [Amrita::e(:div, (class_ ? Amrita::a(:class, class_) : nil)){
-	Amrita::e(:code){
-	  s.chomp
-	}
-      }, "\n"]
-  end
   def AsWiki::diff(a,b)
     f = Diff::diff(a,b)
 
@@ -72,7 +65,14 @@ module AsWiki
     end
     return r
   end
-  
+  def diffout(s, class_=nil)
+    [Amrita::e(:div, (class_ ? Amrita::a(:class, class_) : nil)){
+	Amrita::e(:code){
+	  s.chomp
+	}
+      }, "\n"]
+  end
+
   module Util
     def expandwikiname(wikiname, base='')
       # return wikiname # XXX
@@ -103,6 +103,19 @@ module AsWiki
 			 Amrita::a(:class, "nonexistent")){
 	  AsWiki::unescape(name) + "?"}
       end
+    end
+    def timestr(t)
+      t.strftime($TIMEFORMAT) + " (#{modified(t)}) "
+    end
+    def modified(t)
+      return '-' unless t
+      dif = (Time.now - t).to_i
+      dif = dif / 60
+      return "#{dif}m" if dif <= 60
+      dif = dif / 60
+      return "#{dif}h" if dif <= 24
+      dif = dif / 24
+      return "#{dif}d"
     end
   end
 end

@@ -31,16 +31,12 @@ module AsWiki
       tmplfile = File.join('template', 'Node', template + '.html')
       @template = Amrita::TemplateFile.new(tmplfile)
     end
-    attr_reader :tree
     def <<(item)
       @node << item
     end
     def expand
       data = {:data => @node}
-      @tree = @template.expand_tree(data)
-    end
-    def to_s
-      @tree.to_s
+      return @template.expand_tree(data)
     end
   end
 end

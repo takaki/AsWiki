@@ -1,3 +1,14 @@
+2002-09-28  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki.cgi: create $TIMEFORMAT.
+
+	* aswiki/util.rb: create AsWiki::Util#timestr, AsWiki::Util#modified 
+
+2002-09-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/backup.rb: remove quotemeta (to use CGI::escape is
+	enough).
+
 2002-09-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.47

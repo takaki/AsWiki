@@ -2,6 +2,7 @@
 # This program is distributed under the GNU GPL 2.
 
 require 'time.rb'
+require 'aswiki/util.rb'
 
 module AsWiki
 
@@ -9,13 +10,8 @@ module AsWiki
     def initialize(basedir)
       @dir = File.join(basedir, 'RCS')
     end
-    def quotemeta(s)
-      return s.gsub(/(['"!$|;>*<\\&>()])/,'\\\\\1').untaint 
-    end
-
     public
     def rlog(name, rev=nil)
-      name = quotemeta(name)
       log = []
       if rev
 	command = "|rlog -zLT -r1.#{rev} #{backupname(name)}"
@@ -36,13 +32,12 @@ module AsWiki
     end
 
     def co(name, rev)
-      name = quotemeta(name)
       return File.readlines("|co -r1.#{rev} -p -q #{backupname(name)}")
     end
 
     def ci(name)
-      name = quotemeta(name)
-      if ! system("ci -l -q -zLT #{name} #{backupname(name)}")
+      # if ! system("ci -l -q -zLT #{textname(name)} #{backupname(name)}")
+      if ! system("ci -l -q -zLT text/#{name} #{backupname(name)}") # XXX XXX XXX
 	raise
       end
     end
@@ -52,7 +47,7 @@ module AsWiki
       File.exist?(backupname(name))
     end
     def backupname(fname)
-      return File.join(@dir, File.basename(fname) + ',v')
+      return File.join(@dir, AsWiki::escape(fname) + ',v')
     end
   end
 end

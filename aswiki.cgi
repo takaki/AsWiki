@@ -16,6 +16,10 @@ require 'aswiki/pagedata'
 require 'digest/md5'
 require 'amrita/template'
 
+# default value
+$TOPPAGENAME = 'IndexPage'
+$TIMEFORMAT  ="%F %T %z"
+$BASEDIR     = '.'
 # $SAFE = 1
 
 MetaPages = {

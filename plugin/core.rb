@@ -33,7 +33,7 @@ module AsWiki
     Name = 'metapages'
     include AsWiki::Util
     def onview(line, b, e, av)
-      data = {:data => MetaPages.keys.sort.collect{|k| wikilink(k)}}
+      data = {:data => $metapages.keys.sort.collect{|k| wikilink(k)}}
       @view = load_template.expand_tree(data)
     end
   end
@@ -57,7 +57,7 @@ module AsWiki
     private 
     def markandsweep(pname)
       @checked[pname] = true
-      AsWiki::Parser.new(@r.load(pname).to_s, pname, false).wikinames.
+      AsWiki::Parser.new(@r.load(pname).to_s, pname).wikinames.
 	uniq.each{|n|
 	if @r.exist?(n) and not @queue.key?(n) and not @checked.key?(n)
 	  @queue[n] = true
@@ -76,7 +76,7 @@ module AsWiki
       @r = AsWiki::Repository.new('.')
       pages = {}
       @r.namelist.each{|p|
-	AsWiki::Parser.new(@r.load(p).to_s, p, false).wikinames.uniq.each{|n|
+	AsWiki::Parser.new(@r.load(p).to_s, p).wikinames.uniq.each{|n|
 	  if n !~ /\A\w+:[A-Z]\w+(?!:)/
 	    pages[n] = true
 	  end

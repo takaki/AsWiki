@@ -1,3 +1,15 @@
+2002-11-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki.cgi: MetaPages => $metapages
+
+	* aswiki/parser.rb: remove DummyNode.
+	not expand.
+	
+
+2002-10-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki.cgi: MetaPages -> $metapages
+
 2002-10-29  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki.cgi: add $USEATTACH to choice attach plugin use or not.

@@ -45,9 +45,10 @@ module AsWiki
     private
     def load_template(filename=self.type::Name)
       tmplfile = File.join('template', 'plugin', filename + '.html')
-      tmpl = Amrita::TemplateFile.new(tmplfile)
-      tmpl.expand_attr = true
-      return tmpl
+      template = Amrita::TemplateFileWithCache[tmplfile]
+      template.expand_attr = true
+      template.use_compiler = true
+      return template
     end
   end
 end

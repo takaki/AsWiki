@@ -6,9 +6,19 @@ $TOPPAGENAME = 'IndexPage'
 $TIMEFORMAT  ="%F/%T %z"
 $BASEDIR     = '.'
 $USEATTACH   = true
+$LANG        = 'ja'
 # $SAFE = 1
 
 load ('aswiki.conf')
+
+$metapages = {
+  'MetaPages'   => '#metapages',
+  'RecentPages' => '#recentpages',
+  'AllPages'    => '#allpages',
+  'OrphanedPages' => '#orphanedpages',
+  'NotCreatedPages' => '#notcreatedpages',
+  'PluginList' => '#pluginlist',
+}
 
 require 'cgi'
 
@@ -29,14 +39,7 @@ require 'digest/md5'
 require 'amrita/template'
 require 'amrita/format'
 
-MetaPages = {
-  'MetaPages'   => '#metapages',
-  'RecentPages' => '#recentpages',
-  'AllPages'    => '#allpages',
-  'OrphanedPages' => '#orphanedpages',
-  'NotCreatedPages' => '#notcreatedpages',
-  'PluginList' => '#pluginlist',
-}
+
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
   include AsWiki::Util
@@ -67,8 +70,8 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  AsWiki::redirectpage(cgi,  "#{url}#{iwiki}")
 	else
 	  pd = AsWiki::PageData.new(name)
-	  if MetaPages.key?(name)
-	    pd.parsetext(MetaPages[name])
+	  if $metapages.key?(name)
+	    pd.parsetext($metapages[name])
 	    page  = AsWiki::Page.new('Ro', pd)
 	  elsif repository.exist?(name)
 	    pd.parsefile

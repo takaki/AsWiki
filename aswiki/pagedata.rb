@@ -2,11 +2,14 @@
 # This program is distributed under the GNU GPL 2 or later.
 
 require 'aswiki/parser'
+require "aswiki/i18n/#{$LANG}"
 
 module AsWiki
   class PageData
     include AsWiki::Util
     include Amrita::ExpandByMember
+    include AsWiki::I18N
+
     def initialize(name)
       @name = name
       @r = AsWiki::Repository.new('.')

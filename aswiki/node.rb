@@ -26,13 +26,16 @@ module AsWiki
     def Node::load_parts_template
       pt = Amrita::TemplateFileWithCache["template/Node/parts.html"]
       pt.expand_attr = true
-      pt.install_parts_to(PartsModule)
       pt.expand_attr = true
+      pt.prettyprint = true
+      pt.debug_compiler = true
+      pt.install_parts_to(PartsModule)
     end
 
     def initialize(template)
-      @node = []
+      @data = []
       expand_attr = true
+      compact_space = false
       if PartsModule.const_defined?(template)
         extend PartsModule.const_get(template)
 	expand_attr = true
@@ -43,21 +46,9 @@ module AsWiki
     end
 
     def <<(item)
-      @node << item
+      @data << item
     end
-
-    def expand
-      if self.kind_of?(Amrita::PartsTemplate) 
-	 parts_template.expand(ptx)
-      else
-        data = {:data => @node}
-        return @template.expand_tree(data)
-      end
-    end
-    
-    def data
-      @node
-    end
+    attr_reader :data
   end
 end
 

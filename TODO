@@ -1,6 +1,13 @@
 -*- outline -*-
 
 * High
+  - page 統合
+  - i18n
+  - factory
+  - session に Nameで保存
+  - plugin compile
+  - menuのcss fixed
+  - bug expand_attr compact_space
   - できるだけAmrita::eは使わない。
   - pre problem(amrita 待ち)
   - RCSの選択
@@ -35,6 +42,7 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - img: mailto 
   - AttachManager transaction
   - attach brushup
   - plugin#load_templateの改善

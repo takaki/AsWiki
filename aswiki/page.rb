@@ -11,13 +11,9 @@ module AsWiki
   class Page
     def initialize(template ,data)
       tmplfile = File.join('template','Page', template + '.html')
-      # Amrita::TemplateFileWithCache::set_cache_dir('cache')
       template = Amrita::TemplateFileWithCache[tmplfile]
-      # template = Amrita::TemplateFile.new(tmplfile)
       template.expand_attr = true
       template.use_compiler = true
-      # template.debug_compiler = true
-      # template.prettyprint 
       @str = ''
       template.expand(@str, data)
     end

@@ -24,17 +24,13 @@ module AsWiki
     ELEMENT = PLAINTEXT + [:UL, :OL]
     D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
 
-    class DummyNode < Node
-      def expand
-      end
-    end
-    
-    def initialize(str,name='', maketree=true)
+    def initialize(str,name='')
       @name = name
       @s = Scanner.new(str)
       @rawwikinames = []
       @plugin = AsWiki::Plugin.new(@name)
-      @nodeclass =  maketree ? Node : DummyNode
+      
+      # @nodeclass =  maketree ? Node : DummyNode
 
       @tree = parse
     end
@@ -51,7 +47,7 @@ module AsWiki
     end
     def parse
       @line = 1
-      node = @nodeclass.new('Root')
+      node = Node.new('Root')
       next_token
       while true
 	case @token[0]
@@ -71,7 +67,7 @@ module AsWiki
 	when :HN_BEGIN    
 	  node << hn
 	when :HR          
-	  node << @nodeclass.new('Hr').expand
+	  node << Node.new('Hr')
 	  next_token
 	when :PLUGIN  
 	  node << plugin
@@ -87,7 +83,7 @@ module AsWiki
 	  node << syntax_error
 	end
       end 
-      return node.expand
+      return node
     end
     def blank
       next_token
@@ -105,10 +101,10 @@ module AsWiki
     end
     def hn
       level = @token[1].size
-      node = @nodeclass.new("H#{level}")
+      node = Node.new("H#{level}")
       next_token
       node << textline
-      return node.expand
+      return node
     end
     def plugin_block
       block = [] << (@token[1]+"\n")
@@ -138,7 +134,7 @@ module AsWiki
     end
 
     def dl
-      node = @nodeclass.new('Dl')
+      node = Node.new('Dl')
       while true
 	next_token
 	node << { :title => textline,  :doc => element}
@@ -149,10 +145,10 @@ module AsWiki
 	  break
 	end
       end
-      return node.expand
+      return node
     end
     def ul
-      node = @nodeclass.new('Ul')
+      node = Node.new('Ul')
       indent = @token[1].size
       next_token
       node << catch(:ulend) do
@@ -165,10 +161,10 @@ module AsWiki
 	  end
 	end
       end
-      return node.expand
+      return node
     end
     def ol
-      node = @nodeclass.new('Ol')
+      node = Node.new('Ol')
       indent = @token[1].size
       next_token
       while true
@@ -179,10 +175,10 @@ module AsWiki
 	  break
 	end
       end
-      return node.expand
+      return node
     end
     def table
-      node = @nodeclass.new('Table')
+      node = Node.new('Table')
       while true
 	case @token[0]
 	when :TABLE_BEGIN
@@ -196,7 +192,7 @@ module AsWiki
 	  break
 	end
       end
-      return node.expand
+      return node
     end
     def table_tr
       col = []
@@ -216,12 +212,12 @@ module AsWiki
       return {:col => col}
     end
     def paragraph
-      node = @nodeclass.new('Paragraph')
+      node = Node.new('Paragraph')
       node << plaintext
-      return node.expand
+      return node
     end
     def plaintext
-      node = @nodeclass.new('Plaintext')
+      node = Node.new('Plaintext')
       while true
 	case @token[0]
 	when *TEXTLINE
@@ -234,10 +230,10 @@ module AsWiki
 	  break
 	end
       end
-      return node.expand
+      return node
     end
     def element(indent=0)
-      node = @nodeclass.new('Element')
+      node = Node.new('Element')
       while true
 	case @token[0]
 	when *PLAINTEXT
@@ -249,7 +245,7 @@ module AsWiki
 	  elsif indent < @token[1].size
 	    node << ul
 	  elsif indent > @token[1].size
-	    throw :ulend, node.expand
+	    throw :ulend, node
 	  else
 	    raise RangeError
 	  end
@@ -268,22 +264,22 @@ module AsWiki
 	  break
 	end
       end
-      return node.expand
+      return node
     end
     def decorate(tag)
       next_token
-      node = @nodeclass.new(D_TAG[tag])
+      node = Node.new(D_TAG[tag])
       node  << textline
       if @token[0] == tag 
 	next_token
       else                
 	node << syntax_error
       end
-      return node.expand
+      return node
     end
 
     def textline
-      node = @nodeclass.new('Textline')
+      node = Node.new('Textline')
       while true
 	case @token[0]
 	when :OTHER, :SPACE, :WORD
@@ -297,13 +293,13 @@ module AsWiki
 	  node << wikilink(name, @name)
 	when :URI
 	  node << Amrita::e(:a, Amrita::a(:href, @token[1])){@token[1]}
-	  # tn = @nodeclass.new('Url')
+	  # tn = Node.new('Url')
 	  # tn << {:url=>@token[1],:text=>@token[1]}
-	  # node << tn.expand
+	  # node << tn
 	when :MOINHREF
 	  url, key = @token[1][1..-2].split
-	  if /\Aimg:/ =~ url 
-	    node << Amrita::e(:img, Amrita::a(:src,$'), #' this commet is for emacs ruby-mode
+	  if /\Aimg:(http|https)/ =~ url  # XXX
+	    node << Amrita::e(:img, Amrita::a(:src,$1 + $'), #' this commet is for emacs ruby-mode 
 			      Amrita::a(:alt,key))
 	  else
 	    node << Amrita::e(:a, Amrita::a(:href,url),
@@ -321,7 +317,7 @@ module AsWiki
 	end
 	next_token
       end
-      return node.expand
+      return node
     end
     def textblock(endtag)
       node = []

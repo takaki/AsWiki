@@ -6,8 +6,12 @@ module WWiki
     def initialize(basedir)
       @dir = File.join(basedir, 'RCS')
     end
+    def quotemeta(s)
+      return s.gsub(/(['"!$|;>*<\\&>()])/,'\\\\\1').untaint 
+    end
     public
     def backup(fname)
+      fname = quotemeta(fname)
       if ! system("ci -l -q -zLT -d #{fname} #{backupname(fname)}")
 	raise
       end

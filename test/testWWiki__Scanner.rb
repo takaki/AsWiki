@@ -45,6 +45,7 @@ class TestWWiki__Scanner < RUNIT::TestCase
       ["WikiName日本", [[:WIKINAME1,"WikiName"],[:OTHER, "日本"]]],
       ["日本語[[foo]]", [[:OTHER, "日本語"], [:WIKINAME2, "[[foo]]"]]],
       ["@@@[[foo]]", [[:OTHER, "@"], [:OTHER, "@"], [:OTHER, "@"], [:WIKINAME2, "[[foo]]"]]],
+#       ["a\na\n", [[:WORD,'a'],[:SPACE,"\n"],[:WORD,'a'],[:SPACE,"\n"]]]
       ]
     
     s = WWiki::Scanner.new(" \n")

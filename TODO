@@ -1,6 +1,12 @@
 -*- outline -*-
 
 * ToDo
+  - Namazuで検索
+  - $dobackup
+  - $print_error
+  - Page templateの統合  
+  - NotCreatedPages
+  - OrphanedPages
 
 * Wishlist
 ** hashed plugin
@@ -8,6 +14,7 @@
 ** toc
 ** policy
 デフォルトで./をつけるページ，付けないページ
+
 
 * Idea
 ** attr

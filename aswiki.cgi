@@ -4,6 +4,7 @@
 
 # $LOAD_PATH.push '/usr/lib/ruby/1.6'
 
+# $SAFE = 1
 require 'cgi'
 # require 'obaq/htmlgen'
 
@@ -103,7 +104,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       c = repository.load(name)
       data = {
 	:title => 'Raw data of ' + name ,
-	:content => CGI::escapeHTML(c.to_s)
+	:content => c.to_s
       }
       page = AsWiki::Page.new('Raw', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){

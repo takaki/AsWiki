@@ -1,3 +1,12 @@
+2002-09-18  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* template/* : add styl sheet tag.
+
+2002-09-16  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki.cgi : fix duplicate escape HTML problem of raw
+	view.
+
 2002-09-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/scanner.rb: table を '|' から '||' に変更。'|' だと

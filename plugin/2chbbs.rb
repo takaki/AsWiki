@@ -1,3 +1,6 @@
+# Copyritght (c) 2002 TANIGUCHI Takaki
+# This program is distributed under the GNU GPL 2.
+
 require 'wwiki/plugin'
 require 'obaq/htmlgen'
 require 'cgi/session'

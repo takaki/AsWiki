@@ -1,7 +1,13 @@
+# Copyritght (c) 2002 TANIGUCHI Takaki
+# This program is distributed under the GNU GPL 2.
+
 require 'obaq/htmlgen'
 require 'obaq/htmlparser'
 require 'wwiki/util'
 require 'digest/md5'
+
+require 'amrita/template'
+
 
 module WWiki
   def WWiki::editpage(name, content)

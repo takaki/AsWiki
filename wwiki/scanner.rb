@@ -1,3 +1,6 @@
+# Copyritght (c) 2002 TANIGUCHI Takaki
+# This program is distributed under the GNU GPL 2.
+
 require 'strscan'
 require 'uri/common'
 require 'delegate'
@@ -62,7 +65,8 @@ module WWiki
 	  else
 	    q.push [:OTHER, tmp]
 	  end
-	elsif tmp = sc.scan(/\A([A-Z][a-z]+){2,}\b/)
+	# elsif tmp = sc.scan(/\A([A-Z][a-z]+){2,}\b/)
+	elsif tmp = sc.scan(/\A([A-Z]+[a-z]+){2,}\b/)
 	  q.push [:WIKINAME1, tmp]
 	elsif tmp = sc.scan(/\A\[\[\S+?\]\]/)
 	  q.push [:WIKINAME2, tmp]

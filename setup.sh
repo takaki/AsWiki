@@ -7,3 +7,4 @@
 
 mkdir RCS
 mkdir attr
+mkdir text

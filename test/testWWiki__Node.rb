@@ -11,7 +11,7 @@ class TestWWiki__Node < RUNIT::TestCase
     # assert_fail("untested")
     c = WWiki::LiNode.new
     c << "aaa" << "bbb"
-    print c.to_s
+    # print c.to_s
   end
 
   def test_s_new

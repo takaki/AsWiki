@@ -5,7 +5,7 @@ class TestWWiki__Backup < RUNIT::TestCase
 
   def setup
     STDIN.reopen('/dev/null')
-    @c = WWiki::Backup.new('test')
+    @c = WWiki::Backup.new('test/RCS')
     fname = 'test/data/test'
     bname = 'test/RCS/test,v'
     Dir.mkdir('test/RCS')
@@ -33,12 +33,12 @@ class TestWWiki__Backup < RUNIT::TestCase
 
   def test_getbackupdataandmtime
     data = @c.getbackupdataandmtime('test',1)
-    assert_equal(["1\n",Time.parse('2002/01/01 00:00:00')] ,data)
+    assert_equal([["1\n"],Time.parse('2002/01/01 00:00:00')] ,data)
   end
 
   def test_getrecentbackupdataandmtime
     data = @c.getrecentbackupdataandmtime('test')
-    assert_equal(["2\n",Time.parse('2002/01/01 01:00:00')] ,data)
+    assert_equal([["2\n"],Time.parse('2002/01/01 01:00:00')] ,data)
   end
 
   def test_list_backups

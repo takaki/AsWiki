@@ -2,20 +2,9 @@ require 'time.rb'
 
 module WWiki
 
-=begin
-  class Backup
-      def initialize; raise; end
-      def backup(fname) raise; end
-      def getrecentbackupdataandmtime(name) raise; end
-      def list_backups(name) raise; end
-      def getbackupdataandmtime(name, id) raise; end
-    end
-  end
-=end
-
   class Backup
     def initialize(dir)
-      @backupdir = File.join(dir, 'RCS')
+      @dir = dir
     end
     public
     def backup(fname)
@@ -25,7 +14,7 @@ module WWiki
     end
     def getrecentbackupdataandmtime(name)
       return nil if !existsbackupfile(name);
-      f = File.readlines("|co -p -q " + backupname(name)).to_s
+      f = File.readlines("|co -p -q " + backupname(name))
       mtime = ''
       File.foreach("|rlog -zLT " + backupname(name)) do |l|
 	if /^date: (\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\+\d\d);/ =~ l then
@@ -56,7 +45,7 @@ module WWiki
       return nil if !existsbackupfile(name);
       fn = backupname(name)
       mtime = nil
-      f = File.readlines("|co -p -q -r1.#{id} #{fn}").to_s
+      f = File.readlines("|co -p -q -r1.#{id} #{fn}")
       File.foreach("|rlog -r1.#{id} -zLT #{fn}") do |l|
 	if /^date: (\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\+\d\d);/ =~ l then
 	  mtime = $1
@@ -67,7 +56,7 @@ module WWiki
     end
     private
     def backupname(fname)
-      return File.join(@backupdir, File.basename(fname) + ',v')
+      return File.join(@dir, File.basename(fname) + ',v')
     end
     def existsbackupfile(name)
       test(?e, backupname(name).untaint)

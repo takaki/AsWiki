@@ -27,36 +27,35 @@ module WWiki
       node = RootNode.new()
       next_token
       while true
-	if TEXT.include?(@token[0]) then node << text
+	case @token[0]
+	when *TEXT
+	  node << text
+	when :BLANK       
+	  node << blank
+	when :DL          
+	  node << dl
+	when :EOL         
+	  eol  
+	  node << "\n"
+	when :HN_BEGIN    
+	  node << hn
+	when :HR          
+	  node << HrNode
+	  next_token
+	when :PLUGIN  
+	  node << plugin
+	when :PLUGIN_BEGIN
+	  node << plugin_block
+	when :PRE_BEGIN   
+	  node << preblock
+	when :TABLE_BEGIN 
+	  node << table
+	when :EOF         
+	  break
 	else 
-	  case @token[0]
-	  when :BLANK       
-	    node << blank
-	  when :DL          
-	    node << dl
-	  when :EOL         
-	    eol  
-	    node << "\n"
-	  when :HN_BEGIN    
-	    node << hn
-	  when :HR          
-	    node << HrNode
-	    next_token
-	  when :PLUGIN  
-	    node << plugin
-	  when :PLUGIN_BEGIN
-	    node << plugin_block
-	  when :PRE_BEGIN   
-	    node << preblock
-	  when :TABLE_BEGIN 
-	    node << table
-	  when :EOF         
-	    break
-	  else 
-	    node << syntax_error
-	  end
-	end 
-      end
+	  node << syntax_error
+	end
+      end 
       return node
     end
     def blank
@@ -134,64 +133,28 @@ module WWiki
     end
     def ul
       node = UlNode.new
-      depth = @token[1].size
+      indent = @token[1].size
       next_token
       while true
-	if PARAGRAPH.include?(@token[0])
-	  node << paragraph
-	end
 	case @token[0]
-	when :UL
-	  if depth == @token[1].size
-	    next_token
-	    next
-	  elsif depth > @token[1].size
-	    node << ul
-	  else
-	    break
-	  end
-	when :OL
-	  node << ol
+	when *TEXT
+	  node << text(indent)
 	else
 	  break
 	end
       end
       return node 
     end
-    def li(depth)
-      node = LiNode.new
-      while true
-	if PARAGRAPH.include?(@token[0])
-	  node << paragraph
-	elsif @token[0] == :OL
-	  node << ol
-	elsif :UL == @token[0]
-	  if depth < @token[1].size
-	    node << ul
-	  else
-	    break
-	  end
-	else
-	  break
-	end
-      end
-      return node
-    end
     def ol
       node = OlNode.new
-      depth = @token[1].size
+      indent = @token[1].size
       next_token
       while true
-	if PARAGRAPH.include?(@token[0])
-	  node << paragraph
-	end
 	case @token[0]
-	when :OL
-	  next_token
-	  node << paragraph
-	when :EOL
-	  eol
-	else  break
+	when *TEXT
+	  node << text(indent)
+	else
+	  break
 	end
       end
       return node
@@ -246,10 +209,9 @@ module WWiki
     def paragraph
       node = ParagraphNode.new
       while true
-	if TEXTLINE.include?(@token[0])
-	  node << textline
-	end
 	case @token[0]
+	when *TEXTLINE
+	  node << textline
 	when :S_DELIM
 	  node << decorate(:B_DELIM)
 	when :E_DELIM
@@ -260,18 +222,36 @@ module WWiki
       end
       return node
     end
-    def text
+    def text(indent=0)
       node = TextNode.new
       while true
-	if PARAGRAPH.include?(@token[0])
-	  node << paragraph
-	end
 	case @token[0]
-	when :UL          
-	  node << ul
+	when *PARAGRAPH
+	  node << paragraph
+	when :UL
+	  if indent == @token[1].size
+	    next_token
+	    break
+	  elsif indent < @token[1].size
+	    node << ul
+	  elsif indent > @token[1].size
+	    break
+	  else
+	    raise
+	  end
 	when :OL          
-	  node << ol
-	else  break
+	  if indent == @token[1].size
+	    next_token
+	    break
+	  elsif indent < @token[1].size
+	    node << ol
+	  elsif indent > @token[1].size
+	    break
+	  else
+	    raise
+	  end
+	else
+	  break
 	end
       end
       return node

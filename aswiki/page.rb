@@ -8,16 +8,6 @@ require 'amrita/template'
 
 
 module AsWiki
-  def AsWiki::editpage(name, body)
-    data = {:title => name, 
-      :body => body.to_s,
-      :name => name,
-      :md5sum => Digest::MD5::new(body.to_s).to_s,
-      :helppage => cgiurl([['c','v'],['p','HelpPage']]),
-    }
-    page = AsWiki::Page.new('Edit', data)
-    return page
-  end
   class Page
     def initialize(template ,data)
       @str = ''

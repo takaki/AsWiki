@@ -8,8 +8,10 @@ module AsWiki
   class Plugin
     PluginList = []
     PluginTable = {}
+    PluginTableByType = {}
     def Plugin.inherited(sub)
       PluginList << sub
+      PluginTableByType[sub.to_s] = sub
     end
     def initialize(name)
       @name = name

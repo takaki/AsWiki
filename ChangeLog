@@ -1,5 +1,18 @@
 2002-10-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* release: 0.52
+
+	* aswiki.cgi: partially solve TimeStampMismatch problem.
+	edit merge of old file and new file again.
+
+	* aswiki/exception.rb: EditPage. handling edit page call. 
+
+	* aswiki/util.rb: rename AsWiki::diff to AsWiki::merge
+
+	* aswiki/plugin.rb: PluginTalbeByType.
+
+	* release: 0.51
+
 	* aswiki/util.rb: #cgiurl for making cgilink.
 
 	* aswiki.cgi: history feature.

@@ -28,7 +28,6 @@ module AsWiki
     def parsefile
       c = @r.load(@name)
       @timestamp = @r.mtime(@name)
-
       @p = AsWiki::Parser.new(c.to_s, @name)
       @wikinames = @p.wikinames
       @body = @p.tree

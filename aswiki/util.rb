@@ -11,9 +11,8 @@ module AsWiki
   def AsWiki::unescape(s)
     return CGI::unescape(s)
   end
-  def AsWiki::diff(a,b)
+  def AsWiki::merge(a,b, tag=true)
     f = Diff::diff(a,b)
-
     c = []
     ai = 0
     bi = 0
@@ -25,14 +24,12 @@ module AsWiki
 	  if b[bi] != a[ai]
 	    raise ArgumentError, 'not match 1'
 	  end
-	  r << Amrita::e(:div){
-	    Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
+	  r << diffout(b[bi], '=', tag,  bi, 'diffeql')
 	  ai += 1
 	  bi += 1
 	end
 	x[2].each{|l|
-	  r << Amrita::e(:div, Amrita::a(:class,'diffnew')){
-	    Amrita::e(:code){"#{bi} #{x[0]} #{l}".chomp}} << "\n"
+	  r << diffout(l, x[0], tag, bi, 'diffnew')
 	  bi += 1
 	}
       elsif x[0] == :-
@@ -40,14 +37,12 @@ module AsWiki
 	  if b[bi] != a[ai]
 	    raise ArgumentError, 'not match 2'
 	  end
-	  r << Amrita::e(:div){
-	    Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
+	  r << diffout(b[bi], '=', tag, bi, 'diffeql')
 	  ai += 1
 	  bi += 1
 	end
 	x[2].each{|l|
-	  r << Amrita::e(:div, Amrita::a(:class,'diffold')){
-	    Amrita::e(:code){"#{bi} #{x[0]} #{l}".chomp}} << "\n"
+	  r << diffout(l, x[0], tag, bi, 'diffold')
 	  ai += 1
 	}
       else
@@ -59,19 +54,34 @@ module AsWiki
       if b[bi] != a[ai]
 	raise ArgumentError, 'not match 3'
       end
-      r << Amrita::e(:div){Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
+      r << diffout(b[bi], '=', tag, bi, 'diffeql')
       ai += 1
       bi += 1
     end
     return r
   end
-  def diffout(s, class_=nil)
-    [Amrita::e(:div, (class_ ? Amrita::a(:class, class_) : nil)){
+  def AsWiki::diffout(s,sign, tag, lineno, class_)
+    if tag
+      return Amrita::e(:div, Amrita::a(:class, class_)){
 	Amrita::e(:code){
-	  s.chomp
+	  "#{lineno} #{sign} #{s.chomp}"
 	}
-      }, "\n"]
+      }, "\n"
+    else
+      case sign.to_s
+      when '='
+	  return s
+      when '+'
+	return '+' + s
+      when '-'
+	return '-' + s
+      else
+	raise ArgumentError, sign.to_s
+      end
+    end
   end
+
+
 
   module Util
     def expandwikiname(wikiname, base='')
@@ -91,16 +101,16 @@ module AsWiki
     end
     def wikilink(name, base='')
       repository = AsWiki::Repository.new
-      link = AsWiki::escape(name)
+      link = name
       if repository.exist?(name) || name =~ /[^:]+:[^:]+/ || 
 	  MetaPages.has_key?(name)
 	return Amrita::e(:a, Amrita::a(:href,cgiurl([['c','v'],['p',link]]))
 			 ){
-	  AsWiki::unescape(name)}
+	  name}
       else
 	return Amrita::e(:a, Amrita::a(:href, cgiurl([['c','v'],['p',link]])),
 			 Amrita::a(:class, "notexist")){
-	  AsWiki::unescape(name) + "?"}
+	  name + "?"}
       end
     end
     def timestr(t)
@@ -122,3 +132,4 @@ module AsWiki
     end
   end
 end
+

@@ -12,6 +12,7 @@ require 'wwiki/plugin'
 module WWiki
   class Parser
     include Obaq::HtmlGen
+    include WWiki::Util
     WORD  = [:SPACE, :OTHER, :WORD]
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
     DECORATION = [:EM, :STRONG]
@@ -22,13 +23,30 @@ module WWiki
     
     def initialize(str)
       @s = Scanner.new(str)
-      @wikilinks = []
+      @wikinames = []
       @plugin = WWiki::Plugin.new
 
       @tree = parse
     end
-    attr_reader :tree, :wikilinks
+    attr_reader :tree, :wikinames
+    def wikilinks
+      return @wikinames.uniq. delete_if{|w| w =~ /:[^:]/ }.map{|l| 
+	[l, $repository.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
+	"#{wikilink(l[0])}(#{modified(l[1])})\n" }
+    end
     private 
+    def modified(t)
+      return '-' unless t
+      dif = (Time.now - t).to_i
+      dif = dif / 60
+      return "#{dif}m" if dif <= 60
+      dif = dif / 60
+      return "#{dif}h" if dif <= 24
+      dif = dif / 24
+      return "#{dif}d"
+    end
+
+    
     def next_token
       @token = @s.next_token
     end
@@ -273,12 +291,12 @@ module WWiki
 	when :OTHER, :SPACE, :WORD
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
-	  @wikilinks << @token[1]
-	  node << WWiki::wikilink(@token[1])
+	  @wikinames << @token[1]
+	  node << wikilink(@token[1])
 	when :WIKINAME2
 	  name = @token[1][2..-3]
-	  @wikilinks << name 
-	  node << WWiki::wikilink(name)
+	  @wikinames << name 
+	  node << wikilink(name)
 	when :URI
 	  node << E(:a, A(:href, @token[1])){@token[1]}
 	when :MOINHREF

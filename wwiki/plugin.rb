@@ -18,12 +18,18 @@ module WWiki
 	av.shift
       end
       cmd = av[0]
-      if p = PluginTable[cmd].new
+      if pc = PluginTable[cmd]
+	p = pc.new
 	p.onview(line, b, e, av)
 	return p
       else
-	return "Unknown Plugin: cmd"
+	return line.to_s
       end
+    end
+    private
+    def load_template
+      tmplfile = File.join('template', 'plugin', self.type::Name + '.html')
+      Obaq::HtmlParser.parse_file(tmplfile)
     end
   end
 end

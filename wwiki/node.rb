@@ -22,8 +22,9 @@ module WWiki
       @node << item
     end
     def to_s
+      # data = {:data => Obaq::noescape{@node.to_s}}
+      # data = {:data => @node}
       data = {:data => @node}
-      # data = {:data => self.to_a}
       tree = @template.expand(data)
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false

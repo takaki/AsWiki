@@ -1,7 +1,11 @@
 -*- outline -*-
 
-EditPage
-save
-日本語の処理
-WikiNameの処理
-href周り
+* href周り
+* lock
+* interwikiname
+* policy
+デフォルトで./をつけるページ，付けないページ
+* toc
+* header のナンバリング
+* h1 delete
+  

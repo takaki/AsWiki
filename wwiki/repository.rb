@@ -4,7 +4,7 @@ require 'wwiki/util'
 
 module WWiki
   class Repository
-    def initialize(basedir)
+    def initialize(basedir='.')
       @dir = File.join(basedir ,'text')
       @basedir = basedir
     end
@@ -26,7 +26,11 @@ module WWiki
     end
     
     def mtime(name)
-      return File.mtime(textname(name))
+      if exist?(name)
+	return File.mtime(textname(name))
+      else
+	return nil
+      end
     end
 
     def namelist
@@ -39,7 +43,7 @@ module WWiki
     end
     private
     def textname(name)
-      return File.join(@dir, WWiki::escape(name))
+      return File.join(@dir, name)
     end
   end
 end

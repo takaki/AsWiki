@@ -5,7 +5,7 @@ class TestWWiki__Scanner < RUNIT::TestCase
 
   def test_next_token
     t = [ 
-      ["=== ===", [[:HN_BEGIN, "==="],[:SPACE, " "], [:HN_END, "==="]]],
+      ["=== ", [[:HN_BEGIN, "==="],[:SPACE, " "],]],
       ["AA:BB:CC", [[:OTHER, "AA:BB:CC"]]],
       ["hoge  ", [[:WORD, "hoge"],[:SPACE, "  "]]],
       ["foo" , [[:WORD, 'foo']]],
@@ -27,10 +27,10 @@ class TestWWiki__Scanner < RUNIT::TestCase
       ["hoge:WikiName", [[:INTERWIKINAME,"hoge:WikiName"]]],
       ["[http://hoge.foo/ foolink]", 
 	[[:MOINHREF, '[http://hoge.foo/ foolink]']]],
-      ["'' ''", [[:E_DELIM, "''"],[:SPACE, ' '],[:E_DELIM, "''"]]],
-      ["'''a'''", [[:S_DELIM, "'''"],[:WORD, 'a'],[:S_DELIM, "'''"]]],
-      ["''a'' '''b'''", [[:E_DELIM, "''"],[:WORD, 'a'],[:E_DELIM, "''"],
-	  [:SPACE, ' '],[:S_DELIM, "'''"],[:WORD, 'b'],[:S_DELIM, "'''"]]],
+      ["'' ''", [[:EM, "''"],[:SPACE, ' '],[:EM, "''"]]],
+      ["'''a'''", [[:STRONG, "'''"],[:WORD, 'a'],[:STRONG, "'''"]]],
+      ["''a'' '''b'''", [[:EM, "''"],[:WORD, 'a'],[:EM, "''"],
+	  [:SPACE, ' '],[:STRONG, "'''"],[:WORD, 'b'],[:STRONG, "'''"]]],
       [" 1. hoge", [ [:OL, ' 1.'],[:SPACE, ' '],[:WORD, 'hoge']]],
       ["\n 1. ", [ [:BLANK,""],[:EOL,"\n"],[:OL, ' 1.'],[:SPACE, ' ']]],
       [" * hoge", [ [:UL, ' *'],[:SPACE, ' '],[:WORD, 'hoge']]],

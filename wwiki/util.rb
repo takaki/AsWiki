@@ -5,9 +5,17 @@ module WWiki
     return CGI::escape(s).gsub('\.','%2E')
   end
   def WWiki::unescape(s)
-    return CGI::unescape
+    return CGI::unescape(s)
   end
-  def WWiki::wikilink(name)
-    return E(:a, A(:href, "#{$CGIURL}?c=v&p=#{WWiki::escape(name)}")){name}
+  module Util
+    def wikilink(name)
+      if $repository.exist?(name)
+	return E(:a, A(:href, "#{$CGIURL}?c=v&p=#{WWiki::escape(name)}")){
+	  WWiki::unescape(name)}
+      else
+	return WWiki::unescape(name) + 
+	  E(:a, A(:href, "#{$CGIURL}?c=v&p=#{WWiki::escape(name)}")){%q|?|}.to_s
+      end
+    end
   end
 end

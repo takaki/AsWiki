@@ -19,7 +19,7 @@ module AsWiki
       t = Time.now
       time = sprintf('%d/%d/%d (%s) %02d:%02d', t.year, t.mon, t.day, 
 		     weekstr(t.wday), t.hour, t.min)
-      data = "\n#{number}: Ì¾Á°: #{name} Åê¹ÆÆü: #{time} .\n" +
+      data = "\n#{number}: Ì¾Á°: #{name} Åê¹ÆÆü: #{time} \n\n" +
 	session['textdata'] + "\n"
       file = @repository.load(pname)
       file[session['begin'].to_i-1, 0 ] = data

@@ -19,10 +19,11 @@ module AsWiki
     def initialize(template)
       @node = []
       tmplfile = File.join('template', 'Node', template + '.html')
-      # @template = Amrita::TemplateFileWithCache.new(tmplfile)
       Amrita::TemplateFileWithCache::set_cache_dir('cache')
       @template = Amrita::TemplateFileWithCache[tmplfile]
-      @template.use_compiler = true
+      # @template = Amrita::TemplateFile.new(tmplfile)
+      # @template.pre_format = true
+      # @template.use_compiler = true
     end
     def <<(item)
       @node << item

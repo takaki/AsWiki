@@ -21,9 +21,13 @@ require 'amrita/template'
 
 # $SAFE = 1
 
-metapage = {
+MetaPages = {
+  'MetaPages'   => '#metapages',
   'RecentPages' => '#recentpages',
-  'AllPages' => '#allpages'
+  'AllPages'    => '#allpages',
+  'OrphanedPages' => '#orphanedpages',
+  'NotCreatedPages' => '#notcreatedpages',
+  'PluginList' => '#pluginlist',
 }
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
@@ -66,8 +70,8 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	cgi.out({'Status' => '302 REDIRECT',
 		  'Location' => "#{url}#{iwiki}"}){''}
       else
-	if metapage.key?(name)
-	  p = AsWiki::Parser.new(metapage[name])
+	if MetaPages.key?(name)
+	  p = AsWiki::Parser.new(MetaPages[name])
 	  data = {:title => name, :content => p.tree.to_s, }
 	  page  = AsWiki::Page.new('Ro',data)
 	elsif repository.exist?(name)
@@ -121,7 +125,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       end
       data = {
 	:title => 'Diff of ' + name ,
-	:content => CGI::escapeHTML(AsWiki::diff(co,cn).to_s)
+	:content => AsWiki::diff(co,cn) # .to_s
       }
       page = AsWiki::Page.new('Raw', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){

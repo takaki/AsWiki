@@ -310,7 +310,9 @@ module AsWiki
 	    node << Amrita::e(:img, Amrita::a(:src,$'),
 			      Amrita::a(:alt,key))
 	  else
-	    node << Amrita::e(:a, Amrita::a(:href,url)){key}
+	    node << Amrita::e(:a, Amrita::a(:href,url),
+			      Amrita::a(:class, 'external')
+			      ){key}
 	  end
 	when :ENDPERIOD
 	  node << Amrita::e(:br)

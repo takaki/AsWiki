@@ -1,5 +1,18 @@
 2002-09-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+
+	* release: 0.42
+	
+	* plugin/2chbbs.rb: change output format.
+
+	* plugin/core.rb: new plugin #notcreatedpages.
+	new plugin #orphanedpages.
+	new plugin #metaages.
+	new plugin #pluginlist.
+	
+	* aswiki/node.rb: use Amrita::TemplateFile again, because out put
+	HTML is	very dirty.
+
 	* release: 0.41
 
 	* aswiki/backup.rb: rename Backup#backup to Backup#ci.
@@ -23,7 +36,7 @@
 
 2002-09-20  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* template/Node/Pre.html: add class entity for CSS.
+	* template/Node/Pre.html: add class attribute for CSS.
 
 	* default.css: created.
 

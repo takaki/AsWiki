@@ -32,7 +32,9 @@ module AsWiki
 	end
 	# print  "#{bi} #{x[0]} #{x[2]}"
 	x[2].each{|l|
-	  r << "#{bi} #{x[0]} #{l}"
+	  # r << "#{bi} #{x[0]} #{l}"
+	  r << Amrita::e(:span,Amrita::a(:class,'diffnew')){"#{bi} #{x[0]} #{l}".chomp}
+	  r << "\n"
 	  bi += 1
 	}
       elsif x[0] == :-
@@ -47,7 +49,9 @@ module AsWiki
 	end
 	# print  "#{bi} #{x[0]} #{x[2]}"
 	x[2].each{|l|
-	  r << "#{bi} #{x[0]} #{l}"
+	  # r << "#{bi} #{x[0]} #{l}"
+	  r << Amrita::e(:span,Amrita::a(:class,'diffold')){"#{bi} #{x[0]} #{l}".chomp}
+	  r << "\n"
 	  ai += 1
 	}
       else
@@ -86,12 +90,15 @@ module AsWiki
       ename = expandwikiname(name, $pname)
       repository = AsWiki::Repository.new
       link = AsWiki::escape(ename)
-      if repository.exist?(ename) || name =~ /[^:]+:[^:]+/
-	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")){
+      if repository.exist?(ename) || name =~ /[^:]+:[^:]+/ || 
+	  MetaPages.has_key?(name)
+	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")
+			 ){
 	  AsWiki::unescape(name)}
       else
-	[AsWiki::unescape(name) ,
-	  Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")){"?"}]
+	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}"),
+			 Amrita::a(:class, "nonexistent")){
+	  AsWiki::unescape(name) + "?"}
       end
     end
   end

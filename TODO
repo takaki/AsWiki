@@ -1,17 +1,16 @@
 -*- outline -*-
 
 * High
-  - diff0.4に対応
+  - $pname を削除できるようにする。
   - Namazuで検索
   - $print_error
   - $dobackup
   - Page templateの統合  
   - NotCreatedPages
   - OrphanedPages
-  - rcsoutput のもうちょっとましな扱い。adhocすぎ。
   - w3m-elでpostできない?
   - graphviz 用出力(趣味やね)
-  - Parserの高速化 (うーん)
+  - 高速化 (うーん)。Parserは十分早い。だが，Amritaの展開が問題。
 
 * Low
   - toc

@@ -93,17 +93,33 @@ dl
   width: 80%;
   }
 
-div.diffold 
+span.diffold 
 {
   background-color: #FFFF80;
   border-style:none;
   border-width:thin;
   width:99%;
 }
-div.diffnew 
+span.diffnew 
 {
   background-color: #80FF80;
   border-style:none;
   border-width:thin;
-  width:99%;
+  width:99%; 
   }
+
+
+a.nonexistent
+{
+    font-weight: bold;
+  /* background-color:  #F8F8F8; */
+    color: #FF2222;
+}
+a.nonexistent:visited 
+{
+  /* background-color: #F8F8F8; */
+    color: #FF2222;
+}
+
+a.external {
+}

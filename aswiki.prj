@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 41)
+(Project-Version aswiki 0 42)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 40)
+(Parent-Version aswiki 0 41)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Sun, 22 Sep 2002 14:35:02 +0900")
+(Checkin-Time "Sun, 22 Sep 2002 23:39:26 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -20,7 +20,7 @@
 ;; to version 0.0(w), by takaki:
 
   (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.9 664))
-  (aswiki/parser.rb (aswiki/1_parser.rb 1.21 664))
+  (aswiki/parser.rb (aswiki/1_parser.rb 1.22 664))
 
 ;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
 ;; to version 0.1(w), by takaki:
@@ -31,8 +31,8 @@
 ;; to version 0.2(w), by takaki:
 
   (template/Node/Li.html (aswiki/3_LiNode.htm 1.4 664))
-  (ChangeLog (aswiki/4_ChangeLog 1.12 664))
-  (aswiki/node.rb (aswiki/5_node.rb 1.16 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.13 664))
+  (aswiki/node.rb (aswiki/5_node.rb 1.17 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.11 664))
 
 ;; Files added by populate at Thu, 04 Apr 2002 10:35:33 +0900,
@@ -60,10 +60,10 @@
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (aswiki.cgi (aswiki/17_wwiki.cgi 1.27 755))
+  (aswiki.cgi (aswiki/17_wwiki.cgi 1.28 755))
   (text/SamplePage (aswiki/18_SampleText 1.4 644))
   (template/Node/Hr.html (aswiki/19_HrNode.htm 1.1 664))
-  (template/Node/Pre.html (aswiki/20_PreNode.ht 1.2 664))
+  (template/Node/Pre.html (aswiki/20_PreNode.ht 1.3 664))
   (template/Node/H6.html (aswiki/21_HN6Node.ht 1.1 664))
   (template/Node/H5.html (aswiki/22_HN5Node.ht 1.1 664))
   (template/Node/H4.html (aswiki/23_HN4Node.ht 1.1 664))
@@ -76,11 +76,11 @@
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.13 664))
+  (TODO (aswiki/29_TODO 1.14 664))
   (template/Node/Table.html (aswiki/30_TableNode. 1.1 664))
   (template/Node/Dl.html (aswiki/31_DlNode.htm 1.1 664))
   (template/Page/View.html (aswiki/32_ViewPage.h 1.16 664))
-  (aswiki/page.rb (aswiki/33_page.rb 1.14 664))
+  (aswiki/page.rb (aswiki/33_page.rb 1.15 664))
 
 ;; Files added by populate at Wed, 10 Apr 2002 23:11:24 +0900,
 ;; to version 0.8(w), by takaki:
@@ -97,13 +97,13 @@
 
   (plugin/demo.rb (aswiki/40_demo.rb 1.9 664))
   (aswiki/plugin.rb (aswiki/41_plugin.rb 1.9 664))
-  (aswiki/util.rb (aswiki/42_util.rb 1.11 664))
+  (aswiki/util.rb (aswiki/42_util.rb 1.12 664))
 
 ;; Files added by populate at Sat, 18 May 2002 23:38:58 +0900,
 ;; to version 0.16(w), by takaki:
 
-  (plugin/2chbbs.rb (aswiki/43_2chbbs.rb 1.8 664))
-  (plugin/core.rb (aswiki/44_core.rb 1.6 664))
+  (plugin/2chbbs.rb (aswiki/43_2chbbs.rb 1.9 664))
+  (plugin/core.rb (aswiki/44_core.rb 1.7 664))
   (text/InterWikiName (aswiki/45_InterWikiN 1.2 644))
   (template/plugin/list.html (aswiki/46_list.html 1.2 664))
   (template/plugin/2chbbs.html (aswiki/47_2chbbs.htm 1.2 664))
@@ -116,7 +116,7 @@
 ;; Files added by populate at Fri, 24 May 2002 23:42:44 +0900,
 ;; to version 0.19(w), by takaki:
 
-  (template/Page/Raw.html (aswiki/b/1_Raw.html 1.6 664))
+  (template/Page/Raw.html (aswiki/b/1_Raw.html 1.7 664))
 
 ;; Files added by populate at Mon, 10 Jun 2002 00:55:36 +0900,
 ;; to version 0.23(w), by takaki:
@@ -146,7 +146,19 @@
 ;; Files added by populate at Wed, 18 Sep 2002 23:40:30 +0900,
 ;; to version 0.38(w), by takaki:
 
-  (default.css (aswiki/b/8_default.cs 1.3 664))
+  (default.css (aswiki/b/8_default.cs 1.4 664))
+
+;; Files added by populate at Sun, 22 Sep 2002 23:26:45 +0900,
+;; to version 0.41(w), by takaki:
+
+  (template/plugin/notcreatedpages.html (aswiki/b/9_notcreated 1.1 664))
+  (template/plugin/orphanedpages.html (aswiki/b/10_orphanedpa 1.1 664))
+  (template/plugin/metapages.html (aswiki/b/11_metapages. 1.1 664))
+
+;; Files added by populate at Sun, 22 Sep 2002 23:37:37 +0900,
+;; to version 0.41(w), by takaki:
+
+  (template/plugin/pluginlist.html (aswiki/b/12_pluginlist 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

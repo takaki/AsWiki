@@ -68,8 +68,10 @@ module AsWiki
   end
   def AsWiki::diffout(s,sign, tag, lineno, class_)
     if tag
-      return Node.new('Diffout') << { :class => class_, 
-	:text =>  "#{lineno} #{sign} #{s.chomp}"}
+      return Node::parts.create_amulet(:Diffout, [{ :class => class_,
+					   :text =>  "#{lineno} #{sign} #{s.chomp}"}])
+      # return Node.new('Diffout') << { :class => class_, 
+      # :text =>  "#{lineno} #{sign} #{s.chomp}"}
     else
       case sign.to_s
       when '='

@@ -1,2 +1,6 @@
 NAKAJIMA Taku <tnakajima@brain-tokyo.jp>
 * parts template patch
+
+Mike Limaye <mike@limaye.org>
+* bug fix [util.rb, backup.rb]
+

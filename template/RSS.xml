@@ -3,7 +3,7 @@
 "http://my.netscape.com/publish/formats/rss-0.91.dtd">
 <rss version="0.91">
 <channel> 
-<title it="title">AsWiki</title>
+<title id="title">AsWiki</title>
 <language id="language">ja</language>
 <link id="link">http://www.assist.media.nagoya-u.ac.jp/ASDP/index.cgi</link>
 <description><span id="title"></span>: RecentChanges</description>

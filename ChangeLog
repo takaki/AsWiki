@@ -1,3 +1,13 @@
+2003-05-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/backup.rb: RCSBackup#rlog; bug fiexed (thanks, Mike Limaye).
+
+	* aswiki/util.rb: diffout; bug fixed (thanks, Mike Limaye).
+
+2003-04-15  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/handler.rb: no change page check on save time.
+
 2003-03-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/util.rb: fixed cgiurl.

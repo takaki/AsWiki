@@ -23,7 +23,7 @@ module AsWiki
 	  rev = $1.to_i
 	  next
 	end
-	if /^date: (\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\+\d\d);(?:.*lines: (.+)?)?/ =~ l
+	if /^date: (\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d.+\d\d);(?:.*lines: (.+)?)?/ =~ l
 	 log << [rev, Time.parse($1), $2]
 	end
       end

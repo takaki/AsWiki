@@ -144,7 +144,7 @@ module AsWiki
 	  cs  = c[bol-1...eol]
 	  raise AsWiki::SaveConflict.new(name, AsWiki::merge(cs, bl, false))
 	end
-
+	body.gsub("\r\n", "\n")
 	bol = (cgi.value('ebol')[0] or 1).to_i
 	eol = (cgi.value('eeol')[0] or c.size).to_i
 	c[bol-1...eol] = body.to_s

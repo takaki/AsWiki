@@ -50,7 +50,7 @@ module AsWiki
       super
       c = @repository.load(name)
       pd = AsWiki::PageData.new(name)
-      pd.body = Amrita::pre { Amrita::e(:code) {  c.to_s  } } # XXX
+      pd.body = Amrita::e(:pre){ Amrita::e(:code) {  c.to_s  } }
       page = AsWiki::Page.new('Raw', pd)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
@@ -96,7 +96,7 @@ module AsWiki
       pd = AsWiki::PageData.new(name)
       pd.revision  = rev
       pd.timestamp = backup.rlog(name, rev)[0][1]
-      pd.body = Amrita::pre { Amrita::e(:code) {  c.to_s  } } # XXX
+      pd.body = Amrita::e(:pre) { Amrita::e(:code) {  c.to_s  } }
       page = AsWiki::Page.new('History', pd)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s

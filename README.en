@@ -1,5 +1,8 @@
 = AsWiki - WikiWikiWeb clone written in Ruby
 
+** This is under development and very unstable.    ** 
+** If in doubt, use AsWiki-1.0.x.                  **
+
 == License
 Copyright (c) 2002 TANIGUCHI Takaki<takaki@assist.media.nagoya-u.ac.jp>
 This program is distirubted under the GPL2 or later.
@@ -17,15 +20,15 @@ its output html.
 
 == Requires
 * ruby(>=1.6.7) http://www.ruby-lang.org/
-* amrita      http://www.ruby-lang.org/en/raa-list.rhtml?id=75
-* strscan     http://www.ruby-lang.org/en/raa-list.rhtml?id=705
+* amrita      http://raa.ruby-lang.org/list.rhtml?name=amrita
+* strscan     http://raa.ruby-lang.org/list.rhtml?name=strscan
 === to use version log
-* diff.rb     http://www.ruby-lang.org/en/raa-list.rhtml?id=63 
+* diff.rb     http://raa.ruby-lang.org/list.rhtml?name=diff
 * RCS         http://www.fsf.org/software/rcs/rcs.html
 === to use attach 
-* bdb         http://www.ruby-lang.org/en/raa-list.rhtml?id=49
+* bdb         http://raa.ruby-lang.org/list.rhtml?name=bdb
 === to use RSS
-* REXML       http://www.ruby-lang.org/en/raa-list.rhtml?id=405
+* REXML       http://raa.ruby-lang.org/list.rhtml?name=rexml
 	
 == Download
 * http://sourceforge.net/project/showfiles.php?group_id=68271

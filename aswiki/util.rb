@@ -14,7 +14,7 @@ module AsWiki
   end
   def AsWiki::redirectpage(cgi, url)
     cgi.out({'Status' => '302 REDIRECT',
-	      'Location' => url}){Amrita::e(:a,Amrita::a(:href, url)){url}.to_s}
+	      'Location' => url}){Amrita::e(:a, :href => url){url}.to_s}
   end
 
   def AsWiki::merge(a,b, tag=true)
@@ -140,16 +140,14 @@ module AsWiki
       elink = expandwikiname(link, base)
       if repository.exist?(elink) || elink =~ /[^:]+:[^:]+/ || 
 	  $metapages.has_key?(elink)
-	return Node::parts[:WikiName][{
+	return Node.new('WikiName') << {
 	  :url => cgiurl([],elink),
-	  :text => name}]
+	  :text => name}
       else
-	return Node::parts.create_amulet(:WikiNameNE,[
-					   {
-					     :url => cgiurl([], elink),
-					     :text => name
-					   }
-					 ] )
+	return Node.new('WikiNameNE') << {
+	  :url => cgiurl([], elink),
+	  :text => name
+	}
       end
     end
     def timestr(t)

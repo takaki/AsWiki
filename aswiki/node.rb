@@ -4,7 +4,7 @@
 require 'strscan'
 require 'uri/common'
 
-# require 'amrita/parts'
+require 'amrita/parts'
 require 'amrita/amulet'
 
 require 'aswiki/scanner'
@@ -12,30 +12,24 @@ require 'aswiki/scanner'
 
 module AsWiki 
   class Node
-    
-    def Node::parts
-      if not defined? NodeParts
-	# XXX
-	$NodeParts = Amrita::TemplateFile.new(File.join($DIR_TEMPLATE,'Node.html'))
-	$NodeParts.define_amulet(:Dl=>Node, :Em=>Node, 
-			:H2=>Node, :H3=>Node, :H4=>Node, :H5=>Node, :H6=>Node,
-			:Ol=>Node, :Paragraph=>Node, 
-			:Strong=>Node, :Table=>Node, :Root=>Node,  
-			:Textline=>Node, :Plaintext=>Node, 
-			:Element=>Node, :Ul=>Node, :Hr=>Node, :Url=>Node, 
-			:Moinhref=>Node, :MoinhrefImg=>Node, :Br=>Node,
-			:WikiNameNE=>Node, :WikiName=>Node,
-			:Diffout=>Node,
-			:pre=>Node
-			)
-      end
-      return $NodeParts
+    module PartsModule
     end
 
+    def Node::load_parts_template
+      return if PartsModule::const_defined?(:WikiName)
+      pt = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,'Node.html')]
+      pt.expand_attr = true
+      pt.install_parts_to(PartsModule)
+    end
 
-    include Amrita::Amulet
-    def initialize(data=[])
-      @data = data
+    def initialize(template)
+      @data = []
+      extend PartsModule.const_get(template)
+    end
+
+    def <<(item)
+      @data << item
+      self
     end
     attr_reader :data
   end

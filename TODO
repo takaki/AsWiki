@@ -1,6 +1,7 @@
 -*- outline -*-
 
 * High
+  - session_id を渡す目的でCGI.newをしない
   - attach brushup
   - AttachManager transaction
   - mod_ruby

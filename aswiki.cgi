@@ -31,6 +31,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   load ('aswiki.conf')
   repository = AsWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
+  cgi = CGI.new
   class << cgi
     def multipartcheck
       @multipart = false
@@ -68,19 +69,9 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  page  = AsWiki::Page.new('Ro',data)
 	elsif repository.exist?(name)
 	  pd = AsWiki::PageData.new(name)
-	  data = {:title => name, 
-	    :contents => Amrita::noescape{pd.tree.to_s},
-	    :edit => "#{$CGIURL}?c=e;p=#{AsWiki::escape(name)}",
-	    :toppage => "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}",
-	    :recentpages => "#{$CGIURL}?c=v;p=RecentPages",
-	    :allpages => "#{$CGIURL}?c=v;p=AllPages",
-	    :rawpage => "#{$CGIURL}?c=r;p=#{AsWiki::escape(name)}",
-	    :diffpage => "#{$CGIURL}?c=d;p=#{AsWiki::escape(name)}",
-	    :helppage => "#{$CGIURL}?c=v;p=HelpPage",
-	    :lastmodified => repository.mtime(name),
-	    :wikilinks => pd.wikilinks,
-	  }
-	  page = AsWiki::Page.new('View', data)
+	  pd.contents = Amrita::noescape{pd.tree.to_s}
+	  pd.lastmodified = repository.mtime(name)
+	  page = AsWiki::Page.new('View', pd)
 	else
 	  page = AsWiki::editpage(name, '')
 	end

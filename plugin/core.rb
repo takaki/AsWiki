@@ -24,7 +24,9 @@ module AsWiki
     Name = 'allpages'
     include AsWiki::Util
     def onview(line, b, e, av)
-      data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)}}
+      data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)},
+	:total => @repository.namelist.length
+      }
       load_template.expand(@view, data)
       @view = Amrita::noescape{@view}
     end

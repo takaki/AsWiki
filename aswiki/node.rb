@@ -29,10 +29,11 @@ module AsWiki
       @node << item
     end
     def to_s
-      s = ''
+      # s = ''
       data = {:data => @node}
-      @template.expand(s, data)
-      return Amrita::noescape{s}
+      # @template.expand(s, data)
+      # return Amrita::noescape{s}
+      return Amrita::noescape{@template.expand('', data)}
     end
   end
 end

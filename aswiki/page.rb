@@ -28,7 +28,6 @@ module AsWiki
       template = Amrita::TemplateFile.new(tmplfile)
       template.expand_attr = true
       template.expand(@str, data)
-      @contents = @str
     end
     def to_s
       return @str

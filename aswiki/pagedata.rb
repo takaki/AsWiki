@@ -6,7 +6,7 @@ require 'aswiki/parser'
 module AsWiki
   class PageData
     include AsWiki::Util
-    # include Amrita::ExpandByMember
+    include Amrita::ExpandByMember
     def initialize(name)
       @name = name
       @r = AsWiki::Repository.new('.')
@@ -16,6 +16,13 @@ module AsWiki
       @wikinames = @p.wikinames
 
       @title = name
+      @edit        = "#{$CGIURL}?c=e;p=#{AsWiki::escape(name)}"
+      @toppage     = "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}"
+      @recentpages = "#{$CGIURL}?c=v;p=RecentPages"
+      @allpages    = "#{$CGIURL}?c=v;p=AllPages"
+      @rawpage     = "#{$CGIURL}?c=r;p=#{AsWiki::escape(name)}"
+      @diffpage    = "#{$CGIURL}?c=d;p=#{AsWiki::escape(name)}"
+      @helppage    = "#{$CGIURL}?c=v;p=HelpPage"
     end
     attr_reader :tree, :wikinames
     attr_accessor :title,:edit,:recentpages,:toppage,:allpages,:rawpage,

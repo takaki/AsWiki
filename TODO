@@ -15,6 +15,7 @@
   - mod_ruby
   
 * Low
+  - outer link list?
   - menuのcss fixed
   - 逆リンク…普通にやると全検索になるから…
   - mergeの導入(plugin)

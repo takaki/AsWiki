@@ -23,7 +23,8 @@ module AsWiki
     def initialize(template ,data)
       @str = ''
       tmplfile = File.join('template','Page', template + '.html')
-      template = Amrita::TemplateFile.new(tmplfile)
+      Amrita::TemplateFileWithCache::set_cache_dir('cache') # XXX
+      template = Amrita::TemplateFileWithCache[tmplfile]
       template.expand_attr = true
       template.expand(@str, data)
     end

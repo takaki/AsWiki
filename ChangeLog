@@ -1,3 +1,20 @@
+2002-09-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/page.rb: use Amrita::TemplateFileWithCache.
+
+	* aswiki/backup.rb: new methods Backup#rlog.
+	new methods Backup#co.
+	brushup.
+	remove Backup#list_backups.
+	
+	* aswiki/node.rb: use Amrita::TemplateFileWithCache.
+
+2002-09-20  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* template/Node/Pre.html: add class entity for CSS.
+
+	* default.css: created.
+
 2002-09-18  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/repository.rb, aswiki/backup.rb: Backup timing
@@ -5,7 +22,9 @@
 	real backup time.
 
 	* template/* : add style sheet tag.
-
+	
+	* release: 0.39
+	
 2002-09-16  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki.cgi : fix duplicate escape HTML problem of raw

@@ -41,8 +41,8 @@ class TestAsWiki__Backup < RUNIT::TestCase
     assert_equal([["1\n"],Time.parse('2002/01/01 00:00:00')] ,data)
   end
 
-  def test_list_backups
-    data = @c.list_backups('test')
+  def test_rlog
+    data = @c.rlog('test')
     assert_equal([[2,Time.parse('2002/01/01 01:00:00')],
 		   [1,Time.parse('2002/01/01 00:00:00')]] ,data)
 		 

@@ -15,11 +15,14 @@ require 'amrita/template'
 
 module AsWiki 
   class Node
+    @@template_cache = {}
     def initialize(template)
       @node = []
       tmplfile = File.join('template', 'Node', template + '.html')
-      # @template = Obaq::HtmlParser.parse_file(tmplfile)
-      @template = Amrita::TemplateFile.new(tmplfile)
+      # @template = Amrita::TemplateFileWithCache.new(tmplfile)
+      Amrita::TemplateFileWithCache::set_cache_dir('cache')
+      @template = Amrita::TemplateFileWithCache[tmplfile]
+      @template.use_compiler = true
     end
     def <<(item)
       @node << item

@@ -1,6 +1,7 @@
 -*- outline -*-
 
-* ToDo
+* High
+  - diff0.4に対応
   - Namazuで検索
   - $dobackup
   - $print_error
@@ -9,16 +10,18 @@
   - OrphanedPages
   - rcsoutput のもうちょっとましな扱い。adhocすぎ。
   - w3m-elでpostできない?
+  - graphviz 用出力(趣味やね)
+  - Parserの高速化 (うーん)
 
-* Wishlist
-** hashed plugin
-** header のナンバリング
-** toc
-** policy
-デフォルトで./をつけるページ，付けないページ
+* Low
+  - toc
+  - デフォルトで./をつけるページ，付けないページ
 
+* idea
+  - ページに対する属性。継承?
+  - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
-* Idea
-** attr
-ページに対する属性。継承?
-カレントディレクトリ。デフォルトでネームスペースに属するか?
+* abandoned
+  - header のナンバリング => CSS
+  - hashed plugin => Walrusでつくるとき考える
+  

@@ -257,13 +257,13 @@ module AsWiki
       template.asxml = true
 
 
-      count = 15 
+      count = 15
       data = {
 	:title => $TITLE,
 	:language => $LANG,
 	:link => $CGIURL,
 	:description => "#{$TITLE}: RecentPages",
-	:data => @repository.attrlist.sort{|a,b| b[1] <=> a[1]}[0..count].map{|l| 
+	:data => @repository.attrlist.sort{|a,b| b[1] <=> a[1]}[0,count].map{|l| 
 	  {
 	    :title => l[0],
 	    :link  => "#{$CGIURL}?c=v;p=#{l[0]}",

@@ -38,7 +38,7 @@ module AsWiki
       ret = adb.querybynum(num)
       @data = {
 	:url  => cgiurl([['c','download'],['num',num]]),
-	:mime => ret[:type],
+	:mime => ret[:type].gsub(/\r|\n/,''),
 	:name => ret[:filename],
       }
 

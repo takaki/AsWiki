@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 78)
+(Project-Version aswiki 0 79)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 77)
+(Parent-Version aswiki 0 78)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Tue, 03 Dec 2002 00:10:04 +0900")
+(Checkin-Time "Tue, 03 Dec 2002 02:01:14 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -31,7 +31,7 @@
 ;; to version 0.2(w), by takaki:
 
   
-  (ChangeLog (aswiki/4_ChangeLog 1.46 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.47 664))
   (aswiki/node.rb (aswiki/5_node.rb 1.28 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.17 664))
 
@@ -76,7 +76,7 @@
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.38 664))
+  (TODO (aswiki/29_TODO 1.39 664))
   
   
   (template/Page/View.html (aswiki/32_ViewPage.h 1.33 664))
@@ -129,7 +129,7 @@
 
   (README.en (aswiki/b/4_README 1.6 664))
   (COPYING (/usr/share/common-licenses/GPL) :symlink)
-  (plugin/attach.rb (aswiki/b/5_attach.rb 1.15 664))
+  (plugin/attach.rb (aswiki/b/5_attach.rb 1.16 664))
   (template/plugin/attach.html (aswiki/b/6_attach.htm 1.5 664))
 
 ;; Files added by populate at Wed, 07 Aug 2002 00:04:10 +0900,
@@ -196,7 +196,7 @@
 ;; Files added by populate at Thu, 07 Nov 2002 01:08:59 +0900,
 ;; to version 0.60(w), by takaki:
 
-  (aswiki/handler.rb (aswiki/b/20_handler.rb 1.8 664))
+  (aswiki/handler.rb (aswiki/b/20_handler.rb 1.9 664))
 
 ;; Files added by populate at Sun, 24 Nov 2002 00:58:47 +0900,
 ;; to version 0.64(w), by takaki:

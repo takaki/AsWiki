@@ -1,6 +1,6 @@
 2002-12-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* release: 0.78
+	* release: 0.79
 
 	* aswiki/plugin.rb: load_parts methods argument turn change.
 
@@ -12,7 +12,7 @@
 
 	* aswiki/scanner.rb: WikiName regexp has been config parameter.
 
-	* aswiki/util.rb: expandwikiname support `string' namespacez.
+	* aswiki/util.rb: expandwikiname support `strong' namespacez.
 
 	* release: 0.76
 

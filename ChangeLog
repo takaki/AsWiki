@@ -1,5 +1,7 @@
 2004-08-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* release: 1.0.3
+
 	* aswiki/parser.rb: applied TANAKA's ol bug fix patch.
 
 2004-06-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>

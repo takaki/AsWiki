@@ -1,16 +1,16 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 1.1 4)
+(Project-Version aswiki 1.1 5)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 1.1 3)
+(Parent-Version aswiki 1.1 4)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Sun, 16 Feb 2003 12:36:41 +0900")
+(Checkin-Time "Sun, 16 Feb 2003 12:45:44 +0900")
 (Checkin-Login takaki)
-(Populate-Ignore ("obsolete/" "~$" "\\.log$"))
+(Populate-Ignore ("obsolete/" "~$" "\\.log$" "COPYING"))
 (Project-Keywords)
 (Files
 ;; This is a comment.  Fill in files here.
@@ -19,13 +19,13 @@
 ;; Files added by populate at Mon, 01 Apr 2002 12:57:05 +0900,
 ;; to version 0.0(w), by takaki:
 
-  (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.10 664))
+  (test/testParser.rb (aswiki/0_testWWiki_ 1.10 664))
   (aswiki/parser.rb (aswiki/1_parser.rb 1.44 664))
 
 ;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
 ;; to version 0.1(w), by takaki:
 
-  (test/testWWiki__Scanner.rb (aswiki/2_testWWiki_ 1.7 664))
+  (test/testScanner.rb (aswiki/2_testWWiki_ 1.7 664))
 
 ;; Files added by populate at Wed, 03 Apr 2002 14:59:48 +0900,
 ;; to version 0.2(w), by takaki:
@@ -38,7 +38,7 @@
 ;; Files added by populate at Thu, 04 Apr 2002 10:35:33 +0900,
 ;; to version 0.3(w), by takaki:
 
-  (test/testWWiki__Node.rb (aswiki/7_testWWiki_ 1.5 664))
+  (test/testNode.rb (aswiki/7_testWWiki_ 1.5 664))
 
 ;; Files added by populate at Sat, 06 Apr 2002 23:56:01 +0900,
 ;; to version 0.4(w), by takaki:
@@ -48,13 +48,13 @@
   
   
   
-  (test/testWWiki__Backup.rb (aswiki/13_testWWiki_ 1.9 664))
+  (test/testBackup.rb (aswiki/13_testWWiki_ 1.9 664))
   (aswiki/backup.rb (aswiki/14_backup.rb 1.20 664))
 
 ;; Files added by populate at Mon, 08 Apr 2002 00:17:39 +0900,
 ;; to version 0.5(w), by takaki:
 
-  (test/testWWiki__Repository.rb (aswiki/15_testWWiki_ 1.6 664))
+  (test/testRepository.rb (aswiki/15_testWWiki_ 1.6 664))
   (aswiki/repository.rb (aswiki/16_repository 1.18 664))
 
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
@@ -121,14 +121,14 @@
 ;; Files added by populate at Mon, 10 Jun 2002 00:55:36 +0900,
 ;; to version 0.23(w), by takaki:
 
-  (Makefile (aswiki/b/2_setup.sh 1.12 664))
+  (Makefile (aswiki/b/2_setup.sh 1.13 664))
   (text/HelpPage (aswiki/b/3_HelpPage 1.5 664))
 
 ;; Files added by populate at Mon, 05 Aug 2002 21:09:25 +0900,
 ;; to version 0.27(w), by takaki:
 
   (README.en (aswiki/b/4_README 1.7 664))
-  (COPYING (/usr/share/common-licenses/GPL) :symlink)
+  
   (plugin/attach.rb (aswiki/b/5_attach.rb 1.18 664))
   (template/plugin/attach.html (aswiki/b/6_attach.htm 1.5 664))
 
@@ -211,7 +211,7 @@
 ;; Files added by populate at Mon, 02 Dec 2002 23:21:18 +0900,
 ;; to version 0.76(w), by takaki:
 
-  (test/testAsWiki__Util.rb (aswiki/b/23_testAsWiki 1.2 664))
+  (test/testUtil.rb (aswiki/b/23_testAsWiki 1.2 664))
 
 ;; Files added by populate at Mon, 09 Dec 2002 10:32:36 +0900,
 ;; to version 0.81(w), by takaki:
@@ -255,6 +255,11 @@
 
   (plugin/search.rb (aswiki/b/32_search.rb 1.1 664))
   (template/plugin/search.html (aswiki/b/33_search.htm 1.1 664))
+
+;; Files deleted by depopulate at Sun, 16 Feb 2003 12:40:54 +0900,
+;; from version 1.1.4(w), by takaki:
+
+  ; (COPYING () :symlink)
 )
 (Merge-Parents)
 (New-Merge-Parents)

@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
 # $Format: "VERSION = $ProjectVersion$"$
-VERSION = 1.1.4
+VERSION = 1.1.5
 
 all:
 
@@ -15,5 +15,8 @@ setup:
 clean:
 	find -name '*~' |xargs rm -f
 
-dist: clean
+COPYING:
+	-wget http://www.gnu.org/copyleft/gpl.txt -O $@
+
+dist: clean COPYING
 	shtool tarball -d aswiki-$(VERSION) -c gzip -o ../aswiki-$(VERSION).tar.gz .

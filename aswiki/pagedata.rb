@@ -3,6 +3,7 @@
 
 require 'aswiki/parser'
 require "aswiki/i18n/#{$LANG}"
+# require 'delegate'
 
 module AsWiki
   class PageParts
@@ -14,17 +15,19 @@ module AsWiki
       pt.expand_attr = true
       pt.install_parts_to(PartsModule)
     end
-    def initialize(template)
+    def initialize(pagedata, template)
       extend PartsModule.const_get(template)
+      @pd = pagedata
+      # super(pagedata)
     end
-    attr_accessor :data
   end
 
   class PageData
     class MenuBar < PageParts
       include I18N
-      def initialize(pname)
-	super('MenuBar')
+      def initialize(pd)
+	super(pd, 'MenuBar')
+	pname = pd.name
 	@edit        = cgiurl([['c', 'e'], ['p', pname]])
 	@toppage     = cgiurl([['c', 'v'], ['p', $TOPPAGENAME]])
 	@recentpages = cgiurl([['c', 'v'], ['p', 'RecentPages']])
@@ -39,8 +42,7 @@ module AsWiki
     end
     class PageTitle < PageParts
       def initialize(pd)
-	super('PageTitle')
-	@pd = pd
+	super(pd, 'PageTitle')
       end 
       def title
 	@pd.title
@@ -49,14 +51,14 @@ module AsWiki
 	@pd.revision
       end
       def lastmodified
-	timestr(@pd.timestamp)
+	# timestr(@pd.timestamp)
+	@pd.lastmodified
       end
     end
       
     class PageHeader < PageParts
       def initialize(pd)
-	super('PageHeader')
-	@pd = pd
+	super(pd, 'PageHeader')
       end 
       def logtable
 	@name = @pd.name
@@ -82,8 +84,7 @@ module AsWiki
 
     class PageBody < PageParts
       def initialize(pd)
-	super('PageBody')
-	@pd = pd
+	super(pd, 'PageBody')
       end
       
       def body
@@ -99,11 +100,11 @@ module AsWiki
 
     class PageFooter < PageParts
       def initialize(pd)
-	super('PageFooter')
-	@pd = pd
+	super(pd, 'PageFooter')
       end
       def lastmodified
-	timestr(@pd.timestamp)
+	@pd.lastmodified
+	# timestr(@pd.timestamp)
       end
       def wikilinks
 	@pd.wikilinks
@@ -143,7 +144,7 @@ module AsWiki
     end
 
     def menubar
-      MenuBar.new(@name)
+      MenuBar.new(self)
     end
     def pagetitle
       PageTitle.new(self)
@@ -157,6 +158,10 @@ module AsWiki
     def pagefooter
       PageFooter.new(self)
     end 
+
+      def lastmodified
+	timestr(timestamp)
+      end
 
     def wikilinks
       @p.wikinames.delete_if{|w| w =~ /:[^:]/ }.uniq.map{|l| 

@@ -1,16 +1,10 @@
 -*- outline -*-
 
 * High
-  - Nora or CGIKit
   - page initialize and publish
-  - -w
-  - session に Nameで保存
-  - menuのcss fixed
   - pre problem(amrita 待ち)
   - RCSの選択
   - session_id を渡す目的でCGI.newをしない
-  - 逆リンク…普通にやると全検索になるから…
-  - nora
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - history の raw page
   - $BASEDIRは必要か
@@ -19,13 +13,16 @@
   - ci でtextname Backupをmoduleにしてしまえばいい。include
   - imgだけはinline?
   - toc
-  - mergeの導入(plugin)
   - mod_ruby
-  - Namazuで検索
-  - Page templateの統合  
-  - w3m-elでpostできない?
   
 * Low
+  - menuのcss fixed
+  - 逆リンク…普通にやると全検索になるから…
+  - mergeの導入(plugin)
+  - Namazuで検索
+  - w3m-elでpostできない?
+  - -w
+  - Nora or CGIKit
   - graphviz 用出力(趣味やね)
   - Amritaの展開が問題。
   - デフォルトで./をつけるページ，付けないページ
@@ -35,6 +32,7 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - Page templateの統合  
   - 決め打ち日本語の問題(plugin)。
   - できるだけAmrita::eは使わない。
   - factory
@@ -51,6 +49,7 @@
   - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 
 * abandoned
+  - session に Nameで保存 初期化のタイミングとかで無理
   - #minibbs
   - #minimemo
   - #nikki?

@@ -1,5 +1,7 @@
 2002-11-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* release: 0.65
+
 	* aswiki/pagedata.rb: devide page template into page layout
 	template and page parts	template.
 

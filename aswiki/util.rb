@@ -108,7 +108,8 @@ module AsWiki
       repository = AsWiki::Repository.new
       link = name
       if repository.exist?(name) || name =~ /[^:]+:[^:]+/ || 
-	  MetaPages.has_key?(name)
+	  true
+	  #AsWiki::MetaPages.has_key?(name)
 	return Amrita::e(:a, Amrita::a(:href,cgiurl([['c','v'],['p',link]]))
 			 ){
 	  name}

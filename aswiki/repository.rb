@@ -45,7 +45,7 @@ module AsWiki
 	map{|f| [AsWiki::unescape(f), File.mtime(File.join(@dir, f))]}
     end
     def textname(name)
-      return File.join(@dir, AsWiki::escape(name))
+      return File.join(@dir, AsWiki::escape(name)).untaint
     end
     private
   end

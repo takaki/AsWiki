@@ -4,7 +4,7 @@
 require 'aswiki/plugin'
 require 'aswiki/attachdb'
 require 'cgi/session'
-require 'bdb'
+#require 'bdb'
 
 module AsWiki
   class AttachPlugin < Plugin

@@ -3,6 +3,8 @@
 # This program is distributed under the GNU GPL 2 or later.
 
 # $SAFE = 1
+# $:.unshift Dir::pwd
+
 require 'cgi'
 
 require 'aswiki/repository'
@@ -36,6 +38,10 @@ MetaPages = {
 if $0 == __FILE__ or defined?(MOD_RUBY)
   include AsWiki::Util
   load ('aswiki.conf')
+  Dir::chdir $BASEDIR
+  Amrita::TemplateFileWithCache::set_cache_dir('cache')
+  AsWiki::Node::load_parts_template unless defined? $aswiki_parts_template_loaded
+  $aswiki_parts_template_loaded = true
   repository = AsWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
   cgi = FCGI.new
@@ -64,7 +70,9 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    raise AsWiki::EditPageCall.new(name)
 	  end
 	  cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	    page.to_s 
+   $xxxx = 0 unless defined? $xxxx
+   $xxxx += 1
+	    page.to_s + $xxxx.to_s + $$.to_s
 	  }
 	end
       when 'e'
@@ -73,7 +81,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	c = repository.load(name)
 	data = {
 	  :title => name ,
-	  :body => c.to_s
+	  :body => pre { e(:code) {  c.to_s  } }
 	}
 	page = AsWiki::Page.new('Raw', data)
 	cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
@@ -182,6 +190,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   rescue AsWiki::RuntimeError
     data = {:title => $!.type.to_s , :body => $!.message + "\n"}
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+       $! + $@.join +
       AsWiki::Page.new('Error', data).to_s
     }
   rescue Exception
@@ -193,3 +202,5 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     }
   end    
 end
+
+

@@ -5,7 +5,7 @@ require 'strscan'
 require 'uri/common'
 require 'delegate'
 
-require 'amrita/template'
+require 'amrita/parts'
 
 require 'aswiki/scanner'
 
@@ -21,19 +21,42 @@ end
 
 module AsWiki 
   class Node
-    @@template_cache = {}
+    module PartsModule
+    end
+
+    def Node::load_parts_template
+      pt = Amrita::TemplateFileWithCache["template/Node/parts.html"]
+      pt.install_parts_to(PartsModule)
+    end
+
     def initialize(template)
       @node = []
-      tmplfile = File.join('template', 'Node', template + '.html')
-      @template = Amrita::TemplateFile.new(tmplfile)
+
+      if PartsModule.const_defined?(template)
+        extend PartsModule.const_get(template)
+      else
+        tmplfile = File.join('template', 'Node', template + '.html')
+        @template = Amrita::TemplateFile.new(tmplfile)
+      end
     end
+
     def <<(item)
       @node << item
     end
+
     def expand
-      data = {:data => @node}
-      return @template.expand_tree(data)
+      if self.kind_of?(Amrita::PartsTemplate)
+        to_s
+      else
+        data = {:data => @node}
+        return @template.expand_tree(data)
+      end
     end
+
+    def data
+      @node
+    end
+
   end
 end
 

@@ -7,6 +7,10 @@ require 'aswiki/util.rb'
 module AsWiki
 
   class Backup
+    def system(cmd)
+      super cmd.untaint
+    end
+
     def initialize(basedir)
       @dir = File.join(basedir, 'RCS')
     end
@@ -19,7 +23,7 @@ module AsWiki
 	command = "|rlog -zLT #{backupname(name)}"
       end
       rev = 0
-      File.foreach(command) do |l|
+      File.foreach(command.untaint) do |l|
 	if /^revision 1.(\d+)/ =~ l
 	  rev = $1.to_i
 	  next
@@ -32,7 +36,7 @@ module AsWiki
     end
 
     def co(name, rev)
-      return File.readlines("|co -r1.#{rev} -p -q #{backupname(name)}")
+      return File.readlines("|co -r1.#{rev} -p -q #{backupname(name)}".untaint)
     end
 
     def ci(name)

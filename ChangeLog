@@ -1,6 +1,21 @@
+2002-12-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.85
+
+	* aswiki/pagedata.rb: MergeTemplateFile base implement
+
+	* aswiki/page.rb: MergeTemplateFile base implement
+
+	* aswiki/merge.rb: create merge template base template class
+	MergeTemplateFile
+
+2002-12-19  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.84
+
 2002-12-15  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* aswiki/scanner.rb: fix moinhref (too wide).
+	* aswiki/scanner.rb: fix moinhref (regexp match too wide).
 
 	* release: 0.83
 

@@ -5,20 +5,25 @@ require 'aswiki/util'
 require 'digest/md5'
 
 require 'amrita/template'
-# require 'amrita/merge'
+require 'amrita/merge'
 # include Amrita
 
 module AsWiki
   class Page
     def initialize(pagetype, data)
-      PageParts::load_parts_template(pagetype)
       tmplfile = File.join('template','PageBase.html')
       template = Amrita::TemplateFileWithCache[tmplfile]
+      # template = Amrita::TemplateFile.new(tmplfile)
       template.expand_attr = true
-      template.use_compiler = true
+      # template.use_compiler = true
       
       @str = ''
-      template.expand(@str, data)
+      model = { :pagedata => 
+	MergeTemplateFile.new("template/Page/#{pagetype}.html") do 
+	  data
+	end
+      }
+      template.expand(@str, model)
     end
     
     def to_s

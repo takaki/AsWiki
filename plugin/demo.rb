@@ -8,7 +8,7 @@ module AsWiki
   class NowPlugin < Plugin
     Name = 'now'
     def onview(line, b, e, av=[])
-      @view = Time.now.to_s
+      @view = Time.now.strftime($TIMEFORMAT)
     end
   end
 end

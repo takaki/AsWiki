@@ -11,6 +11,11 @@ module AsWiki
   def AsWiki::unescape(s)
     return CGI::unescape(s)
   end
+  def AsWiki::redirectpage(cgi, url)
+    cgi.out({'Status' => '302 REDIRECT',
+	      'Location' => url}){''}
+  end
+
   def AsWiki::merge(a,b, tag=true)
     f = Diff::diff(a,b)
     c = []

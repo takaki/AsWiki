@@ -1,6 +1,8 @@
 -*- outline -*-
 
 * High
+  - 決め打ち日本をせめて前に分離。いや，amritaで無理矢理…，それなら普
+    通にやれよ。
   - $BASEDIRは必要か
   - AutomaticLinkは表示だけか。むやみとlinkしてもね。
   - UnitTestを手抜きするな。とくに日本語。
@@ -8,16 +10,12 @@
   - imgだけはinline?
   - toc
   - #minibbs
+  - mergeの導入(plugin)
   - #minimemo
   - #nikki?
-  - mergeの導入
   - session_id を渡す目的でCGI.newをしない
-  - attach brushup
-  - AttachManager transaction
   - mod_ruby
   - Namazuで検索
-  - $print_error
-  - $dobackup
   - Page templateの統合  
   - w3m-elでpostできない?
   - graphviz 用出力(趣味やね)
@@ -32,6 +30,8 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - AttachManager transaction
+  - attach brushup
   - plugin#load_templateの改善
   - lastmodified: format, (127d) 
   - attache escape
@@ -39,6 +39,8 @@
   - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 
 * abandoned
+  - $print_error
+  - $dobackup
   - header のナンバリング => CSS2
   - hashed plugin => Walrusでつくるとき考える
   

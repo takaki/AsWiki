@@ -5,21 +5,26 @@ require 'aswiki/plugin'
 require 'cgi/session'
 require 'aswiki/util'
 
+
 module AsWiki
   class W2chBBSPlugin < Plugin
     Name = '2chbbs'
     include AsWiki::Util
+    Anonymous = '名無しさん'
+    MyName = '名前'
+    Date = '投稿日'
+    Weekstr = %w[日 月 火 水 木 金 土]
     def onpost(session)
       pname = session['pname']
       number = session['number'].to_i + 1
-      poster = (session['poster'] != '' ? session['poster'] : "名無しさん")
+      poster = (session['poster'] != '' ? session['poster'] : Anonymous)
       name = (session['mail'] != '' ? 
 		"[mailto:#{session['mail']} #{poster}]" :
 		"[[#{poster}]]")
       t = Time.now
       time = sprintf('%d/%d/%d (%s) %02d:%02d', t.year, t.mon, t.day, 
 		     weekstr(t.wday), t.hour, t.min)
-      data = "\n#{number}: 名前: #{name} 投稿日: #{time} \n\n" +
+      data = "\n#{number}: #{MyName}: #{name} #{Date}: #{time} \n\n" +
 	session['textdata'] + "\n"
       file = @repository.load(pname)
       file[session['begin'].to_i-1, 0 ] = data
@@ -42,7 +47,7 @@ module AsWiki
     end
     private
     def weekstr(i)
-      return %w[日 月 火 水 木 金 土][i] 
+      return Weekstr[i] 
     end
   end
 end

@@ -1,3 +1,12 @@
+2002-10-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/exception.rb: now, exception class is not included in
+	module AsWiki.
+
+	* aswiki/util.rb: AsWiki::redirectpage
+
+	* aswiki/attachdb.rb: new
+
 2002-10-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.52

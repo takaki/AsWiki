@@ -28,9 +28,10 @@ module AsWiki
     def parsefile
       c = @r.load(@name)
       @timestamp = @r.mtime(@name)
-      @p = AsWiki::Parser.new(c.to_s, @name)
-      @wikinames = @p.wikinames
-      @body = @p.tree
+      parsetext(c.to_s)
+      # @p = AsWiki::Parser.new(c.to_s, @name)
+      # @wikinames = @p.wikinames
+      # @body = @p.tree
     end
     def parsetext(c)
       @p = AsWiki::Parser.new(c.to_s, @name)

@@ -13,13 +13,14 @@ require 'aswiki/interwiki'
 require 'aswiki/backup'
 require 'aswiki/pagedata'
 require 'aswiki/cgi'
+require 'aswiki/attachdb'
 
 require 'digest/md5'
 require 'amrita/template'
 
 # default value. if you think change them, use 'aswiki.conf'.
 $TOPPAGENAME = 'IndexPage'
-$TIMEFORMAT  ="%F %T %z"
+$TIMEFORMAT  ="%F/%T %z"
 $BASEDIR     = '.'
 # $SAFE = 1
 
@@ -50,8 +51,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  iname, iwiki = name.split(':') 
 	  iwdb = AsWiki::InterWikiDB.new
 	  url = iwdb.url(iname)
-	  cgi.out({'Status' => '302 REDIRECT',
-		    'Location' => "#{url}#{iwiki}"}){''}
+	  AsWiki::redirectpage(cgi,  "#{url}#{iwiki}")
 	else
 	  pd = AsWiki::PageData.new(name)
 	  if MetaPages.key?(name)
@@ -61,18 +61,18 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    pd.parsefile
 	    page = AsWiki::Page.new('View', pd)
 	  else
-	    raise AsWiki::EditPage.new(name)
+	    raise EditPageCall.new(name)
 	  end
 	  cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	    page.to_s 
 	  }
 	end
       when 'e'
-	raise AsWiki::EditPage.new(name)
+	raise EditPageCall.new(name)
       when 'r'
 	c = repository.load(name)
 	data = {
-	  :title => 'Raw data of ' + name ,
+	  :title => name ,
 	  :body => c.to_s
 	}
 	page = AsWiki::Page.new('Raw', data)
@@ -118,61 +118,46 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  if cgi.value('md5sum')[0] !=  Digest::MD5::new(c).to_s
 	    bl = body.map{|l| l.sub("\r\n", "\n")}
 	    cl = c.map{|l| l}
-	    raise AsWiki::EditPage.new(name, AsWiki::merge(cl, bl, false),true)
+	    raise EditPageCall.new(name, AsWiki::merge(cl, bl, false),true)
 	  end
 	rescue Errno::ENOENT
 	end
 	repository.save(name, body)
-	cgi.out({'Status' => '302 REDIRECT', 
-		  'Location' => cgiurl([['c','v'],['p',name]])}){''}
+	AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',name]]))
       when 'post'
 	session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
 	if cgi['md5sum'][0] != 
 	    Digest::MD5::new(repository.load(session['pname']).to_s).to_s
-	  raise AsWiki::TimestampMismatchError
+	  raise TimestampMismatch
 	end
 	cgi.params.each{|key, value| session[key] = value}
 	plugin = AsWiki::Plugin::PluginTableByType[session['plugin']].new(name)
 	plugin.onpost(session)
-	cgi.out({'Status' => '302 REDIRECT', 'Location' => 
-		  cgiurl([['c','v'],['p',session['pname']]])}){''}
+	AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',session['pname']]]))
       when 'attach'
 	cgi['_session_id'][0] = cgi.value('_session_id')[0] # XXXX cgi/session bug
 	session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
 	plugin = AsWiki::Plugin::PluginTableByType[session['plugin']].new(name)
 	plugin.onpost(session, cgi['file'])
-	cgi.out({'Status' => '302 REDIRECT', 'Location' => 
-		  cgiurl([['c','v'],['p',session['pname']]])}){''}
+	AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',session['pname']]]))
       when 'download'
-	mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
-	namedb = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
-	page = BDB::Btree.open("attach/page.db", nil, BDB::CREATE)
-	num  = cgi['num'][0]
-	
-	type = mime[num]
-	pathname = "attach/#{num}"
-	cgi.out({'type' => type,
-		  'Last-Modified' => 
-		  CGI::rfc1123_date(File::stat(pathname).mtime),
+	num  = cgi.value('num')[0]
+	adb = AsWiki::AttachDB.new
+	file = adb.loadfile(num)
+	cgi.out({'type' => file[:type],
+		  'Last-Modified' =>  CGI::rfc1123_date(file[:mtime]),
 		  "Content-Disposition" => 
-		  %Q|attachment; filename="#{name[num]}"|}
-		){ open(pathname).read }
+		  %Q|attachment; filename="#{file[:filename]}"|}
+		){file[:body] }
       when 'delete' # XXX plugin onpost?
-	mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
-	namedb = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
-	page = BDB::Btree.open("attach/page.db", nil, BDB::CREATE)
-	num  = cgi['num'][0]
-	pathname = File.join('attach', num)
-	File::unlink(pathname)
-	mime.delete(num)
-	namedb.delete(num)
-	page.delete(num)
-	cgi.out({'Status' => '302 REDIRECT', 
-		  'Location' => cgiurl([['c','v'],['p',name]])}){''}
+	num  = cgi.value('num')[0]
+	adb = AsWiki::AttachDB.new
+	adb.deletefile(num)
+	AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',name]]))
       else
-	raise ArgumentError, "Unknown Command '#{c}'\n"
+	raise AsWikiRuntimeError, "Unknown Command '#{c}'\n"
       end
-    rescue AsWiki::EditPage
+    rescue EditPageCall
       pname   = $!.pname
       body    = $!.body
       message = $!.message
@@ -194,15 +179,13 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	page.to_s
       }
     end
-  rescue AsWiki::RuntimeError
-    data = {:title => $!.type.to_s , :body => $!.message + "\n",
-    }
+  rescue AsWikiRuntimeError
+    data = {:title => $!.type.to_s , :body => $!.message + "\n"}
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       AsWiki::Page.new('Error', data).to_s
     }
-
   rescue Exception
-    data = {:title => $!.type.to_s + "(#{$!.message})", 
+    data = {:title => $!.type.to_s,
       :body => $!.to_s + "\n" +  $!.backtrace.join("\n"),
    } 
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){

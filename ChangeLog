@@ -1,3 +1,11 @@
+2002-12-06  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* plugin/core.rb: set default value of recentpages show page 100.
+	
+2002-12-05  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* plugin/*: return value explicitly
+
 2002-12-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* releaseL 0.80

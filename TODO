@@ -4,6 +4,10 @@
   - english catalogue
   
 * Low
+  - subsubsection toc?
+  - LinkCountPage
+  - rcs keyword
+  - inline escape
   - pre problem(amrita 待ち)
   - session_id を渡す目的でCGI.newをしない
   - page initialize and publish
@@ -23,10 +27,9 @@
   - AutomaticLinkは表示だけか。むやみとlinkしてもね。
   - menuのcss fixed
   - graphviz 用出力(趣味やね)
-  - ページに対する属性。継承?
-  - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - カレントディレクトリ。デフォルトでネームスペースに属するか?
   - imgだけはinline?
   - 空白の入り方がどうも?
   - notcreated pages interwiki
@@ -56,6 +59,7 @@
   - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 
 * abandoned
+  - ページに対する属性。継承?
   - mergeの導入(plugin)
   - session に Nameで保存 初期化のタイミングとかで無理
   - #minibbs

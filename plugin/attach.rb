@@ -26,6 +26,7 @@ module AsWiki
       }
       # @view = load_template.expand_tree(data)
       load_parts
+      return self
     end
     attr_reader :data
   end
@@ -43,6 +44,7 @@ module AsWiki
       }
 
       load_parts('attach')
+      return self
     end
   end
 end

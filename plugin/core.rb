@@ -12,12 +12,12 @@ module AsWiki
     def onview(line, b, e, av)
       count = (av[1] || 100 ).to_i
       @data = {:data =>
-	@repository.attrlist.sort{|a,b| b[1] <=> a[1]}.map{|l| 
+	@repository.attrlist.sort{|a,b| b[1] <=> a[1]}[0,count].map{|l| 
 	  {:plink => wikilink(l[0]), :timestamp => timestr(l[1])}
 	}
       }
-      # @view = load_template.expand_tree(data)
       load_parts
+      return self
     end
   end
 
@@ -28,8 +28,8 @@ module AsWiki
       @data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)},
 	:total => @repository.namelist.length
       }
-      # @view = load_template.expand_tree(data)
       load_parts
+      return self
     end
   end
 
@@ -38,9 +38,8 @@ module AsWiki
     include AsWiki::Util
     def onview(line, b, e, av)
       @data = {:data => $metapages.keys.sort.collect{|k| wikilink(k)}}
-
-      # @view = load_template.expand_tree(data)
       load_parts
+      return self
     end
   end
 
@@ -59,8 +58,8 @@ module AsWiki
 
       @data = {:data => (@r.namelist - @checked.keys).sort.collect{|f|
 	  wikilink(f)}}
-      # @view = load_template.expand_tree(data)
       load_parts
+      return self
     end
     private 
     def markandsweep(pname)
@@ -95,8 +94,8 @@ module AsWiki
 	f =~ /[^:]+:[^:]+/
       }.collect{|f| wikilink(f)}
       @data = {:data => plist, :total => plist.length}
-      # @view = load_template.expand_tree(data)
       load_parts
+      return self
     end
   end
 
@@ -108,8 +107,8 @@ module AsWiki
 	  p::Name
 	}.sort
       }
-      # @view = load_template.expand_tree(data)
       load_parts
+      return self
     end
   end
 end

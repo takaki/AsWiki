@@ -46,6 +46,7 @@ module AsWiki
       }
       # @view = load_template.expand_tree(data)
       load_parts('2chbbs','W2chbbs')
+      return self
     end
     attr_reader :data
 

@@ -31,7 +31,7 @@ module AsWiki
     end
 
     def co(name, rev)
-      return File.readlines("|co -r1.#{rev} -p -q #{backupname(name)}".untaint)
+      return File.readlines("|co -r1.#{rev} -zLT -p -q #{backupname(name)}".untaint)
     end
 
     def ci(name)

@@ -104,7 +104,7 @@ module AsWiki
       bpath = base
       wpath = wikiname
 
-      if base.index('//')
+      if base.index(%r|//+|)
 	t = base.split('//')
 	bcur  = t[0...-1]
 	bpath = t[-1]

@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 80)
+(Project-Version aswiki 0 81)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 79)
+(Parent-Version aswiki 0 80)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Tue, 03 Dec 2002 23:39:18 +0900")
+(Checkin-Time "Fri, 06 Dec 2002 00:24:44 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -31,7 +31,7 @@
 ;; to version 0.2(w), by takaki:
 
   
-  (ChangeLog (aswiki/4_ChangeLog 1.48 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.49 664))
   (aswiki/node.rb (aswiki/5_node.rb 1.28 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.17 664))
 
@@ -49,7 +49,7 @@
   
   
   (test/testWWiki__Backup.rb (aswiki/13_testWWiki_ 1.9 664))
-  (aswiki/backup.rb (aswiki/14_backup.rb 1.17 664))
+  (aswiki/backup.rb (aswiki/14_backup.rb 1.18 664))
 
 ;; Files added by populate at Mon, 08 Apr 2002 00:17:39 +0900,
 ;; to version 0.5(w), by takaki:
@@ -60,7 +60,7 @@
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (aswiki.cgi (aswiki/17_wwiki.cgi 1.50 755))
+  (aswiki.cgi (aswiki/17_wwiki.cgi 1.51 755))
   (text/SamplePage (aswiki/18_SampleText 1.5 644))
   
   
@@ -76,7 +76,7 @@
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.40 664))
+  (TODO (aswiki/29_TODO 1.41 664))
   
   
   (template/Page/View.html (aswiki/32_ViewPage.h 1.33 664))
@@ -95,15 +95,15 @@
 ;; Files added by populate at Thu, 11 Apr 2002 23:29:26 +0900,
 ;; to version 0.10(w), by takaki:
 
-  (plugin/demo.rb (aswiki/40_demo.rb 1.16 664))
+  (plugin/demo.rb (aswiki/40_demo.rb 1.17 664))
   (aswiki/plugin.rb (aswiki/41_plugin.rb 1.16 664))
-  (aswiki/util.rb (aswiki/42_util.rb 1.28 664))
+  (aswiki/util.rb (aswiki/42_util.rb 1.29 664))
 
 ;; Files added by populate at Sat, 18 May 2002 23:38:58 +0900,
 ;; to version 0.16(w), by takaki:
 
-  (plugin/2chbbs.rb (aswiki/43_2chbbs.rb 1.18 664))
-  (plugin/core.rb (aswiki/44_core.rb 1.19 664))
+  (plugin/2chbbs.rb (aswiki/43_2chbbs.rb 1.19 664))
+  (plugin/core.rb (aswiki/44_core.rb 1.20 664))
   (text/InterWikiName (aswiki/45_InterWikiN 1.3 644))
   (template/plugin/list.html (aswiki/46_list.html 1.4 664))
   (template/plugin/2chbbs.html (aswiki/47_2chbbs.htm 1.4 664))
@@ -129,7 +129,7 @@
 
   (README.en (aswiki/b/4_README 1.6 664))
   (COPYING (/usr/share/common-licenses/GPL) :symlink)
-  (plugin/attach.rb (aswiki/b/5_attach.rb 1.16 664))
+  (plugin/attach.rb (aswiki/b/5_attach.rb 1.17 664))
   (template/plugin/attach.html (aswiki/b/6_attach.htm 1.5 664))
 
 ;; Files added by populate at Wed, 07 Aug 2002 00:04:10 +0900,

@@ -8,7 +8,7 @@ module AsWiki
   class NowPlugin < Plugin
     Name = 'now'
     def onview(line, b, e, av=[])
-      @view = Time.now.strftime($TIMEFORMAT)
+      return Time.now.strftime($TIMEFORMAT)
     end
   end
 end
@@ -17,7 +17,7 @@ module AsWiki
   class PrintblockPlugin < Plugin
     Name = 'printblock'
     def onview(line, b, e, av=[])
-      @view = line.map{|l| b=b+1 ; ["#{b-1}: #{l}", Amrita::e(:br),"\n"] }
+      return line.map{|l| b=b+1 ; ["#{b-1}: #{l}", Amrita::e(:br),"\n"] }
     end
   end
 end
@@ -29,7 +29,7 @@ module AsWiki
     def onpost(session)
       pname = session['pname']
       file = @repository.load(pname)
-      file[session['begin'].to_i-1, 0 ] = " * #{CGI.new['item']}\n"
+      file[session['begin'].to_i-1, 0 ] = "* #{CGI.new['item']}\n"
       @repository.save(pname, file.to_s)
     end
     def onview(line, b, e, av=[])
@@ -48,6 +48,7 @@ module AsWiki
       }
       # @view = load_template.expand_tree(data)
       load_parts
+      return self
     end
   end
 end

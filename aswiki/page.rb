@@ -1,14 +1,14 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-require 'wwiki/util'
+require 'aswiki/util'
 require 'digest/md5'
 
 require 'amrita/template'
 
 
-module WWiki
-  def WWiki::editpage(name, content)
+module AsWiki
+  def AsWiki::editpage(name, content)
     data = {:title => name, 
       # :content => CGI::escapeHTML(content.to_s),
       :content => content.to_s,
@@ -16,7 +16,7 @@ module WWiki
       :md5sum => Digest::MD5::new(content.to_s).to_s,
       :helppage => "#{$CGIURL}?c=v;p=HelpPage",
     }
-    page = WWiki::Page.new('Edit', data)
+    page = AsWiki::Page.new('Edit', data)
     return page
   end
   class Page

@@ -1,11 +1,11 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-require 'wwiki/backup'
-require 'wwiki/util'
+require 'aswiki/backup'
+require 'aswiki/util'
 
 
-module WWiki
+module AsWiki
   class Repository
     def initialize(basedir='.')
       @dir = File.join(basedir ,'text')
@@ -22,7 +22,7 @@ module WWiki
     
     def save(name, str)
       if exist?(name)
-	backup = WWiki::Backup.new(@basedir)
+	backup = AsWiki::Backup.new(@basedir)
 	backup.backup(textname(name))
       end
       (open(textname(name),'w') << str.gsub(/\r\n/, "\n")).close
@@ -38,16 +38,16 @@ module WWiki
 
     def namelist
       return Dir.open(@dir).select{|f| test(?f, File.join(@dir, f))}.
-	map{|f| WWiki::unescape(f)}
+	map{|f| AsWiki::unescape(f)}
     end
     
     def attrlist
       return Dir.open(@dir).select{|f| test(?f, File.join(@dir, f))}.
-	map{|f| [WWiki::unescape(f), File.mtime(File.join(@dir, f))]}
+	map{|f| [AsWiki::unescape(f), File.mtime(File.join(@dir, f))]}
     end
     private
     def textname(name)
-      return File.join(@dir, WWiki::escape(name))
+      return File.join(@dir, AsWiki::escape(name))
     end
   end
 end

@@ -5,7 +5,7 @@ require 'strscan'
 require 'uri/common'
 require 'delegate'
 
-module WWiki
+module AsWiki
   class Scanner
     PAT_URI =  /\A#{URI::REGEXP::PATTERN::X_ABS_URI}/xn
     C128 = [128].pack('C')
@@ -77,11 +77,9 @@ module WWiki
 	  q.push [:ENDPERIOD, tmp]
 	elsif tmp = sc.scan(/\A[ \t\r\f]+/)
 	  q.push [:SPACE, tmp]
-	# elsif tmp = sc.scan(/\A\|\| *$/)
-	elsif tmp = sc.scan(/\A\| *$/)
+	elsif tmp = sc.scan(/\A\|\| *$/)
 	  q.push [:TABLE_END, tmp]
-	# elsif tmp = sc.scan(/\A\|\|/)
-	elsif tmp = sc.scan(/\A\|/)
+	elsif tmp = sc.scan(/\A\|\|/)
 	  q.push [:TABLE, tmp]
 	elsif tmp = sc.scan(/\A\[\S+ +\S+?\]/)
 	  q.push [:MOINHREF, tmp]

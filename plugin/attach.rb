@@ -1,11 +1,11 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-require 'wwiki/plugin'
+require 'aswiki/plugin'
 require 'cgi/session'
 require 'bdb'
 
-module WWiki
+module AsWiki
   class AttachPlugin < Plugin
     Name = 'attach'
     def onpost(session, file)

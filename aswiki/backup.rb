@@ -3,7 +3,7 @@
 
 require 'time.rb'
 
-module WWiki
+module AsWiki
 
   class Backup
     def initialize(basedir)

@@ -7,12 +7,12 @@
 require 'cgi'
 # require 'obaq/htmlgen'
 
-require 'wwiki/repository'
-require 'wwiki/parser'
-require 'wwiki/page'
-require 'wwiki/exception'
-require 'wwiki/interwiki'
-require 'wwiki/backup'
+require 'aswiki/repository'
+require 'aswiki/parser'
+require 'aswiki/page'
+require 'aswiki/exception'
+require 'aswiki/interwiki'
+require 'aswiki/backup'
 
 require 'digest/md5'
 
@@ -26,8 +26,8 @@ metapage = {
 }
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
-  load ('wwiki.conf')
-  repository = WWiki::Repository.new('.')
+  load ('aswiki.conf')
+  repository = AsWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
   # include Obaq::HtmlGen
   cgi = CGI.new
@@ -57,7 +57,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     when 'v'
       if name =~ /[^:]+:[^:]+/
 	iname, iwiki = name.split(':') 
-	iwdb = WWiki::InterWikiDB.new
+	iwdb = AsWiki::InterWikiDB.new
 	p iwdb
 	url = iwdb.url(iname)
 	# XXX code
@@ -65,28 +65,28 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 		  'Location' => "#{url}#{iwiki}"}){''}
       else
 	if metapage.key?(name)
-	  p = WWiki::Parser.new(metapage[name])
+	  p = AsWiki::Parser.new(metapage[name])
 	  data = {:title => name, :content => p.tree.to_s, }
-	  page  = WWiki::Page.new('Ro',data)
+	  page  = AsWiki::Page.new('Ro',data)
 	elsif repository.exist?(name)
 	  c = repository.load(name)
-	  p = WWiki::Parser.new(c.to_s)
-	  # p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
+	  p = AsWiki::Parser.new(c.to_s)
+	  # p = AsWiki::Parser.new(CGI::escapeHTML(c.to_s))
 	  data = {:title => name, 
 	    :content => Amrita::noescape{p.tree.to_s},
-	    :edit => "#{$CGIURL}?c=e;p=#{WWiki::escape(name)}",
+	    :edit => "#{$CGIURL}?c=e;p=#{AsWiki::escape(name)}",
 	    :toppage => "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}",
 	    :recentpages => "#{$CGIURL}?c=v;p=RecentPages",
 	    :allpages => "#{$CGIURL}?c=v;p=AllPages",
-	    :rawpage => "#{$CGIURL}?c=r;p=#{WWiki::escape(name)}",
-	    :diffpage => "#{$CGIURL}?c=d;p=#{WWiki::escape(name)}",
+	    :rawpage => "#{$CGIURL}?c=r;p=#{AsWiki::escape(name)}",
+	    :diffpage => "#{$CGIURL}?c=d;p=#{AsWiki::escape(name)}",
 	    :helppage => "#{$CGIURL}?c=v;p=HelpPage",
 	    :lastmodified => repository.mtime(name),
 	    :wikilinks => Amrita::noescape{p.wikilinks},
 	  }
-	  page = WWiki::Page.new('View', data)
+	  page = AsWiki::Page.new('View', data)
 	else
-	  page = WWiki::editpage(name, '')
+	  page = AsWiki::editpage(name, '')
 	end
 	cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	  page.to_s 
@@ -94,7 +94,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       end
     when 'e'
       c = repository.load(name)
-      page = WWiki::editpage(name, c)
+      page = AsWiki::editpage(name, c)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
@@ -104,19 +104,19 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	:title => 'Raw data of ' + name ,
 	:content => CGI::escapeHTML(c.to_s)
       }
-      page = WWiki::Page.new('Raw', data)
+      page = AsWiki::Page.new('Raw', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
     when 'd'
-      backup = WWiki::Backup.new('.')
+      backup = AsWiki::Backup.new('.')
       cn  = repository.load(name)
-      co, = backup.getrecentbackupdataandmtime(WWiki::escape(name))
+      co, = backup.getrecentbackupdataandmtime(AsWiki::escape(name))
       data = {
 	:title => 'Diff of ' + name ,
-	:content => CGI::escapeHTML(WWiki::diff(co,cn).to_s)
+	:content => CGI::escapeHTML(AsWiki::diff(co,cn).to_s)
       }
-      page = WWiki::Page.new('Raw', data)
+      page = AsWiki::Page.new('Raw', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
@@ -125,18 +125,18 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       begin
 	if cgi['md5sum'][0] != 
 	    Digest::MD5::new(repository.load(name).to_s).to_s
-	  raise WWiki::TimestampMismatchError
+	  raise AsWiki::TimestampMismatchError
 	end
       rescue Errno::ENOENT
       end
       repository.save(name, content)
       cgi.out({'Status' => '302 REDIRECT', 
-		'Location' => "#{$CGIURL}?c=v;p=#{WWiki::escape(name)}"}){''}
+		'Location' => "#{$CGIURL}?c=v;p=#{AsWiki::escape(name)}"}){''}
     when 'post'
       session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
       if cgi['md5sum'][0] != 
 	  Digest::MD5::new(repository.load(session['pname']).to_s).to_s
-	raise WWiki::TimestampMismatchError
+	raise AsWiki::TimestampMismatchError
       end
       cgi.params.each{|key, value| session[key] = value}
       plugin = eval(session['plugin'] + '.new')
@@ -180,11 +180,11 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     else
       raise "Unknown Command '#{c}'<br>"
     end
-  rescue WWiki::RuntimeError
+  rescue AsWiki::RuntimeError
     data = {:title => $!.type, :content => $!.message + "\n",
     }
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-      WWiki::Page.new('Error', data).to_s
+      AsWiki::Page.new('Error', data).to_s
     }
 
   rescue Exception
@@ -192,7 +192,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       $!.backtrace.join("\n"),
    } 
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-      WWiki::Page.new('Error', data).to_s
+      AsWiki::Page.new('Error', data).to_s
     }
   end    
 end

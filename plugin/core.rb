@@ -1,31 +1,29 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-require 'obaq/htmlgen'
-require 'obaq/htmlparser'
+require 'aswiki/plugin'
+require 'aswiki/util'
 
-require 'wwiki/plugin'
-require 'wwiki/util'
 
-module WWiki
+module AsWiki
   class RecentPagesPlugin < Plugin
     Name = 'recentpages'
-    include WWiki::Util
+    include AsWiki::Util
     def onview(line, b, e, av)
       count = (av[1] || 100 ).to_i
       data = {:data =>
 	@repository.attrlist.sort{|a,b| b[1] <=> a[1]}.map{
 	  |l| wikilink(l[0]) + " " + l[1].to_s}
       }
-      @view = load_template.expand(data).to_s
+      load_template.expand(@view, data)
     end
   end
   class AllPagesPlugin < Plugin
     Name = 'allpages'
-    include WWiki::Util
+    include AsWiki::Util
     def onview(line, b, e, av)
       data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)}}
-      @view = load_template.expand(data).to_s
+      load_template.expand(@view, data)
     end
   end
 end

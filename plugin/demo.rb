@@ -1,10 +1,10 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-require 'wwiki/plugin'
+require 'aswiki/plugin'
 require 'cgi/session'
 
-module WWiki
+module AsWiki
   class NowPlugin < Plugin
     Name = 'now'
     def onview(line, b, e, av=[])
@@ -13,7 +13,7 @@ module WWiki
   end
 end
 
-module WWiki
+module AsWiki
   class PrintblockPlugin < Plugin
     Name = 'printblock'
     def onview(line, b, e, av=[])
@@ -21,7 +21,7 @@ module WWiki
     end
   end
 end
-module WWiki
+module AsWiki
   class ListPlugin < Plugin
     Name = 'list'
     def onpost(session)
@@ -38,8 +38,8 @@ module WWiki
       session['end'] = e
       data = {:session_id => session.session_id,
 	:md5sum =>  Digest::MD5::new(@repository.load($pname).to_s)}
-      form = load_template.expand(data)
-      @view = form.to_s
+      @view = ''
+      load_template.expand(@view, data)
     end
   end
 end

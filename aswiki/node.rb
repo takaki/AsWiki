@@ -5,7 +5,7 @@ require 'strscan'
 require 'uri/common'
 require 'delegate'
 
-require 'wwiki/scanner'
+require 'aswiki/scanner'
 
 # require 'obaq/htmlgen'
 # require 'obaq/htmlparser'
@@ -13,7 +13,7 @@ require 'wwiki/scanner'
 
 require 'amrita/template'
 
-module WWiki 
+module AsWiki 
   class Node
     def initialize(template)
       @node = []

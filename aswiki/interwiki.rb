@@ -1,14 +1,14 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-require 'wwiki/repository'
+require 'aswiki/repository'
 
-module WWiki
+module AsWiki
   class InterWikiDB
     def initialize
       @url = {}
       @code = {}
-      repository = WWiki::Repository.new
+      repository = AsWiki::Repository.new
       c = repository.load('InterWikiName')
       r = /\s+\*\s*\[(\S+)\s+(\S+)\]\s*(\S+)?/
       c.each {|l|

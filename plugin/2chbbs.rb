@@ -1,16 +1,16 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-require 'wwiki/plugin'
+require 'aswiki/plugin'
 require 'obaq/htmlgen'
 require 'cgi/session'
-require 'wwiki/util'
+require 'aswiki/util'
 
-module WWiki
+module AsWiki
   class W2chBBSPlugin < Plugin
     Name = '2chbbs'
     include Obaq::HtmlGen
-    include WWiki::Util
+    include AsWiki::Util
     def onpost(session)
       pname = session['pname']
       number = session['number'].to_i + 1

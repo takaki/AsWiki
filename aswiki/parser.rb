@@ -7,15 +7,15 @@ require 'delegate'
 
 # require 'obaq/htmlgen'
 
-require 'wwiki/scanner'
-require 'wwiki/node'
-require 'wwiki/util'
-require 'wwiki/plugin'
+require 'aswiki/scanner'
+require 'aswiki/node'
+require 'aswiki/util'
+require 'aswiki/plugin'
 
-module WWiki
+module AsWiki
   class Parser
 #    include Obaq::HtmlGen
-    include WWiki::Util
+    include AsWiki::Util
     WORD  = [:SPACE, :OTHER, :WORD]
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
     DECORATION = [:EM, :STRONG]
@@ -27,13 +27,13 @@ module WWiki
     def initialize(str)
       @s = Scanner.new(str)
       @wikinames = []
-      @plugin = WWiki::Plugin.new
+      @plugin = AsWiki::Plugin.new
 
       @tree = parse
     end
     attr_reader :tree, :wikinames
     def wikilinks
-      repository = WWiki::Repository.new
+      repository = AsWiki::Repository.new
       return @wikinames.delete_if{|w| w =~ /:[^:]/ }.map{|l| 
 	expandwikiname(l, $pname)}.uniq.map{|l| 
 	[l, repository.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|

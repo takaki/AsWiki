@@ -4,14 +4,14 @@
 require 'cgi'
 require 'diff'
 
-module WWiki
-  def WWiki::escape(s)
+module AsWiki
+  def AsWiki::escape(s)
     return CGI::escape(s).gsub('\.','%2E')
   end
-  def WWiki::unescape(s)
+  def AsWiki::unescape(s)
     return CGI::unescape(s)
   end
-  def WWiki::diff(a,b)
+  def AsWiki::diff(a,b)
     d = Diff.new(a,b)
     f = []
 
@@ -88,17 +88,14 @@ module WWiki
     end
     def wikilink(name)
       ename = expandwikiname(name, $pname)
-      repository = WWiki::Repository.new
-      link = WWiki::escape(ename)
+      repository = AsWiki::Repository.new
+      link = AsWiki::escape(ename)
       if repository.exist?(ename) || name =~ /[^:]+:[^:]+/
 	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")){
-	  WWiki::unescape(name)}
+	  AsWiki::unescape(name)}
       else
-	[WWiki::unescape(name) ,
+	[AsWiki::unescape(name) ,
 	  Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")){"?"}]
-#	return Amrita::noescape{
-#	  WWiki::unescape(name) + 
-#	    Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")){"?"}.to_s }
       end
     end
   end

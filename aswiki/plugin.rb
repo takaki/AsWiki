@@ -1,7 +1,7 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-module WWiki
+module AsWiki
   class Plugin
     PluginList = []
     PluginTable = {}
@@ -12,7 +12,8 @@ module WWiki
       PluginList.each{|p|
 	PluginTable[p::Name] = p
       }
-      @repository = WWiki::Repository.new
+      @repository = AsWiki::Repository.new
+      @view = ''
     end
     def onview(line, b, e)
       l = line[0]
@@ -36,7 +37,7 @@ module WWiki
     private
     def load_template(filename=self.type::Name)
       tmplfile = File.join('template', 'plugin', filename + '.html')
-      Obaq::HtmlParser.parse_file(tmplfile)
+      Amrita::TemplateFile.new(tmplfile)
     end
   end
 end

@@ -20,37 +20,30 @@ module WWiki
 	page[fname] = pname
 	mime[fname] = file[0].content_type
 	name[fname] = file[0].original_filename
-	
       end
     end
     def onview(line, b, e, av=[])
       session = CGI::Session.new(CGI::new, {'tmpdir' => 'session'})
       session['pname'] = $pname
       session['plugin'] = self.type
-      data ={:_session_id => session.session_id}
-      form = load_template.expand(data)
-      @view = form.to_s
-    end
-  end
 
-  class AttachlistPlugin < Plugin
-    Name = 'attachlist'
-    def onview(line, b, e, av=[])
       mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
       name = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
       page = BDB::Btree.open("attach/page.db", nil, BDB::CREATE)
+
       files =  page.select{|key,value| value == $pname}.collect{|key,val| key}
       item = files.sort{|a,b| name[a] <=> name[b]}.collect{|f| {
 	  :dllink => $CGIURL + "?c=download;num=#{f}", 
 	  :name => CGI::escapeHTML( name[f]) ,
 	  :rmlink => $CGIURL + "?c=delete;p=#{$pname};num=#{f}", 
 	} }
-      data ={:item => item}
+
+      data ={:_session_id => session.session_id,
+	:item => item
+      }
       form = load_template.expand(data)
       @view = form.to_s
     end
   end
-
-
 end
 

@@ -1,3 +1,7 @@
+2002-08-10  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* plugin/attach.rb: attachlistをattachに統合。
+
 2002-08-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* wwiki.cgi: attach が機能するようになった。

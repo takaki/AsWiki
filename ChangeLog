@@ -1,6 +1,6 @@
 2003-02-17  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* aswiki/pagedata.rb: amulet corresponding.
+	* aswiki/pagedata.rb: use amulet.
 
 2003-02-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 

@@ -37,8 +37,8 @@ module AsWiki
     end
 
     def amulet_load(pagetype)
-      # @am = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
-      @am = Amrita::TemplateFile.new(File.join($DIR_TEMPLATE,"Page/#{pagetype}.html"))
+      @am = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
+      # @am = Amrita::TemplateFile.new(File.join($DIR_TEMPLATE,"Page/#{pagetype}.html"))
       @am.define_amulet(:Menubar, :Pagetitle, :Pageheader, :Pagebody, :Pagefooter)
     end
 

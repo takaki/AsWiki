@@ -2,10 +2,9 @@ require 'wwiki/backup'
 require 'delegate'
 
 module WWiki
-  class Repository < DelegateClass(Backup)
+  class Repository
     def initialize(basedir)
       @dir = File.join(basedir ,'text')
-      super(WWiki::Backup.new(basedir))
     end
 
     def read(name, id=nil) 
@@ -13,9 +12,9 @@ module WWiki
     end
     
     def save(name, str)
+      backup = WWiki::Backup.new(basedir)
       fname = File.join(@dir,name)
-      STDERR.puts str
-      backup(fname)
+      backup.backup(fname)
       (open(fname ,'w') << str.gsub(/\r\n/, "\n")).close
     end
     

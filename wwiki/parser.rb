@@ -2,9 +2,11 @@ require 'strscan'
 require 'uri/common'
 require 'delegate'
 
+require 'obaq/htmlgen'
+
 require 'wwiki/scanner'
 require 'wwiki/node'
-require 'obaq/htmlgen'
+require 'wwiki/util'
 
 module WWiki
   class Parser
@@ -268,18 +270,20 @@ module WWiki
 	when :OTHER, :SPACE, :WORD
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
-	  node << E(:a, A(:href, 'http://' + @token[1])){@token[1]}
+	  node << E(:a, A(:href, $CGIURL + '?c=v&p=' + WWiki::escape(@token[1]))
+		    ) {@token[1]}
 	when :WIKINAME2
 	  name = @token[1][2..-3]
-	  node << E(:a, A(:href, 'http://' + name)){name}
+	  node << E(:a, A(:href, $CGIURL + '?c=v&p=' + name)){name}
 	when :URI
 	  node << E(:a, A(:href, @token[1])){@token[1]}
 	when :MOINHREF
 	  url, key = @token[1][1..-2].split
-	  node << E(:a, A(:href, url)){key}
-	  # if /\Aimg:/ =~ url then  node << %Q|<img src="#{$'}" alt="#{key}">|
-	  #  else node << ahref(url, CGI::escapeHTML(key))
-	  # end
+	  if /\Aimg:/ =~ url 
+	    node << E(:img, A(:src,$'), A(:alt, key))
+	  else
+	    node << E(:a, A(:href, url)){key}
+	  end
 	when :ENDPERIOD
 	  node << E(:br)
 	when :EOL

@@ -4,7 +4,7 @@ require 'obaq/htmlparser'
 module WWiki
   class Page
     def initialize(template ,data)
-      tmplfile = File.join('template',template + '.html')
+      tmplfile = File.join('template','Page', template + '.html')
       template = Obaq::HtmlParser.parse_file(tmplfile)
       @tree = template.expand(data)
     end

@@ -1,10 +1,12 @@
 #! /usr/bin/env ruby
 
 require 'cgi'
+require 'obaq/htmlgen'
+
 require 'wwiki/repository'
 require 'wwiki/parser'
 require 'wwiki/page'
-require 'obaq/htmlgen'
+
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
   load ('wwiki.conf')
@@ -19,20 +21,20 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       name = cgi['p'][0]
       name = name.to_s == '' ? $TOPPAGENAME : name
       c = repository.read(name)
-      p = WWiki::Parser.new(c.to_s)
+      p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
       data = {:title => name, :content => p.tree.to_s,
 	:edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	WWiki::Page.new('ViewPage', data).to_s
+	WWiki::Page.new('View', data).to_s
       }
     when 'e'
       repository = WWiki::Repository.new('.')
       name = cgi['p'][0]
       name = name == '' ? $TOPPAGENAME : name
       c = repository.read(name)
-      data = {:title => name, :content => c.to_s,
+      data = {:title => name, :content => CGI::escapeHTML(c.to_s),
 	:edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
-      page = WWiki::Page.new('EditPage', data)
+      page = WWiki::Page.new('Edit', data)
       page.tree.each do |e|
 	case e[:action]
 	when 'save'
@@ -57,10 +59,11 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       raise 
     end
   rescue Exception
-    data = {:title => $!.type, :content => $!.backtrace.join("\n"),
+    data = {:title => $!.type, :content => $!.to_s + "\n" + 
+      $!.backtrace.join("\n"),
       :edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-      WWiki::Page.new('ErrorPage', data).to_s
+      WWiki::Page.new('Error', data).to_s
     }
   end    
 end

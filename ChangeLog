@@ -1,5 +1,7 @@
 2002-12-15  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* aswiki/scanner.rb: fix moinhref (too wide).
+
 	* release: 0.83
 
 	* aswiki/repository.rb: GC (unlink zero size file).

@@ -79,7 +79,8 @@ module AsWiki
 	elsif tmp = sc.scan(/\A\|\|/)
 	  q.push [:TABLE, tmp]
 	# elsif tmp = sc.scan(/\A\[\S+ +\S+?\]/)
-	elsif tmp = sc.scan(/\A\[\S+ +[^]]+?\]/)
+	# elsif tmp = sc.scan(/\A\[\S+ +[^]]+?\]/)
+	elsif tmp = sc.scan(/\A\[#{URI::REGEXP::PATTERN::X_ABS_URI}\s+[^]]+?\]/xn)
 	  q.push [:MOINHREF, tmp]
 	elsif tmp = sc.scan(/\A\{\{/)
 	  q.push [:ESCAPE_BEGIN, tmp]

@@ -26,12 +26,14 @@ module AsWiki
       @historypage = cgiurl([['c', 'h'], ['p', pname]])
       @diffpage    = cgiurl([['c', 'd'], ['p', pname]])
       @helppage    = cgiurl([['c', 'v'], ['p', 'HelpPage']])
+
     end
     attr_reader :edit,:recentpages,:toppage,:allpages,:rawpage,
       :diffpage,:helppage, :historypage
     attr_reader :tree, :wikinames,:name
     attr_accessor :revision, :timestamp, :body, :md5sum, :title,
       :pagetype
+    attr_accessor :ebol, :eeol
     
     def parsefile
       c = @r.load(@name)

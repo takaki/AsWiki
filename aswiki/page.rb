@@ -15,6 +15,7 @@ module AsWiki
       template = Amrita::TemplateFileWithCache[tmplfile]
       # template = Amrita::TemplateFile.new(tmplfile)
       template.expand_attr = true
+      template.pre_format = true
       # template.use_compiler = true
       
       @str = ''

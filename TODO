@@ -1,11 +1,12 @@
 -*- outline -*-
 
 * High
-  - MergeTemplate?
   - english catalogue
   - name space expand allways
 
 * Low
+  - automatic img link?
+  - pre pre bug
   - moinhref rel uri?
   - subsubsection toc?
   - rcs keyword proble
@@ -16,19 +17,20 @@
   - UnitTestを手抜きするな。とくに日本語。
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - mod_ruby
-  - outer link list?
-  - Namazuで検索? Wiki内でする必要は?
   - w3m-elでpostできない?
   - -w
   - Nora or CGIKit
 
 * idea
+  - outer link list?
   - 逆リンク…普通にやると全検索になるから…
   - AutomaticLinkは表示だけか。むやみとlinkしてもね。
   - menuのcss fixed
   - graphviz 用出力(趣味やね)
 
 * done
+  - partial edit
+  - MergeTemplate?
   - 0 size delete ?(gc)
   - inline escape
   - LinkCountPage
@@ -62,6 +64,7 @@
   - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 
 * abandoned
+  - Namazuで検索? Wiki内でする必要は?
   - ページに対する属性。継承?
   - mergeの導入(plugin)
   - session に Nameで保存 初期化のタイミングとかで無理
@@ -72,4 +75,3 @@
   - $dobackup
   - header のナンバリング => CSS2
   - hashed plugin => Walrusでつくるとき考える
-  

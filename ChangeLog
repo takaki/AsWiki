@@ -1,3 +1,21 @@
+2002-12-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.86
+
+	* plugin/demo.rb: LineNoPlugin; new
+
+	* aswiki/handler.rb: EditPage, SavePage; partial edit.
+	SavePage; append return tail of body.
+	
+	* template/Page/Edit.html: partial edit
+
+	* template/Page/View.html: pageheader; partial edit
+
+	* aswiki/parser.rb: Parser#hn; partial edit. toc begin 0 (page
+	top).
+
+	* template/Page/Raw.html: fux duplicate print bug
+
 2002-12-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.85

@@ -134,13 +134,18 @@ module AsWiki
     def initialize(cgi, name)
       super
       body = cgi.value('body')[0]
+      if body[-1] != "\n"; body << "\n" ;end
       begin
-	c = @repository.load(name).to_s
-	if cgi.value('md5sum')[0] !=  Digest::MD5::new(c).to_s
+	c = @repository.load(name)
+	if cgi.value('md5sum')[0] !=  Digest::MD5::new(c.to_s).to_s
 	  bl = body.map{|l| l.sub("\r\n", "\n")}
-	  cl = c.map{|l| l}
-	  raise AsWiki::SaveConflict.new(name, AsWiki::merge(cl, bl, false))
+	  raise AsWiki::SaveConflict.new(name, AsWiki::merge(c, bl, false))
 	end
+
+	bol = (cgi.value('ebol')[0] or 1).to_i
+	eol = (cgi.value('eeol')[0] or c.size).to_i
+	c[bol-1...eol] = body.to_s
+	body = c.to_s
       rescue Errno::ENOENT
       end
       @repository.save(name, body)
@@ -213,12 +218,22 @@ module AsWiki
       begin
 	c = @repository.load(pname) 
       rescue Errno::ENOENT
-	c = true 
+	c = [true]
       end
       pd = AsWiki::PageData.new(pname)
       pd.md5sum = Digest::MD5::new(c.to_s).to_s
       pd.title  = title
-      pd.body   = body.nil? ? c : body
+      if body.nil?
+	bol = (cgi.value('ebol')[0] or 1).to_i
+	eol = (cgi.value('eeol')[0] or c.size).to_i
+	pd.body   = c[bol-1...eol]
+	pd.ebol   = bol
+	pd.eeol   = eol
+      else
+	pd.body   = body
+	pd.ebol   = 1
+	pd.eeol   = c.to_a.size # XXX ???
+      end
       page = AsWiki::Page.new('Edit', pd)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s

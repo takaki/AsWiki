@@ -14,6 +14,12 @@ module AsWiki
 end
 
 module AsWiki
+  class LineNoPlugin < Plugin
+    Name = 'lineno'
+    def onview(line, b, e, av=[])
+      return "lineno #{b}\n"
+    end
+  end
   class PrintblockPlugin < Plugin
     Name = 'printblock'
     def onview(line, b, e, av=[])

@@ -11,11 +11,13 @@ require 'aswiki/scanner'
 require 'aswiki/node'
 require 'aswiki/util'
 require 'aswiki/plugin'
+require "aswiki/i18n/#{$LANG}"
 
 module AsWiki
   class Parser
 #    include Obaq::HtmlGen
     include AsWiki::Util
+    include AsWiki::I18N
     WORD  = [:SPACE, :OTHER, :WORD]
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
     DECORATION = [:EM, :STRONG]
@@ -35,6 +37,10 @@ module AsWiki
       @tocdata = []
       @tocnum  = 0
 
+      @tocdata = [{:number => "##{@tocnum}", :text => '', 
+	  :msg_edit => msg_edit,}]
+      @lastbol = 1
+      
       @tree = parse
     end
     attr_reader :tree, :tocdata
@@ -104,13 +110,22 @@ module AsWiki
     end
     def hn
       level = @token[1].size
+      lineno = @line
       node = Node.new("H#{level}")
       next_token
       ret = textline
       if level == 2
 	@tocnum = @tocnum + 1
-	@tocdata << {:number => "##{@tocnum}", :text => ret}
-	node << {:number => @tocnum, :text=> ret}
+	@tocdata[-1][:partialedit] = cgiurl([['c', 'e'], ['p', @name],
+					      ['ebol',@lastbol],
+					      ['eeol',lineno-1]])
+	@lastbol = lineno
+	@tocdata << {:number => "##{@tocnum}", :text => ret,
+	  :msg_edit => msg_edit,
+	  :partialedit => cgiurl([['c', 'e'], ['p', @name],
+					      ['ebol',@lastbol]])
+	}
+	node << {:number => @tocnum, :text=> ret, }
       else
 	node << {:number => nil, :text=> ret}
       end

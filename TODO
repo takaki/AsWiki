@@ -1,7 +1,8 @@
 -*- outline -*-
 
 * High
-  - strong name space
+  - 0size delete ?
+  - include object tag
   - page initialize and publish
   - pre problem(amrita 待ち)
   - session_id を渡す目的でCGI.newをしない
@@ -32,6 +33,7 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - strong name space
   - RSS
   - plugin parts template
   - Backup - RCS ではなくて，text rotate。あるいはしないとかの選択。

@@ -88,20 +88,52 @@ module AsWiki
 
 
   module Util
+    def pathexpand(path)
+      ret = []
+      path.each { |k| 
+	if (k == '.') ; next ; end
+	if (k == '..'); ret.pop; next; end
+	ret <<  k
+      }
+      return ret
+    end
+
     def expandwikiname(wikiname, base='')
-      # return wikiname # XXX
-      if wikiname.index('.') 
-	p = []
-	n = ((wikiname[0,1] == '.' ? base + '/' : '') + wikiname).split('/')
-	n.each { |k| 
-	  if (k == '.') ; next ; end
-	  if (k == '..'); p.pop; next; end
-	  p <<  k
-	}
-	return  p.join('/');
-      else
-	return wikiname
+      bcur = []
+      wcur = []
+      bpath = base
+      wpath = wikiname
+
+      if base.index('//')
+	t = base.split('//')
+	bcur  = t[0...-1]
+	bpath = t[-1]
       end
+      if wikiname.index('//')
+	t = wikiname.split('//')
+	wcur  = t[0...-1]
+	wpath = t[-1]
+      end
+      
+      case wcur[0]
+      when nil
+	cur = bcur
+      when ''
+	# cur = wcur.join('//')
+	wcur.shift
+	cur = wcur
+      else 
+	cur = pathexpand(bcur + wcur)
+      end
+      if wpath.index('.') 
+	n = ((wpath[0,1] == '.' ? bpath + '/' : '') + wpath).split('/')
+	p = pathexpand(n)
+	fullpath = p.join('/')
+      else
+	fullpath = wpath
+      end
+
+      return (cur.push(fullpath)).join('//')
     end
     def wikilink(name, base='')
       repository = AsWiki::Repository.new

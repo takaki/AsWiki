@@ -1,5 +1,9 @@
 2002-12-02  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* aswiki/scanner.rb: WikiName regexp has been config parameter.
+
+	* aswiki/util.rb: expandwikiname support `string' namespacez.
+
 	* release: 0.76
 
 	* aswiki/handler.rb: add rss handler.

@@ -10,6 +10,8 @@ $USEATTACH   = true
 $LANG        = 'ja'
 $TITLE       = 'AsWiki'
 $USERSS      = false
+# $WIKINAMERE  = sc.scan(/\A([A-Z][a-z]+){2,}\b/) # original rule
+$WIKINAMERE  = /\A([A-Z][a-z0-9]*){2,}\b/ # AsWiki local rule
 $ATTACH_SIZE_LIMIT =  1024 * 1024 * 10
 # $SAFE = 1
 

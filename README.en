@@ -18,11 +18,15 @@ its output html.
 == Requires
 * ruby(>=1.6.7) http://www.ruby-lang.org/
 * amrita      http://www.ruby-lang.org/en/raa-list.rhtml?id=75
-* bdb         http://www.ruby-lang.org/en/raa-list.rhtml?id=49
 * strscan     http://www.ruby-lang.org/en/raa-list.rhtml?id=705
+=== to use version log
 * diff.rb     http://www.ruby-lang.org/en/raa-list.rhtml?id=63 
 * RCS         http://www.fsf.org/software/rcs/rcs.html
-
+=== to use attach 
+* bdb         http://www.ruby-lang.org/en/raa-list.rhtml?id=49
+=== to use RSS
+* REXML       http://www.ruby-lang.org/en/raa-list.rhtml?id=405
+	
 == Install
 * down load from
 http://www.assist.media.nagoya-u.ac.jp/download/aswiki/

@@ -21,6 +21,7 @@ module AsWiki
     end
   end
 end
+
 module AsWiki
   class ListPlugin < Plugin
     Name = 'list'
@@ -39,13 +40,14 @@ module AsWiki
       session['begin'] = b
       session['end'] = e
       # session.close
-      data = {
+      @data = {
 	:session_id => session.session_id,
 	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s,
 	:msg_list_item => msg_list_item,
 	:msg_list_add => msg_list_add,
       }
-      @view = load_template.expand_tree(data)
+      # @view = load_template.expand_tree(data)
+      load_parts
     end
   end
 end

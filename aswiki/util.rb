@@ -6,6 +6,7 @@ require 'algorithm/diff'
 
 module AsWiki
   def AsWiki::escape(s)
+    s # XXX ??? ruby's bug ???
     return CGI::escape(s).gsub('\.','%2E')
   end
   def AsWiki::unescape(s)
@@ -112,7 +113,7 @@ module AsWiki
       else
 	return Node.new('WikiNameNE') << 
 	  { :url => cgiurl([['c','v'],['p',link]]),
-	  :text => name + "?"}
+	  :text => name }
       end
     end
     def timestr(t)

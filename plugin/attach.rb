@@ -21,11 +21,13 @@ module AsWiki
       session['plugin'] = self.type
 
       adb =  AsWiki::AttachDB.new
-      data ={:_session_id => session.session_id,
+      @data ={:_session_id => session.session_id,
 	:item => adb.listfile(@name)
       }
-      @view = load_template.expand_tree(data)
+      # @view = load_template.expand_tree(data)
+      load_parts
     end
+    attr_reader :data
   end
 end
 

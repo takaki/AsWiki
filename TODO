@@ -1,21 +1,26 @@
 -*- outline -*-
 
 * High
+  - plugin parts template
+  - strong name space
+  - attachの切り離し
+  - Backup - RCS ではなくて，text rotate。あるいはしないとかの選択。
   - RSS
   - page initialize and publish
   - pre problem(amrita 待ち)
-  - RCSの選択
   - session_id を渡す目的でCGI.newをしない
-  - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
-  - $BASEDIRは必要か
-  - UnitTestを手抜きするな。とくに日本語。
-  - ci でtextname Backupをmoduleにしてしまえばいい。include
   
 * Low
+  - 0 size file delte
+  - 空白の入り方がどうも?
+  - 逆リンク…普通にやると全検索になるから…
+  - $BASEDIRは必要か
+  - ci でtextname Backupをmoduleにしてしまえばいい。include
+  - UnitTestを手抜きするな。とくに日本語。
+  - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - imgだけはinline?
   - mod_ruby
   - outer link list?
-  - 逆リンク…普通にやると全検索になるから…
   - mergeの導入(plugin)
   - Namazuで検索? Wiki内でする必要は?
   - w3m-elでpostできない?
@@ -23,6 +28,7 @@
   - Nora or CGIKit
 
 * idea
+  - 逆リンク…普通にやると全検索になるから…
   - AutomaticLinkは表示だけか。むやみとlinkしてもね。
   - menuのcss fixed
   - graphviz 用出力(趣味やね)

@@ -62,7 +62,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       if AsWiki::HandlerTable.key?(c)
 	AsWiki::HandlerTable[c].new(cgi, name)
       else
-	raise AsWiki::RuntimeError, "Unknown Command '#{c}'\n"
+	raise AsWiki::RuntimeError, "Unknown Command or Not Active Feature '#{c}'\n"
       end
     rescue AsWiki::EditPageCall, AsWiki::SaveConflict
       AsWiki::HandlerTable[$!.class].new(cgi, $!)

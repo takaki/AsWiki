@@ -1,3 +1,8 @@
+2002-12-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/plugin.rb, template/plugin/*, plugin/* : use parts
+	template.	
+
 2002-11-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/scanner.rb: wikiname regexp change.

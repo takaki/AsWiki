@@ -1,0 +1,37 @@
+= AsWiki - WikiWikiWeb clone written in Ruby
+
+== License
+Copyright (c) 2002 TANIGUCHI Takaki<takaki@assist.media.nagoya-u.ac.jp>
+This program is distirubted under the GPL2 or later.
+
+== What is AsWiki?:
+AsWiki is WikiWikiWeb clone written in Ruby. WikiWikiWeb is web based
+collaboration tool. AsWiki provide web-site which anyone can create
+and edit page. AsWiki run as Ruby CGI. It is very easy to customize
+its output html. 
+
+=== Main Feature
+* template base easy customizable output
+* rcs-based version log
+* plugin system
+
+== Requires
+* ruby(>=1.6.7) http://www.ruby-lang.org/
+* amrita      http://www.ruby-lang.org/en/raa-list.rhtml?id=75
+* bdb         http://www.ruby-lang.org/en/raa-list.rhtml?id=49
+* strscan     http://www.ruby-lang.org/en/raa-list.rhtml?id=705
+* diff.rb     http://www.ruby-lang.org/en/raa-list.rhtml?id=63 
+* RCS         http://www.fsf.org/software/rcs/rcs.html
+
+== Install
+* down load from
+http://www.assist.media.nagoya-u.ac.jp/download/aswiki/
+* extract tar ball
+* run 'make setup'
+* edit aswiki.conf. I am sure what you need edit only $CGIURL.
+* finish
+
+== News and Development
+I running AsWiki web site at
+http://www.assist.media.nagoya-u.ac.jp/ASDP/. But it is writen in
+Japanse. So I prepare AsWiki website talk in English.

@@ -38,14 +38,17 @@ module AsWiki
       session['begin'] = b
       session['end'] = e
       session['number'] = av[1].to_i
-      data = {
+      @data = {
 	:_session_id => session.session_id,
 	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s,
 	:msg_2chbbs_from => msg_2chbbs_from,
 	:msg_2chbbs_write => msg_2chbbs_write,
       }
-      @view = load_template.expand_tree(data)
+      # @view = load_template.expand_tree(data)
+      load_parts('W2chbbs')
     end
+    attr_reader :data
+
 #    private
 #    def weekstr(i)
 #      return Weekstr[i] 

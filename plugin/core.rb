@@ -11,32 +11,39 @@ module AsWiki
     include AsWiki::Util
     def onview(line, b, e, av)
       count = (av[1] || 100 ).to_i
-      data = {:data =>
+      @data = {:data =>
 	@repository.attrlist.sort{|a,b| b[1] <=> a[1]}.map{|l| 
 	  {:plink => wikilink(l[0]), :timestamp => timestr(l[1])}
 	}
       }
-      @view = load_template.expand_tree(data)
+      # @view = load_template.expand_tree(data)
+      load_parts
     end
   end
+
   class AllPagesPlugin < Plugin
     Name = 'allpages'
     include AsWiki::Util
     def onview(line, b, e, av)
-      data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)},
+      @data = {:data => @repository.namelist.sort.collect{|f| wikilink(f)},
 	:total => @repository.namelist.length
       }
-      @view = load_template.expand_tree(data)
+      # @view = load_template.expand_tree(data)
+      load_parts
     end
   end
+
   class MetaPagesPlugin < Plugin
     Name = 'metapages'
     include AsWiki::Util
     def onview(line, b, e, av)
-      data = {:data => $metapages.keys.sort.collect{|k| wikilink(k)}}
-      @view = load_template.expand_tree(data)
+      @data = {:data => $metapages.keys.sort.collect{|k| wikilink(k)}}
+
+      # @view = load_template.expand_tree(data)
+      load_parts
     end
   end
+
   class OrphanedPagesPlugin < Plugin
     Name = 'orphanedpages'
     include AsWiki::Util
@@ -50,9 +57,10 @@ module AsWiki
       markandsweep($TOPPAGENAME)
       @@run = false
 
-      data = {:data => (@r.namelist - @checked.keys).sort.collect{|f|
+      @data = {:data => (@r.namelist - @checked.keys).sort.collect{|f|
 	  wikilink(f)}}
-      @view = load_template.expand_tree(data)
+      # @view = load_template.expand_tree(data)
+      load_parts
     end
     private 
     def markandsweep(pname)
@@ -69,6 +77,7 @@ module AsWiki
       }
     end
   end
+
   class NotCreatedPagesPlugin < Plugin
     Name = 'notcreatedpages'
     include AsWiki::Util
@@ -83,19 +92,22 @@ module AsWiki
 	}
       }
       plist = (pages.keys - @r.namelist).sort.collect{|f| wikilink(f)}
-      data = {:data => plist, :total => plist.length}
-      @view = load_template.expand_tree(data)
+      @data = {:data => plist, :total => plist.length}
+      # @view = load_template.expand_tree(data)
+      load_parts
     end
   end
+
   class PluginListPlugin < Plugin
     Name = 'pluginlist'
     def onview(line, b, e, av)
-      data = {:data => 
+      @data = {:data => 
 	Plugin::PluginList.collect{|p|
 	  p::Name
 	}.sort
       }
-      @view = load_template.expand_tree(data)
+      # @view = load_template.expand_tree(data)
+      load_parts
     end
   end
 end

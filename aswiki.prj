@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 27)
+(Project-Version aswiki 0 28)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 26)
+(Parent-Version aswiki 0 27)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 05 Aug 2002 21:09:02 +0900")
+(Checkin-Time "Wed, 07 Aug 2002 00:04:21 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -60,7 +60,7 @@
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (wwiki.cgi (aswiki/17_wwiki.cgi 1.19 755))
+  (wwiki.cgi (aswiki/17_wwiki.cgi 1.20 755))
   (text/SamplePage (aswiki/18_SampleText 1.4 644))
   (template/Node/Hr.html (aswiki/19_HrNode.htm 1.1 664))
   (template/Node/Pre.html (aswiki/20_PreNode.ht 1.1 664))
@@ -87,7 +87,7 @@
 
   (wwiki.conf (aswiki/34_wwiki.conf 1.2 664))
   (template/Page/Edit.html (aswiki/35_EditPage.h 1.9 664))
-  (template/Page/Error.html (aswiki/36_ErrorPage. 1.3 664))
+  (template/Page/Error.html (aswiki/36_ErrorPage. 1.4 664))
   (template/Node/Blank.html (aswiki/37_BlankNode. 1.1 664))
   (template/Node/Plaintext.html (aswiki/38_PlaintextN 1.1 664))
   (template/Node/Textline.html (aswiki/39_TextlineNo 1.1 664))
@@ -102,11 +102,11 @@
 ;; Files added by populate at Sat, 18 May 2002 23:38:58 +0900,
 ;; to version 0.16(w), by takaki:
 
-  (plugin/2chbbs.rb (aswiki/43_2chbbs.rb 1.4 664))
+  (plugin/2chbbs.rb (aswiki/43_2chbbs.rb 1.5 664))
   (plugin/core.rb (aswiki/44_core.rb 1.3 664))
   (text/InterWikiName (aswiki/45_InterWikiN 1.2 644))
   (template/plugin/list.html (aswiki/46_list.html 1.1 664))
-  (template/plugin/2chbbs.html (aswiki/47_2chbbs.htm 1.1 664))
+  (template/plugin/2chbbs.html (aswiki/47_2chbbs.htm 1.2 664))
   (template/plugin/recentpages.html (aswiki/48_recentpage 1.1 664))
   (template/plugin/allpages.html (aswiki/49_allpages.h 1.1 664))
   (template/Page/Ro.html (aswiki/50_Ro.html 1.3 664))
@@ -123,6 +123,19 @@
 
   (setup.sh (aswiki/b/2_setup.sh 1.3 664))
   (text/HelpPage (aswiki/b/3_HelpPage 1.1 664))
+
+;; Files added by populate at Mon, 05 Aug 2002 21:09:25 +0900,
+;; to version 0.27(w), by takaki:
+
+  (README (aswiki/b/4_README 1.1 664))
+  (COPYING (/usr/share/common-licenses/GPL) :symlink)
+  (plugin/attach.rb (aswiki/b/5_attach.rb 1.1 664))
+  (template/plugin/attach.html (aswiki/b/6_attach.htm 1.1 664))
+
+;; Files added by populate at Wed, 07 Aug 2002 00:04:10 +0900,
+;; to version 0.27(w), by takaki:
+
+  (template/plugin/attachlist.html (aswiki/b/7_attachlist 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

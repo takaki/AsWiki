@@ -2,6 +2,8 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
+$LOAD_PATH.push '/usr/lib/ruby/1.6'
+
 require 'cgi'
 require 'obaq/htmlgen'
 
@@ -14,7 +16,7 @@ require 'wwiki/backup'
 
 require 'digest/md5'
 
-require 'amrita/template'
+# require 'amrita/template'
 
 # $SAFE = 1
 
@@ -29,10 +31,26 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
   include Obaq::HtmlGen
   cgi = CGI.new
-  c = cgi['c'][0]
-  c =  c.to_s == '' ? 'v' : c
-  name, = cgi['p']
-  name = name.to_s == '' ? $TOPPAGENAME : name
+  class << cgi
+    def multipartcheck
+      @multipart = false
+      if %r|^multipart/form-data| =~ ENV['CONTENT_TYPE'] 
+	@multipart = true
+      end
+    end
+    def sval(key)
+      if @multipart
+	return self[key][0] ? self[key][0].gets : ''
+      else
+	return self[key][0] 
+      end
+    end
+  end
+  cgi.multipartcheck
+  c = cgi.sval('c')
+  c =  c.to_s == '' ? 'v' : CGI::escapeHTML(c)
+  name = cgi.sval('p')
+  name = name.to_s == '' ? $TOPPAGENAME : CGI::escapeHTML(name)
   $pname = name
   begin
     case c
@@ -103,7 +121,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	page.to_s
       }
     when 's'
-      content = cgi['content'][0] # XXX
+      content = cgi['content'][0]
       begin
 	if cgi['md5sum'][0] != 
 	    Digest::MD5::new(repository.load(name).to_s).to_s
@@ -125,8 +143,15 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       plugin.onpost(session)
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
 		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
+    when 'attach'
+      cgi['_session_id'][0] = cgi.sval('_session_id') # xXXX
+      session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
+      plugin = eval(session['plugin'] + '.new')
+      plugin.onpost(session, cgi['file'])
+      cgi.out({'Status' => '302 REDIRECT', 'Location' => 
+		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
     else
-      raise "Unknown Command '#{c}'"
+      raise "Unknown Command '#{c}'<br>"
     end
   rescue WWiki::RuntimeError
     data = {:title => $!.type, :content => $!.message + "\n",

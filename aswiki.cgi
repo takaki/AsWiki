@@ -12,6 +12,7 @@ require 'aswiki/exception'
 require 'aswiki/interwiki'
 require 'aswiki/backup'
 require 'aswiki/pagedata'
+require 'aswiki/cgi'
 
 require 'digest/md5'
 require 'amrita/template'
@@ -31,32 +32,16 @@ MetaPages = {
   'PluginList' => '#pluginlist',
 }
 
+
 if $0 == __FILE__ or defined?(MOD_RUBY)
   load ('aswiki.conf')
   repository = AsWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
-  cgi = CGI.new
-  class << cgi
-    def multipartcheck
-      @multipart = false
-      if %r|^multipart/form-data| =~ ENV['CONTENT_TYPE'] 
-	@multipart = true
-      end
-    end
-    def sval(key)
-      if @multipart
-	return self[key][0] ? self[key][0].gets : ''
-      else
-	return self[key][0] 
-      end
-    end
-  end
-  cgi.multipartcheck
-  c = cgi.sval('c')
-  c =  c.to_s == '' ? 'v' : CGI::escapeHTML(c)
-  name = cgi.sval('p')
-  # name = name.to_s == '' ? $TOPPAGENAME : CGI::escapeHTML(name)
-  name = name.to_s == '' ? $TOPPAGENAME : name
+  cgi = FCGI.new
+  c, = cgi.value('c')
+  c  = c.nil? ? 'v' : c
+  name, = cgi.value('p')
+  name  = name.nil? ? $TOPPAGENAME : name
   begin
     case c
     when 'v'
@@ -69,7 +54,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       else
 	if MetaPages.key?(name)
 	  p = AsWiki::Parser.new(MetaPages[name])
-	  data = {:title => name, :contents => p.tree }
+	  data = {:title => name, :body => p.tree }
 	  page  = AsWiki::Page.new('Ro',data)
 	elsif repository.exist?(name)
 	  pd = AsWiki::PageData.new(name)
@@ -91,7 +76,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       c = repository.load(name)
       data = {
 	:title => 'Raw data of ' + name ,
-	:contents => c.to_s
+	:body => c.to_s
       }
       page = AsWiki::Page.new('Raw', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
@@ -108,14 +93,14 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       end
       data = {
 	:title => 'Diff of ' + name ,
-	:contents => AsWiki::diff(co,cn) # .to_s
+	:body => AsWiki::diff(co,cn) # .to_s
       }
       page = AsWiki::Page.new('Ro', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
     when 's'
-      content = cgi['content'][0]
+      body = cgi['body'][0]
       begin
 	if cgi['md5sum'][0] != 
 	    Digest::MD5::new(repository.load(name).to_s).to_s
@@ -123,7 +108,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	end
       rescue Errno::ENOENT
       end
-      repository.save(name, content)
+      repository.save(name, body)
       cgi.out({'Status' => '302 REDIRECT', 
 		'Location' => "#{$CGIURL}?c=v;p=#{AsWiki::escape(name)}"}){''}
     when 'post'
@@ -137,9 +122,8 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       plugin.onpost(session)
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
 		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
-      exit
     when 'attach'
-      cgi['_session_id'][0] = cgi.sval('_session_id') # xXXX
+      cgi['_session_id'][0] = cgi.value('_session_id')[0] # XXXX cgi.rb bug
       session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
       plugin = eval(session['plugin'] + '.new(name)')
       plugin.onpost(session, cgi['file'])
@@ -172,18 +156,18 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       cgi.out({'Status' => '302 REDIRECT', 
 		'Location' => "#{$CGIURL}?c=v;p=#{name}"}){''}
     else
-      raise "Unknown Command '#{c}'<br>"
+      raise ArgumentError, "Unknown Command '#{c}'\n"
     end
   rescue AsWiki::RuntimeError
-    data = {:title => $!.type, :contents => $!.message + "\n",
+    data = {:title => $!.type, :body => $!.message + "\n",
     }
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       AsWiki::Page.new('Error', data).to_s
     }
 
   rescue Exception
-    data = {:title => $!.type, :contents => $!.to_s + "\n" + 
-      $!.backtrace.join("\n"),
+    data = {:title => $!.type.to_s + "(#{$!.message})", 
+      :body => $!.to_s + "\n" +  $!.backtrace.join("\n"),
    } 
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       AsWiki::Page.new('Error', data).to_s

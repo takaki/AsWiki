@@ -1,6 +1,10 @@
 -*- outline -*-
 
 * High
+  - $BASEDIRは必要か
+  - AutomaticLinkは表示だけか。むやみとlinkしてもね。
+  - UnitTestを手抜きするな。とくに日本語。
+  - ci でtextname Backupをmoduleにしてしまえばいい。include
   - imgだけはinline?
   - toc
   - #minibbs

@@ -8,12 +8,11 @@ require 'amrita/template'
 
 
 module AsWiki
-  def AsWiki::editpage(name, content)
+  def AsWiki::editpage(name, body)
     data = {:title => name, 
-      # :content => CGI::escapeHTML(content.to_s),
-      :contents => content.to_s,
+      :body => body.to_s,
       :name => name,
-      :md5sum => Digest::MD5::new(content.to_s).to_s,
+      :md5sum => Digest::MD5::new(body.to_s).to_s,
       :helppage => "#{$CGIURL}?c=v;p=HelpPage",
     }
     page = AsWiki::Page.new('Edit', data)

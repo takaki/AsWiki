@@ -37,8 +37,8 @@ module AsWiki
 
     def ci(name)
       # if ! system("ci -l -q -zLT #{textname(name)} #{backupname(name)}")
-      if ! system("ci -l -q -zLT text/#{name} #{backupname(name)}") # XXX XXX XXX
-	raise
+      if ! system("ci -l -q -zLT text/#{AsWiki::escape(name)} #{backupname(name)}") # XXX XXX XXX
+	raise IOError, name
       end
     end
 

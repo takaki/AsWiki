@@ -109,15 +109,10 @@ div.diffnew
   }
 
 
-a.nonexistent
+a.notexist
 {
     font-weight: bold;
   /* background-color:  #F8F8F8; */
-    color: #FF2222;
-}
-a.nonexistent:visited 
-{
-  /* background-color: #F8F8F8; */
     color: #FF2222;
 }
 

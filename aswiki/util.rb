@@ -23,7 +23,7 @@ module AsWiki
       if x[0] == :+
 	while bi < x[1]
 	  if b[bi] != a[ai]
-	    raise 'not match 1'
+	    raise ArgumentError, 'not match 1'
 	  end
 	  r << Amrita::e(:div){
 	    Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
@@ -38,7 +38,7 @@ module AsWiki
       elsif x[0] == :-
 	while ai < x[1]
 	  if b[bi] != a[ai]
-	    raise 'not match 2'
+	    raise ArgumentError, 'not match 2'
 	  end
 	  r << Amrita::e(:div){
 	    Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
@@ -51,13 +51,13 @@ module AsWiki
 	  ai += 1
 	}
       else
-	raise '???'
+	raise ArgumentError, '???'
       end
     end
 
     while ai < a.size
       if b[bi] != a[ai]
-	raise 'not match 3'
+	raise ArgumentError, 'not match 3'
       end
       r << Amrita::e(:div){Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
       ai += 1
@@ -99,7 +99,7 @@ module AsWiki
 	  AsWiki::unescape(name)}
       else
 	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}"),
-			 Amrita::a(:class, "nonexistent")){
+			 Amrita::a(:class, "notexist")){
 	  AsWiki::unescape(name) + "?"}
       end
     end

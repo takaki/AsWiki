@@ -14,7 +14,7 @@ module AsWiki
       @p = AsWiki::Parser.new(c.to_s, name, maketree)
       # @tree = @p.tree
       @wikinames = @p.wikinames
-      @contents = @p.tree
+      @body = @p.tree
       @title = name
       @edit        = "#{$CGIURL}?c=e;p=#{AsWiki::escape(name)}"
       @toppage     = "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}"
@@ -26,16 +26,16 @@ module AsWiki
     end
     attr_reader :tree, :wikinames
     attr_accessor :title,:edit,:recentpages,:toppage,:allpages,:rawpage,
-      :diffpage,:helppage,:contents
+      :diffpage,:helppage,:body
     def lastmodified
       t = @r.mtime(@name)
       timestr(t)
     end
     def wikilinks
-      return Amrita::noescape{ @p.wikinames.delete_if{|w|
-	  w =~ /:[^:]/ }.uniq.map{|l| 
-	  [l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
-	  "#{wikilink(CGI::escapeHTML(l[0]),@name)}(#{modified(l[1])})\n" }}
+       return @p.wikinames.delete_if{|w| w =~ /:[^:]/ }.uniq.map{|l| 
+ 	  [l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
+	{:pname => wikilink(CGI::escapeHTML(l[0]),@name) ,
+	  :modified =>  modified(l[1])  }}
     end
   end
 end

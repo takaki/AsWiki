@@ -251,7 +251,7 @@ module AsWiki
 	  elsif indent > @token[1].size
 	    throw :ulend, node.expand
 	  else
-	    raise
+	    raise RangeError
 	  end
 	when :OL          
 	  if indent == @token[1].size
@@ -262,7 +262,7 @@ module AsWiki
 	  elsif indent > @token[1].size
 	    break
 	  else
-	    raise
+	    raise RangeError
 	  end
 	else
 	  break

@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 3)
+(Project-Version aswiki 0 4)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 2)
+(Parent-Version aswiki 0 3)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 03 Apr 2002 15:00:35 +0900")
+(Checkin-Time "Sat, 06 Apr 2002 12:25:22 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -19,8 +19,8 @@
 ;; Files added by populate at Mon, 01 Apr 2002 12:57:05 +0900,
 ;; to version 0.0(w), by takaki:
 
-  (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.3 664))
-  (wwiki/parser.rb (aswiki/1_parser.rb 1.3 664))
+  (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.4 664))
+  (wwiki/parser.rb (aswiki/1_parser.rb 1.4 664))
 
 ;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
 ;; to version 0.1(w), by takaki:
@@ -30,10 +30,15 @@
 ;; Files added by populate at Wed, 03 Apr 2002 14:59:48 +0900,
 ;; to version 0.2(w), by takaki:
 
-  (template/LiNode.html (aswiki/3_LiNode.htm 1.1 664))
-  (ChangeLog (aswiki/4_ChangeLog 1.1 664))
-  (wwiki/node.rb (aswiki/5_node.rb 1.1 664))
-  (wwiki/scanner.rb (aswiki/6_scanner.rb 1.1 664))
+  (template/LiNode.html (aswiki/3_LiNode.htm 1.2 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.2 664))
+  (wwiki/node.rb (aswiki/5_node.rb 1.2 664))
+  (wwiki/scanner.rb (aswiki/6_scanner.rb 1.2 664))
+
+;; Files added by populate at Thu, 04 Apr 2002 10:35:33 +0900,
+;; to version 0.3(w), by takaki:
+
+  (test/testWWiki__Node.rb (aswiki/7_testWWiki_ 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

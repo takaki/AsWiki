@@ -9,9 +9,10 @@ module WWiki
   class Parser
     WORD  = [:SPACE, :OTHER, :WORD]
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
-    DECORATION = [:B_DELIM, :I_DELIM]
-    NORMALTEXT = WORD + TAG + [:EOL]
-    TEXT = NORMALTEXT + DECORATION 
+    DECORATION = [:E_DELIM, :S_DELIM]
+    TEXTLINE = WORD + TAG + [:EOL]
+    PARAGRAPH = TEXTLINE + DECORATION 
+    TEXT = PARAGRAPH + [:UL, :OL]
     def initialize(str)
       @s = Scanner.new(str)
       @tree = parse
@@ -33,8 +34,6 @@ module WWiki
 	    node << blank
 	  when :DL          
 	    node << dl
-	  when :DL2         
-	    node << dl2
 	  when :EOL         
 	    eol  
 	    node << "\n"
@@ -51,10 +50,6 @@ module WWiki
 	    node << preblock
 	  when :TABLE_BEGIN 
 	    node << table
-	  when :UL          
-	    node << ul
-	  when :OL          
-	    node << ol
 	  when :EOF         
 	    break
 	  else 
@@ -142,7 +137,6 @@ module WWiki
       node = UlNode.new
       depth = @token[1].size
       while true
-	# treat ul as textelement
 	if @token[0] == :UL
 	  if depth == @token[1].size
 	    next_token
@@ -161,8 +155,10 @@ module WWiki
     def li(depth)
       node = LiNode.new
       while true
-	if TEXT.include?(@token[0])
+	if PARAGRAPH.include?(@token[0])
 	  node << text
+	elsif @token[0] == :OL
+	  node << ol
 	elsif :UL == @token[0]
 	  if depth < @token[1].size
 	    node << ul
@@ -239,32 +235,42 @@ module WWiki
       end
       return node
     end    
-    def text
-      node = TextNode.new
+    def paragraph
+      node = ParagraphNode.new
       while true
-	node << normaltext
+	if TEXTLINE.include?(@token[0])
+	  node << textline
+	end
 	case @token[0]
-	when :B_DELIM
+	when :S_DELIM
 	  node << decorate(:B_DELIM)
-	when :I_DELIM
+	when :E_DELIM
 	  node << decorate(:I_DELIM)
-	else  break
+	else
+	  break
 	end
       end
       return node
     end
-    def normaltext
-      node = NormaltextNode.new
+    def text
+      node = TextNode.new
       while true
-	if NORMALTEXT.include?(@token[0]) then node << textline
-	else break
+	if PARAGRAPH.include?(@token[0])
+	  node << paragraph
+	end
+	case @token[0]
+	when :UL          
+	  node << ul
+	when :OL          
+	  node << ol
+	else  break
 	end
       end
       return node
     end
     def decorate(tag)
       next_token
-      node = nil << D_TAG[tag][0] << normaltext
+      node = nil << D_TAG[tag][0] << paragraph
       if @token[0] == tag 
 	node << D_TAG[tag][1]
 	next_token

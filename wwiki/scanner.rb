@@ -33,8 +33,6 @@ module WWiki
 	    q.push [:OL, tmp]
 	  elsif tmp = sc.scan(/\A\s+\+\s*/)
 	    q.push [:DL, tmp]
-	  elsif tmp = sc.scan(/\A\s+\S+?::\s*/)
-	    q.push [:DL2, tmp]
 	  elsif tmp = sc.scan(/\A={1,6}/)
 	    q.push [:HN_BEGIN, tmp]
 	  elsif tmp = sc.scan(/\A----\s*$/)
@@ -80,9 +78,9 @@ module WWiki
 	elsif tmp = sc.scan(/\A\[\S+\s+\S+?\]/)
 	  q.push [:MOINHREF, tmp]
 	elsif tmp = sc.scan(/\A'''/)
-	  q.push [:B_DELIM, tmp]
+	  q.push [:S_DELIM, tmp]
 	elsif tmp = sc.scan(/\A''/)
-	  q.push [:I_DELIM, tmp]
+	  q.push [:E_DELIM, tmp]
 	elsif tmp = sc.scan(/\A[\w:]+/)
 	  q.push [:WORD, tmp]
 	elsif tmp = sc.scan(/\A[#{C128}-#{C255}]+/)

@@ -1,4 +1,4 @@
-#! /usr/bin/ruby 
+#! /usr/bin/ruby1.6 
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2 or later.
 

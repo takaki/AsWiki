@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
 # $Format: "VERSION = $ProjectVersion$"$
-VERSION = 0.94
+VERSION = 0.95
 
 all:
 
@@ -11,7 +11,8 @@ setup:
 	-mkdir -p cache
 	-mkdir -p attach
 	-mkdir -p text
-	 # -chmod 777 RCS session cache attach text
+	-chmod 777 RCS session cache attach text
+
 clean:
 	find -name '*~' |xargs rm -f
 

@@ -12,7 +12,7 @@ $TIMEFORMAT  = ($TIMEFORMAT  or "%Y-%m-%d/%H:%M:%S %z")
 
 $USEBACKUP   = (defined?($USEBACKUP) ? $USEBACKUP : true)
 $USERSS      = (defined?($USERSS)    ? $USERSS    : true)
-$USEATTACH   = (defined?($USEATTACH) ? $USEATTACH : true)
+$USEATTACH   = (defined?($USEATTACH) ? $USEATTACH : false)
 
 $ATTACH_SIZE_LIMIT = ($ATTACH_SIZE_LIMIT or  1024 * 1024 * 10)
 

@@ -42,7 +42,7 @@ module AsWiki
 
       @tocdata = [{:number => "##{@tocnum}", :text => '', 
 	  :msg_edit => msg_edit,
-	  :partialedit => cgiurl([['c', 'e'], 
+	  :partialedit => cgiurl([['c', 'e'],
 				   ['ebol',1],
 				   ['eeol',0]], @name)}]
       @lastbol = 1
@@ -124,14 +124,14 @@ module AsWiki
       ret = textline
       if level == 2
 	@tocnum = @tocnum + 1
-	@tocdata[-1][:partialedit] = cgiurl([['c', 'e'], 
-					      ['ebol',@lastbol],
-					      ['eeol',lineno-1]],@name)
+	@tocdata[-1][:partialedit] = cgiurl([['c', 'e'],
+                                             ['ebol',@lastbol],
+                                             ['eeol',lineno-1]],@name)
 	@lastbol = lineno
 	@tocdata << {:number => "##{@tocnum}", :text => ret,
 	  :msg_edit => msg_edit,
 	  :partialedit => cgiurl([['c', 'e'],['ebol',@lastbol]],
-				 @name)
+                                 @name)
 	}
 	node << {:number => @tocnum, :text=> ret, }
       else

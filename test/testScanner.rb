@@ -1,5 +1,6 @@
 require 'rubyunit'
 require 'aswiki/scanner.rb'
+require 'aswiki/config.rb'
 
 class TestAsWiki__Scanner < RUNIT::TestCase
 
@@ -20,7 +21,7 @@ class TestAsWiki__Scanner < RUNIT::TestCase
       [". ", [[:OTHER, '.'],[:SPACE, ' ']]],
       ["{{{", [[:PRE_BEGIN, '{{{']]],
       ["}}}", [[:PRE_END, '}}}']]],
-      [" {{{", [[:SPACE, " "], [:OTHER,'{'],[:OTHER,'{'],[:OTHER,'{'],]],
+      [" {{{", [[:SPACE, " "], [:ESCAPE_BEGIN,'{{'],[:OTHER,'{'],]],
       ["|| ||", [[:TABLE_BEGIN, '||'],[:SPACE, " "], [:TABLE_END,'||']]],
       ["WikiName", [[:WIKINAME1,"WikiName"]]],
       ["[[wikiname]]", [[:WIKINAME2,"[[wikiname]]"]]],
@@ -52,13 +53,20 @@ class TestAsWiki__Scanner < RUNIT::TestCase
     q = []
     while i =  s.next_token
       q << i
+      if i == [:EOF, nil]
+      	break
+      end
     end
     assert_equal([[:BLANK, ' '],[:EOL,"\n"],[:EOF,nil]], q)
     t.each{|a,r| 
+      p a, r
       s = AsWiki::Scanner.new(a+"\n")
       q = []
       while i =  s.next_token
 	q << i
+        if i == [:EOF, nil]
+          break
+        end
       end
       assert_equal(r, q[0..-3])
     }

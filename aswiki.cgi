@@ -34,16 +34,14 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   Amrita::TemplateFileWithCache::set_cache_dir($DIR_CACHE)
   AsWiki::Node::load_parts_template
   repository = AsWiki::Repository.new
-  Dir.glob("#$DIR_PLUGIN/*.rb").delete_if {|p| 
-    p == "#$DIR_PLUGIN/attach.rb" and $USEATTACH == false
-  }.each{|p| 
-    require p.untaint  
+  $plugin_list.each{|p| 
+    require "#$DIR_PLUGIN/#{p}".untaint  
   }
 
   cgi = CGI::new # XXX
   c    = (cgi.value('c')[0] or 'v')
   name = ((cgi.path_info and cgi.path_info[1..-1]) or 
-	  cgi.value('p')[0] or $TOPPAGENAME)
+            cgi.value('p')[0] or $TOPPAGENAME)
   begin
     begin
       if AsWiki::HandlerTable.key?(c)

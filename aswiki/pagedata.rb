@@ -32,10 +32,9 @@ module AsWiki
       @searchpage  = cgiurl([], 'SearchPage')
       # @csspath = $CGIURLdefault.css
 
-      # @theme = { :href => File.dirname($CGIURL) + "/default.css" }
+      # @theme = { :href => "#$THEME/#$THEME.css" }
       @theme = { :href => File.dirname($CGIURL) +  "/default.css" }
     end
-
     attr_reader :searchpage
     attr_reader :theme
     attr_accessor :sb
@@ -103,11 +102,11 @@ module AsWiki
 	  :diffline => l[2].to_s,
 	  :timestamp => timestr(l[1]),
 	  :tonew => {:url =>  cgiurl([['c', 'd'], ['rn',0],
-				       ['ro',l[0]]], @name),
+                                      ['ro',l[0]]], @name),
 	    :text => "current - #{l[0]}"},
 	  :toold => l[0] != 1 ?  {
 	    :url => cgiurl([['c','d'], ['rn', l[0]],
-			     ['ro', l[0]-1]], @name),
+                            ['ro', l[0]-1]], @name),
 	    :text => "new #{l[0]} old #{l[0]-1}" }  : 'not avail'
 	}
       }

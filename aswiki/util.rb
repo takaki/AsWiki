@@ -146,10 +146,9 @@ module AsWiki
 	  :url => cgiurl([],elink),
 	  :text => name}
       else
-	return Node.new('WikiNameNE') << {
+	return Node.new('WikiNameNE') << { 
 	  :url => cgiurl([], elink),
-	  :text => name
-	}
+	  :text => name }
       end
     end
     def timestr(t)
@@ -166,10 +165,10 @@ module AsWiki
       return "#{dif}d"
     end
     def cgiurl(arg, path=nil)
-      return $CGIURL + (path and ("/" + path.split('/').collect{|s|
-				    AsWiki::escape(s)}.join('/'))).to_s + 
-	(arg.empty? ? '' : "?" + 
-	 arg.map{|k,v| AsWiki::escape(k) + '=' + AsWiki::escape(v.to_s)}.join(';'))
+      return $CGIURL + (path and ("/" + path.split('/').collect{|f| 
+      AsWiki::escape(f)}.join('/')) ).to_s + 
+       (arg.empty? ? '' : "?" + 
+        arg.map{|k,v| AsWiki::escape(k) + '=' + AsWiki::escape(v.to_s)}.join(';'))
     end
   end
 end

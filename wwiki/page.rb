@@ -6,8 +6,8 @@ module WWiki
   def WWiki::editpage(name, content)
     include Obaq::HtmlGen
     data = {:title => name, :content => CGI::escapeHTML(content.to_s),
-      :p => E(:input, A(:type,'hidden'),A(:name,'p'),
-	      A(:value, WWiki::escape(name)))
+      :p => e(:input, {:type => 'hidden', :name => 'p', 
+		:value => WWiki::escape(name)})
     }
     page = WWiki::Page.new('Edit', data)
     page.tree.each do |e|
@@ -29,8 +29,8 @@ module WWiki
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false
       f.deleteln = false
-      return  f.format(tree)
-      # return @tree.to_s
+      return  f.format(@tree)
+      # return @tree
     end
   end
 end

@@ -1,11 +1,16 @@
 -*- outline -*-
 
-* href周り
-* lock
-* interwikiname
-* policy
+* ToDo
+** post plugin
+** 名前空間
+** interwikiname
+** lock
+** confilictの解決  
+** h1 delete
+
+* Wishlist
+** hashed plugin
+** header のナンバリング
+** toc
+** policy
 デフォルトで./をつけるページ，付けないページ
-* toc
-* header のナンバリング
-* h1 delete
-  

@@ -10,11 +10,11 @@ module WWiki
   module Util
     def wikilink(name)
       if $repository.exist?(name)
-	return E(:a, A(:href, "#{$CGIURL}?c=v&p=#{WWiki::escape(name)}")){
+	return e(:a, {:href =>"#{$CGIURL}?c=v&p=#{WWiki::escape(name)}"}){
 	  WWiki::unescape(name)}
       else
 	return WWiki::unescape(name) + 
-	  E(:a, A(:href, "#{$CGIURL}?c=v&p=#{WWiki::escape(name)}")){%q|?|}.to_s
+	  e(:a, {:href, "#{$CGIURL}?c=v&p=#{WWiki::escape(name)}"}){%q|?|}.to_s
       end
     end
   end

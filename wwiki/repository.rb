@@ -34,16 +34,17 @@ module WWiki
     end
 
     def namelist
-      return Dir.open(@dir).select{|f| test(?f, File.join(@dir, f) )}
+      return Dir.open(@dir).select{|f| test(?f, File.join(@dir, f))}.
+	map{|f| WWiki::unescape(f)}
     end
     
     def attrlist
-      return Dir.open(@dir).select{|f| test(?f, File.join(@dir, f) )}.
-	map{|f| [f, mtime(f)]}
+      return Dir.open(@dir).select{|f| test(?f, File.join(@dir, f))}.
+	map{|f| [WWiki::unescape(f), File.mtime(File.join(@dir, f))]}
     end
     private
     def textname(name)
-      return File.join(@dir, name)
+      return File.join(@dir, WWiki::escape(name))
     end
   end
 end

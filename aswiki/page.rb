@@ -9,11 +9,13 @@ require 'amrita/template'
 
 module AsWiki
   class Page
-    def initialize(template ,data)
-      tmplfile = File.join('template','Page', template + '.html')
+    def initialize(pagetype, data)
+      PageParts::load_parts_template(pagetype)
+      tmplfile = File.join('template','PageBase.html')
       template = Amrita::TemplateFileWithCache[tmplfile]
       template.expand_attr = true
       template.use_compiler = true
+      
       @str = ''
       template.expand(@str, data)
     end
@@ -23,4 +25,4 @@ module AsWiki
     end
   end
 end
-  
+

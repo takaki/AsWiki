@@ -1,3 +1,8 @@
+2002-11-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/pagedata.rb: devide page template into page layout
+	template and page parts	template.
+
 2002-11-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* plugin/2chbbs.rb: i18n.

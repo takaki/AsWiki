@@ -20,13 +20,8 @@ module AsWiki
 
     def initialize(template)
       @data = []
-      compact_space = false
-      if PartsModule.const_defined?(template)
-        extend PartsModule.const_get(template)
-      else
-        tmplfile = File.join('template', 'Node', template + '.html')
-        @template = Amrita::TemplateFile.new(tmplfile)
-      end
+      # compact_space = false
+      extend PartsModule.const_get(template)
     end
 
     def <<(item)

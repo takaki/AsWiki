@@ -196,7 +196,7 @@ module AsWiki
     include EditPage
     def initialize(cgi, e)
       super(cgi, nil)
-      makeeditpage(cgi, e.pname, e.pname, nil)
+      makeeditpage(cgi, e.pname,  e.pname, nil)
     end
   end
   class SaveConflictHandler <Handler

@@ -4,47 +4,12 @@ require 'wwiki/parser.rb'
 class TestWWiki__Parser < RUNIT::TestCase
   def test_tree
     s = ["aaa bbb ccc
- *
- *
+ 1.
+ 2.
 "]
-    t = {WWiki::RootNode=>
-      [
-	{WWiki::TextNode=>
-	  [
-	    {WWiki::ParagraphNode=>
-	      [
-		{WWiki::TextlineNode=>["aaa", " ", "bbb", "\n"]
-		}
-	      ]
-	    }
-	  ]
-	}, 
-	{WWiki::UlNode =>
-	  [
-	    {WWiki::TextNode =>
-	      [
-		{WWiki::ParagraphNode=>
-		  [
-		    {WWiki::TextlineNode=>["\n"]}
-		  ]
-		}
-	      ]
-	    },
-	    {WWiki::TextNode =>
-	      [
-		{WWiki::ParagraphNode=>
-		  [
-		    {WWiki::TextlineNode=>["\n"]}
-		  ]
-		}
-	      ]
-	    },
-	  ]
-	}
-      ]
-    }
+    t = []
     p =  WWiki::Parser.new(s)
-    tree = p.tree
+    # tree = p.tree
     # p tree.parsetree
     # assert_equal(t, tree.parsetree)
   end
@@ -54,12 +19,15 @@ class TestWWiki__Parser < RUNIT::TestCase
     assert_instance_of(WWiki::Parser, c)
   end
   def test_html
-    s = ["aaa bbb ccc
- *
- *
+    s = [" 
+ * aaa
+  * bbb
+
+ 1. a
+
 "]
     p = WWiki::Parser.new(s)
-    p p.tree.to_s
+    print p.tree.to_s
   end
 
 end

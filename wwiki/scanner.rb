@@ -23,25 +23,25 @@ module WWiki
 	  bol = false
 	  if    tmp = sc.scan(/\A#begin .*$/)
 	    q.push [:PLUGIN_BEGIN, tmp]
-	  elsif tmp = sc.scan(/\A#end\s*$/)
+	  elsif tmp = sc.scan(/\A#end *$/)
 	    q.push [:PLUGIN_END, tmp]
 	  elsif tmp = sc.scan(/\A#.+$/)
 	    q.push [:PLUGIN, tmp]
-	  elsif tmp = sc.scan(/\A\s+\*/)
+	  elsif tmp = sc.scan(/\A +\*/)
 	    q.push [:UL, tmp]
-	  elsif tmp = sc.scan(/\A\s+\(\d+\)/)
+	  elsif tmp = sc.scan(/\A +\d+\./)
 	    q.push [:OL, tmp]
-	  elsif tmp = sc.scan(/\A\s+\+\s*/)
+	  elsif tmp = sc.scan(/\A +\+ */)
 	    q.push [:DL, tmp]
 	  elsif tmp = sc.scan(/\A={1,6}/)
 	    q.push [:HN_BEGIN, tmp]
-	  elsif tmp = sc.scan(/\A----\s*$/)
+	  elsif tmp = sc.scan(/\A---- *$/)
 	    q.push [:HR, tmp]
-	  elsif tmp = sc.scan(/\A\s*\|\|/)
+	  elsif tmp = sc.scan(/\A *\|\|/)
 	    q.push [:TABLE_BEGIN, tmp]
-	  elsif tmp = sc.scan(/\A\{\{\{\s*$/)
+	  elsif tmp = sc.scan(/\A\{\{\{ *$/)
 	    q.push [:PRE_BEGIN, tmp]
-	  elsif tmp = sc.scan(/\A\}\}\}\s*$/)
+	  elsif tmp = sc.scan(/\A\}\}\} *$/)
 	    q.push [:PRE_END, tmp]
 	  elsif tmp = sc.scan(/\A\.$/)
 	    q.push [:ENDPERIOD, tmp]
@@ -65,17 +65,17 @@ module WWiki
 	  q.push [:WIKINAME1, tmp]
 	elsif tmp = sc.scan(/\A\[\[\S+?\]\]/)
 	  q.push [:WIKINAME2, tmp]
-	elsif tmp = sc.scan(/\A={1,6}\s*$/)
+	elsif tmp = sc.scan(/\A={1,6} *$/)
 	  q.push [:HN_END, tmp]
-	elsif tmp = sc.scan(/\A\s+\.$/)
+	elsif tmp = sc.scan(/\A +\.$/)
 	  q.push [:ENDPERIOD, tmp]
 	elsif tmp = sc.scan(/\A[ \t\r\f]+/)
 	  q.push [:SPACE, tmp]
-	elsif tmp = sc.scan(/\A\|\|\s*$/)
+	elsif tmp = sc.scan(/\A\|\| *$/)
 	  q.push [:TABLE_END, tmp]
 	elsif tmp = sc.scan(/\A\|\|/)
 	  q.push [:TABLE, tmp]
-	elsif tmp = sc.scan(/\A\[\S+\s+\S+?\]/)
+	elsif tmp = sc.scan(/\A\[\S+ +\S+?\]/)
 	  q.push [:MOINHREF, tmp]
 	elsif tmp = sc.scan(/\A'''/)
 	  q.push [:S_DELIM, tmp]

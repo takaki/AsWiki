@@ -60,7 +60,6 @@ module WWiki
       return node
     end
     def blank
-      node = nil
       next_token
       while true
 	case  @token[0]
@@ -72,7 +71,7 @@ module WWiki
 	  break
 	end
       end
-      return node  << "<p>"
+      return nil
     end
     def hn
       node = nil
@@ -136,17 +135,24 @@ module WWiki
     def ul
       node = UlNode.new
       depth = @token[1].size
+      next_token
       while true
-	if @token[0] == :UL
+	if PARAGRAPH.include?(@token[0])
+	  node << paragraph
+	end
+	case @token[0]
+	when :UL
 	  if depth == @token[1].size
 	    next_token
-	    node << li(depth)
-	  elsif depth >= @token[1].size
+	    next
+	  elsif depth > @token[1].size
 	    node << ul
 	  else
 	    break
 	  end
-	else 
+	when :OL
+	  node << ol
+	else
 	  break
 	end
       end
@@ -156,7 +162,7 @@ module WWiki
       node = LiNode.new
       while true
 	if PARAGRAPH.include?(@token[0])
-	  node << text
+	  node << paragraph
 	elsif @token[0] == :OL
 	  node << ol
 	elsif :UL == @token[0]
@@ -172,21 +178,23 @@ module WWiki
       return node
     end
     def ol
-      node = nil << "<ol>"
+      node = OlNode.new
       depth = @token[1].size
       next_token
       while true
-	node << "<li>" << text
+	if PARAGRAPH.include?(@token[0])
+	  node << paragraph
+	end
 	case @token[0]
 	when :OL
-	  node << "</li>"
 	  next_token
+	  node << paragraph
 	when :EOL
 	  eol
 	else  break
 	end
       end
-      return node << "</li>" << "</ol>"
+      return node
     end
     def table
       node = nil << "<table>" 

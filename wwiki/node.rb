@@ -18,7 +18,10 @@ module WWiki
       template = Obaq::HtmlParser.parse_file(tmplfile)
       data = {:list => self.to_a}
       tree = template.expand(data)
-      return Obaq::HtmlGen::Formatter.new.format(tree)
+      f = Obaq::HtmlGen::Formatter.new
+      f.escape = false
+      f.deleteln = false
+      return f.format(tree).gsub("\n+","\n")
     end
     def parsetree
       if self == []
@@ -41,8 +44,14 @@ module WWiki
   class ParagraphNode < Node
   end
   class TextlineNode < Node
+    def to_s
+      return self.to_a.to_s
+    end
   end
   class TextNode < Node
+    def to_s
+      return self.to_a.to_s
+    end
   end
   class RootNode < Node
   end
@@ -51,6 +60,8 @@ module WWiki
   class StrongNode < Node
   end
   class WordNode < Node
+  end
+  class OlNode <Node
   end
   class UlNode <Node
   end

@@ -10,10 +10,30 @@
 <body>
 <a href="@recentpages">最近の変更</a>
 <a href="@allpages">全部</a>
-<a href="@diffpage">差分</a>
 <a href="@toppage">トップ</a>
 <a href="@helppage">ヘルプ</a>
-<H1><span id=title></span></h1>
+<table class="history" border="1">
+<tbody>
+<tr>
+<th>版</th>
+<th>差分</th>
+<th>更新日時</th>
+<th>最新版との差分</th>
+<th>直前との差分</th>
+</tr>
+<tr id="logtable">
+<td id="revision"></td>
+<td id="diffline"></td>
+<td id="timestamp"></td>
+<td id="tonew"></td>
+<td id="toold"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<H1><span id=title></span>(第<span id=revision></span>版,
+更新日時: <span id=lastmodified></span>)
+</h1>
 <hr>
 <span id=body></span>
 <hr>

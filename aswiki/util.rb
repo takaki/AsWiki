@@ -94,11 +94,11 @@ module AsWiki
       link = AsWiki::escape(name)
       if repository.exist?(name) || name =~ /[^:]+:[^:]+/ || 
 	  MetaPages.has_key?(name)
-	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")
+	return Amrita::e(:a, Amrita::a(:href,cgiurl([['c','v'],['p',link]]))
 			 ){
 	  AsWiki::unescape(name)}
       else
-	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}"),
+	return Amrita::e(:a, Amrita::a(:href, cgiurl([['c','v'],['p',link]])),
 			 Amrita::a(:class, "notexist")){
 	  AsWiki::unescape(name) + "?"}
       end
@@ -115,6 +115,10 @@ module AsWiki
       return "#{dif}h" if dif <= 24
       dif = dif / 24
       return "#{dif}d"
+    end
+    def cgiurl(arg)
+      return $CGIURL + "?" +
+	arg.map{|k,v| AsWiki::escape(k) + '=' + AsWiki::escape(v.to_s)}.join(';')
     end
   end
 end

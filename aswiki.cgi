@@ -32,16 +32,16 @@ MetaPages = {
   'PluginList' => '#pluginlist',
 }
 
-
 if $0 == __FILE__ or defined?(MOD_RUBY)
+  include AsWiki::Util
   load ('aswiki.conf')
   repository = AsWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
   cgi = FCGI.new
-  c, = cgi.value('c')
-  c  = c.nil? ? 'v' : c
-  name, = cgi.value('p')
-  name  = name.nil? ? $TOPPAGENAME : name
+  c = cgi.value('c')[0]
+  c = c.nil? ? 'v' : c
+  name = cgi.value('p')[0]
+  name = name.nil? ? $TOPPAGENAME : name
   begin
     case c
     when 'v'
@@ -53,11 +53,12 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 		  'Location' => "#{url}#{iwiki}"}){''}
       else
 	if MetaPages.key?(name)
-	  p = AsWiki::Parser.new(MetaPages[name])
-	  data = {:title => name, :body => p.tree }
-	  page  = AsWiki::Page.new('Ro',data)
+	  pd = AsWiki::PageData.new(name)
+	  pd.parsetext(MetaPages[name])
+	  page  = AsWiki::Page.new('Ro', pd)
 	elsif repository.exist?(name)
 	  pd = AsWiki::PageData.new(name)
+	  pd.parsefile
 	  page = AsWiki::Page.new('View', pd)
 	else
 	  page = AsWiki::editpage(name, '')
@@ -82,27 +83,42 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
-    when 'd'
+    when 'h'
+      rev = cgi.value('rev')[0].to_i
       backup = AsWiki::Backup.new('.')
-      cn  = repository.load(name)
+      if rev == 0
+	rev = backup.rlog(name)[0][0]
+       end
+      c = backup.co(name, rev)
+      pd = AsWiki::PageData.new(name)
+      pd.revision  = rev
+      pd.timestamp = backup.rlog(name, rev)[0][1]
+      pd.parsetext(c.to_s)
+      page = AsWiki::Page.new('History', pd)
+      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+	page.to_s
+      }
+    when 'd'
+      revnew = cgi.value('rn')[0].to_i
+      revold = cgi.value('ro')[0].to_i
+
+      backup = AsWiki::Backup.new('.')
       log = backup.rlog(name)
-      if log.length > 1
-	co = backup.co(name, log[1][0])
-      else
-	co = ''
-      end
+
+      cn = revnew == 0 ? repository.load(name) : backup.co(name, revnew)
+      co = revold == 0 ? backup.co(name, log[1][0]) : backup.co(name, revold)
       data = {
-	:title => 'Diff of ' + name ,
-	:body => AsWiki::diff(co,cn) # .to_s
+	:title => 'Diff of ' + name + "(new #{revnew}, old #{revold})",
+	:body => AsWiki::diff(co,cn)
       }
       page = AsWiki::Page.new('Ro', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
     when 's'
-      body = cgi['body'][0]
+      body = cgi.value('body')[0]
       begin
-	if cgi['md5sum'][0] != 
+	if cgi.value('md5sum')[0] != 
 	    Digest::MD5::new(repository.load(name).to_s).to_s
 	  raise AsWiki::TimestampMismatchError
 	end
@@ -110,7 +126,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       end
       repository.save(name, body)
       cgi.out({'Status' => '302 REDIRECT', 
-		'Location' => "#{$CGIURL}?c=v;p=#{AsWiki::escape(name)}"}){''}
+		'Location' => cgiurl([['c','v'],['p',name]])}){''}
     when 'post'
       session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
       if cgi['md5sum'][0] != 
@@ -121,14 +137,14 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       plugin = eval(session['plugin'] + '.new(name)')
       plugin.onpost(session)
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
-		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
+		cgiurl([['c','v'],['p',session['pname']]])}){''}
     when 'attach'
       cgi['_session_id'][0] = cgi.value('_session_id')[0] # XXXX cgi.rb bug
       session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
       plugin = eval(session['plugin'] + '.new(name)')
       plugin.onpost(session, cgi['file'])
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
-		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
+		cgiurl([['c','v'],['p',session['pname']]])}){''}
     when 'download'
       mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
       namedb = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
@@ -154,7 +170,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       namedb.delete(num)
       page.delete(num)
       cgi.out({'Status' => '302 REDIRECT', 
-		'Location' => "#{$CGIURL}?c=v;p=#{name}"}){''}
+		'Location' => cgiurl([['c','v'],['p',name]])}){''}
     else
       raise ArgumentError, "Unknown Command '#{c}'\n"
     end

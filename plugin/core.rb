@@ -44,7 +44,7 @@ module AsWiki
     def onview(line, b, e, av)
       return nil if @@run == true
       @r = AsWiki::Repository.new('.')
-      @checked = {} # want Set ...
+      @checked = {} # i want Set ...
       @queue   = {}
       @@run = true
       markandsweep($TOPPAGENAME)
@@ -55,9 +55,10 @@ module AsWiki
       @view = load_template.expand_tree(data)
     end
     private 
-    def markandsweep(page)
-      @checked[page] = true
-      AsWiki::PageData.new(page, false).wikinames.uniq.each{|n|
+    def markandsweep(pname)
+      @checked[pname] = true
+      AsWiki::Parser.new(@r.load(pname).to_s, pname, false).wikinames.
+	uniq.each{|n|
 	if @r.exist?(n) and not @queue.key?(n) and not @checked.key?(n)
 	  @queue[n] = true
 	end

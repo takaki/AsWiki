@@ -1,8 +1,16 @@
 2002-10-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* release: 0.49
+	* aswiki/util.rb: #cgiurl for making cgilink.
 
-	* aswiki.cgi (MetaPages): :contents => :body
+	* aswiki.cgi: history feature.
+
+	* aswiki/pagedata.rb: split parse process from initialize.
+
+	* template/Page/History.html: new file
+
+	* release: 0.50
+
+	* aswiki.cgi: :contents => :body
 
 	* aswiki/cgi.rb: CGI wrap class
 

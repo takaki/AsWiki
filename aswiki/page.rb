@@ -13,7 +13,7 @@ module AsWiki
       :body => body.to_s,
       :name => name,
       :md5sum => Digest::MD5::new(body.to_s).to_s,
-      :helppage => "#{$CGIURL}?c=v;p=HelpPage",
+      :helppage => cgiurl([['c','v'],['p','HelpPage']]),
     }
     page = AsWiki::Page.new('Edit', data)
     return page

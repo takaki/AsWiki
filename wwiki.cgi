@@ -52,6 +52,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  data = {:title => name, 
 	    :content => p.tree.to_s,
 	    :edit => "#{$CGIURL}?c=e;p=#{WWiki::escape(name)}",
+	    :toppage => "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}",
 	    :recentpages => "#{$CGIURL}?c=v;p=RecentPages",
 	    :allpages => "#{$CGIURL}?c=v;p=AllPages",
 	    :rawpage => "#{$CGIURL}?c=r;p=#{WWiki::escape(name)}",

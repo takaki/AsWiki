@@ -1,5 +1,9 @@
 2002-11-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* release: 0.71
+
+	* aswiki/pagedata.rb: add raw page history view.
+
 	* release: 0.70
 
 	* aswiki/parser.rb: table of contents.

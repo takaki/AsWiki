@@ -79,6 +79,27 @@ module AsWiki
     end
   end
 
+  class HistoryRawHandler < Handler
+    HandlerTable['hr'] = self      
+    def initialize(cgi, name)
+      super
+      rev = cgi.value('rev')[0].to_i
+      backup = AsWiki::Backup.new('.')
+      if rev == 0
+	rev = backup.rlog(name)[0][0]
+      end
+      c = backup.co(name, rev)
+      pd = AsWiki::PageData.new(name)
+      pd.revision  = rev
+      pd.timestamp = backup.rlog(name, rev)[0][1]
+      pd.body = Amrita::pre { Amrita::e(:code) {  c.to_s  } } # XXX
+      page = AsWiki::Page.new('History', pd)
+      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+	page.to_s
+      }
+    end
+  end
+
   class DiffHandler < Handler
     HandlerTable['d'] = self      
     def initialize(cgi, name)

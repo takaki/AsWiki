@@ -68,8 +68,14 @@ module AsWiki
 	
 	backup = AsWiki::Backup.new('.')
 	return backup.rlog(@name).map{|l| 
-	  { :revision => {:url=> cgiurl([['c','h'], ['p',@name], ['rev',l[0]]]),
-	      :rev => l[0]},
+	  { :revision => {
+	      :url=> cgiurl([['c','h'], ['p',@name], ['rev',l[0]]]),
+	      :rev => l[0]
+	    },
+	    :historyraw => {
+	      :url=> cgiurl([['c','hr'], ['p',@name], ['rev',l[0]]]),
+	      :rev => l[0]
+	    },
 	    :diffline => l[2].to_s,
 	    :timestamp => timestr(l[1]),
 	    :tonew => {:url =>  cgiurl([['c', 'd'], ['p', @name], ['rn',0],

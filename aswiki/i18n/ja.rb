@@ -12,6 +12,7 @@ module AsWiki
     def msg_lastmodified; '最終更新' end
 
     def msg_version; '版' end
+    def msg_raw; '生' end
     def msg_diff; '差分' end
     def msg_modified_time; '更新日時' end
     def msg_diff_from_current; '最新版との差分' end

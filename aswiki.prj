@@ -1,0 +1,26 @@
+;; -*- Prcs -*-
+(Created-By-Prcs-Version 1 3 3)
+(Project-Description "")
+(Project-Version aswiki 0 1)
+;; PRCS note: this project version was originally checked in when
+;; the project was named `wwiki'.
+
+(Parent-Version -*- -*- -*-)
+(Version-Log "")
+(New-Version-Log "")
+(Checkin-Time "Mon, 01 Apr 2002 12:57:23 +0900")
+(Checkin-Login takaki)
+(Populate-Ignore ("obsolete/" "~$" "\\.log$"))
+(Project-Keywords)
+(Files
+;; This is a comment.  Fill in files here.
+;; For example:  (prcs/checkout.cc ())
+
+;; Files added by populate at Mon, 01 Apr 2002 12:57:05 +0900,
+;; to version 0.0(w), by takaki:
+
+  (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.1 664))
+  (wwiki/parser.rb (aswiki/1_parser.rb 1.1 664))
+)
+(Merge-Parents)
+(New-Merge-Parents)

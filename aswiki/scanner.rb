@@ -41,8 +41,7 @@ module AsWiki
 	    q.push [:HN_BEGIN, tmp]
 	  elsif tmp = sc.scan(/\A---- *$/)
 	    q.push [:HR, tmp]
-	  # elsif tmp = sc.scan(/\A *\|\|/)
-	  elsif tmp = sc.scan(/\A *\|/)
+	  elsif tmp = sc.scan(/\A *\|\|/)
 	    q.push [:TABLE_BEGIN, tmp]
 	  elsif tmp = sc.scan(/\A\{\{\{ *$/)
 	    q.push [:PRE_BEGIN, tmp]

@@ -1,7 +1,7 @@
 require 'rubyunit'
-require 'wwiki/scanner.rb'
+require 'aswiki/scanner.rb'
 
-class TestWWiki__Scanner < RUNIT::TestCase
+class TestAsWiki__Scanner < RUNIT::TestCase
 
   def test_next_token
     t = [ 
@@ -48,14 +48,14 @@ class TestWWiki__Scanner < RUNIT::TestCase
 #       ["a\na\n", [[:WORD,'a'],[:SPACE,"\n"],[:WORD,'a'],[:SPACE,"\n"]]]
       ]
     
-    s = WWiki::Scanner.new(" \n")
+    s = AsWiki::Scanner.new(" \n")
     q = []
     while i =  s.next_token
       q << i
     end
     assert_equal([[:BLANK, ' '],[:EOL,"\n"],[:EOF,nil]], q)
     t.each{|a,r| 
-      s = WWiki::Scanner.new(a+"\n")
+      s = AsWiki::Scanner.new(a+"\n")
       q = []
       while i =  s.next_token
 	q << i
@@ -65,8 +65,8 @@ class TestWWiki__Scanner < RUNIT::TestCase
   end
 
   def test_s_new
-    c = WWiki::Scanner.new('')
-    assert_instance_of(WWiki::Scanner, c)
+    c = AsWiki::Scanner.new('')
+    assert_instance_of(AsWiki::Scanner, c)
   end
 
 end

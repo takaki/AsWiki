@@ -1,11 +1,11 @@
 require 'rubyunit'
-require 'wwiki/backup.rb'
+require 'aswiki/backup.rb'
 
-class TestWWiki__Backup < RUNIT::TestCase
+class TestAsWiki__Backup < RUNIT::TestCase
 
   def setup
     STDIN.reopen('/dev/null')
-    @c = WWiki::Backup.new('test')
+    @c = AsWiki::Backup.new('test')
     fname = 'test/text/test'
     bname = 'test/RCS/test,v'
     Dir.mkdir('test/RCS')
@@ -49,7 +49,7 @@ class TestWWiki__Backup < RUNIT::TestCase
   end
 
   def test_s_new
-    assert_instance_of(WWiki::Backup, @c)
+    assert_instance_of(AsWiki::Backup, @c)
   end
 
 end

@@ -1,19 +1,18 @@
 require 'rubyunit'
 
-require 'wwiki/repository.rb'
+require 'aswiki/repository.rb'
+require 'aswiki/util'
 
-require 'wwiki/util'
-
-class TestWWiki__Repository < RUNIT::TestCase
+class TestAsWiki__Repository < RUNIT::TestCase
 
   def setup
     STDIN.reopen('/dev/null')
-    @c = WWiki::Repository.new('test')
+    @c = AsWiki::Repository.new('test')
     @dir = 'test/text'
     @fname = ['test', 'test2','ÆüËÜ¸ì']
     Dir.mkdir('test/RCS')
     Dir.mkdir('test/text')
-    @fname.each{|f| (open(File.join(@dir,WWiki::escape(f)) ,'w') << "1\n").close  }
+    @fname.each{|f| (open(File.join(@dir,AsWiki::escape(f)) ,'w') << "1\n").close  }
   end
   def teardown
     Dir.glob('test/text/*').each{|f| File.unlink f}
@@ -23,7 +22,7 @@ class TestWWiki__Repository < RUNIT::TestCase
   end
   
   def test_attrlist
-    assert_equal(@fname.map{|f| [f, File.mtime(File.join(@dir,WWiki::escape(f)))]}.sort,
+    assert_equal(@fname.map{|f| [f, File.mtime(File.join(@dir,AsWiki::escape(f)))]}.sort,
 		 @c.attrlist.sort)
   end
 
@@ -46,7 +45,7 @@ class TestWWiki__Repository < RUNIT::TestCase
   end
 
   def test_s_new
-    assert_instance_of(WWiki::Repository,@c)
+    assert_instance_of(AsWiki::Repository,@c)
   end
 
 end

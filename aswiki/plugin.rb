@@ -1,6 +1,8 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
+require 'aswiki/repository'
+
 module AsWiki
   class Plugin
     PluginList = []

@@ -10,7 +10,8 @@ module AsWiki
     def Plugin.inherited(sub)
       PluginList << sub
     end
-    def initialize
+    def initialize(name)
+      @name = name
       PluginList.each{|p|
 	PluginTable[p::Name] = p
       }
@@ -26,7 +27,7 @@ module AsWiki
       end
       cmd = av[0]
       if pc = PluginTable[cmd]
-	p = pc.new
+	p = pc.new(@name)
 	p.onview(line, b, e, av)
 	return p
       else

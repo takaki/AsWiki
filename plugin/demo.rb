@@ -32,12 +32,12 @@ module AsWiki
     end
     def onview(line, b, e, av=[])
       session = CGI::Session.new(CGI::new, {'tmpdir' => 'session'})
-      session['pname'] = $pname
+      session['pname'] = @name
       session['plugin'] = self.type
       session['begin'] = b
       session['end'] = e
       data = {:session_id => session.session_id,
-	:md5sum =>  Digest::MD5::new(@repository.load($pname).to_s).to_s}
+	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s}
       load_template.expand(@view, data)
       @view = Amrita::noescape{@view}
     end

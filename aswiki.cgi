@@ -14,6 +14,7 @@ require 'aswiki/page'
 require 'aswiki/exception'
 require 'aswiki/interwiki'
 require 'aswiki/backup'
+require 'aswiki/pagedata'
 
 require 'digest/md5'
 
@@ -57,7 +58,6 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   name = cgi.sval('p')
   # name = name.to_s == '' ? $TOPPAGENAME : CGI::escapeHTML(name)
   name = name.to_s == '' ? $TOPPAGENAME : name
-  $pname = name
   begin
     case c
     when 'v'
@@ -75,11 +75,11 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  data = {:title => name, :content => p.tree.to_s, }
 	  page  = AsWiki::Page.new('Ro',data)
 	elsif repository.exist?(name)
-	  c = repository.load(name)
-	  p = AsWiki::Parser.new(c.to_s)
-	  # p = AsWiki::Parser.new(CGI::escapeHTML(c.to_s))
+	  # c = repository.load(name)
+	  # p = AsWiki::Parser.new(c.to_s)
+	  pd = AsWiki::PageData.new(name)
 	  data = {:title => name, 
-	    :content => Amrita::noescape{p.tree.to_s},
+	    :content => Amrita::noescape{pd.tree.to_s},
 	    :edit => "#{$CGIURL}?c=e;p=#{AsWiki::escape(name)}",
 	    :toppage => "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}",
 	    :recentpages => "#{$CGIURL}?c=v;p=RecentPages",
@@ -88,7 +88,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    :diffpage => "#{$CGIURL}?c=d;p=#{AsWiki::escape(name)}",
 	    :helppage => "#{$CGIURL}?c=v;p=HelpPage",
 	    :lastmodified => repository.mtime(name),
-	    :wikilinks => Amrita::noescape{p.wikilinks},
+	    :wikilinks => Amrita::noescape{pd.wikilinks},
 	  }
 	  page = AsWiki::Page.new('View', data)
 	else
@@ -127,7 +127,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	:title => 'Diff of ' + name ,
 	:content => AsWiki::diff(co,cn) # .to_s
       }
-      page = AsWiki::Page.new('Raw', data)
+      page = AsWiki::Page.new('Ro', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
@@ -150,7 +150,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	raise AsWiki::TimestampMismatchError
       end
       cgi.params.each{|key, value| session[key] = value}
-      plugin = eval(session['plugin'] + '.new')
+      plugin = eval(session['plugin'] + '.new(@name)')
       plugin.onpost(session)
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
 		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
@@ -186,7 +186,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       name.delete(num)
       page.delete(num)
       cgi.out({'Status' => '302 REDIRECT', 
-		'Location' => "#{$CGIURL}?c=v;p=#{$pname}"}){''}
+		'Location' => "#{$CGIURL}?c=v;p=#{name}"}){''}
       
     else
       raise "Unknown Command '#{c}'<br>"

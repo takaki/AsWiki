@@ -93,8 +93,7 @@ module AsWiki
 	elsif tmp = sc.scan(/\A\S/e)
 	  q.push [:OTHER, tmp]
 	else
-	  STDERR.puts sc.rest.inspect
-	  raise 'must not happen'
+	  raise 'must not happen: ' + sc.rest.inspect
 	end
       end
       q.push [ :EOF, nil]

@@ -1,5 +1,20 @@
+2002-09-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.43
+
+	* aswiki/util.rb: restart namespace feature.
+	diff output.
+
+	* aswiki.cgi: remove $pname.
+
+	* aswiki/pagedata.rb: new class AsWiki::PageData.
+	to hold pagename, parsetree and misc.
+	
+	* aswiki/util.rb: suspend namespace feature.
+
 2002-09-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* aswiki/util.rb: diff page style.
 
 	* release: 0.42
 	

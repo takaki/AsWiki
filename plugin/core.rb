@@ -48,10 +48,7 @@ module AsWiki
       @checked = {} # want Set ...
       @queue   = {}
       @@run = true
-      pname = $pname
-      $pname = $TOPPAGENAME # XXX
       markandsweep($TOPPAGENAME)
-      $pname = pname # XXX
       @@run = false
 
       data = {:data => (@r.namelist - @checked.keys).sort.collect{|f|
@@ -61,16 +58,14 @@ module AsWiki
     end
     private 
     def markandsweep(page)
-      STDERR.puts '0',page
       @checked[page] = true
-      AsWiki::Parser.new(@r.load(page).to_s).wikinames.each {|l|
-	STDERR.puts '1', l
-	if @r.exist?(l) and not @queue.key?(l) and not @checked.key?(l)
-	  @queue[l] = true
+      AsWiki::PageData.new(page).wikinames.collect {|l|
+	expandwikiname(l,page)}.each{|n|
+	if @r.exist?(n) and not @queue.key?(n) and not @checked.key?(n)
+	  @queue[n] = true
 	end
       }
       @queue.each_key { |l|
-	STDERR.puts '2', l
 	@queue.delete(l)
 	markandsweep(l)
       }
@@ -82,16 +77,14 @@ module AsWiki
     def onview(line, b, e, av)
       @r = AsWiki::Repository.new('.')
       pages = {}
-      pname = $pname
-      $pname = $TOPPAGENAME
       @r.namelist.each{|p|
-	AsWiki::Parser.new(@r.load(p).to_s).wikinames.each{|l|
-	  if l !~ /\A\w+:[A-Z]\w+(?!:)/
-	    pages[l] = true
+	AsWiki::PageData.new(p).wikinames.collect{|l| 
+	  expandwikiname(l,p)}.each{|n|
+	  if n !~ /\A\w+:[A-Z]\w+(?!:)/
+	    pages[n] = true
 	  end
 	}
       }
-      $pname = pname
       data = {:data => (pages.keys - @r.namelist).sort.collect{|f|
 	  wikilink(f)}}
       load_template.expand(@view, data)

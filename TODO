@@ -1,16 +1,14 @@
 -*- outline -*-
 
 * High
-  - $pname を削除できるようにする。
+  - mod_ruby
   - Namazuで検索
   - $print_error
   - $dobackup
   - Page templateの統合  
-  - NotCreatedPages
-  - OrphanedPages
   - w3m-elでpostできない?
   - graphviz 用出力(趣味やね)
-  - 高速化 (うーん)。Parserは十分早い。だが，Amritaの展開が問題。
+  - 高速化 Parserは十分早い。だが，Amritaの展開が問題。
 
 * Low
   - toc

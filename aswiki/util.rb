@@ -11,6 +11,13 @@ module AsWiki
   def AsWiki::unescape(s)
     return CGI::unescape(s)
   end
+  def diffout(s, class_=nil)
+    [Amrita::e(:div, (class_ ? Amrita::a(:class, class_) : nil)){
+	Amrita::e(:code){
+	  s.chomp
+	}
+      }, "\n"]
+  end
   def AsWiki::diff(a,b)
     f = Diff::diff(a,b)
 
@@ -25,16 +32,14 @@ module AsWiki
 	  if b[bi] != a[ai]
 	    raise 'not match 1'
 	  end
-	  # print "#{bi} = #{b[bi]}"
-	  r << "#{bi} = #{b[bi]}"
+	  r << Amrita::e(:div){
+	    Amrita::e(:code){"#{bi} =1 #{b[bi]}".chomp}} << "\n"
 	  ai += 1
 	  bi += 1
 	end
-	# print  "#{bi} #{x[0]} #{x[2]}"
 	x[2].each{|l|
-	  # r << "#{bi} #{x[0]} #{l}"
-	  r << Amrita::e(:span,Amrita::a(:class,'diffnew')){"#{bi} #{x[0]} #{l}".chomp}
-	  r << "\n"
+	  r << Amrita::e(:div, Amrita::a(:class,'diffnew')){
+	    Amrita::e(:code){"#{bi} #{x[0]} #{l}".chomp}} << "\n"
 	  bi += 1
 	}
       elsif x[0] == :-
@@ -42,16 +47,14 @@ module AsWiki
 	  if b[bi] != a[ai]
 	    raise 'not match 2'
 	  end
-	  # print  "#{bi} = #{b[bi]}"
-	  r << "#{bi} = #{b[bi]}"
+	  r << Amrita::e(:div){
+	    Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
 	  ai += 1
 	  bi += 1
 	end
-	# print  "#{bi} #{x[0]} #{x[2]}"
 	x[2].each{|l|
-	  # r << "#{bi} #{x[0]} #{l}"
-	  r << Amrita::e(:span,Amrita::a(:class,'diffold')){"#{bi} #{x[0]} #{l}".chomp}
-	  r << "\n"
+	  r << Amrita::e(:div, Amrita::a(:class,'diffold')){
+	    Amrita::e(:code){"#{bi} #{x[0]} #{l}".chomp}} << "\n"
 	  ai += 1
 	}
       else
@@ -63,8 +66,7 @@ module AsWiki
       if b[bi] != a[ai]
 	raise 'not match 3'
       end
-      # print  "#{bi} = #{b[bi]}\n"
-      r << "#{bi} = #{b[bi]}"
+      r << Amrita::e(:div){Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
       ai += 1
       bi += 1
     end
@@ -72,7 +74,8 @@ module AsWiki
   end
   
   module Util
-    def expandwikiname(wikiname, base)
+    def expandwikiname(wikiname, base='')
+      # return wikiname # XXX
       if wikiname.index('.') 
 	p = []
 	n = ((wikiname[0,1] == '.' ? base + '/' : '') + wikiname).split('/')
@@ -86,8 +89,8 @@ module AsWiki
 	return wikiname
       end
     end
-    def wikilink(name)
-      ename = expandwikiname(name, $pname)
+    def wikilink(name, base='')
+      ename = expandwikiname(name, base)
       repository = AsWiki::Repository.new
       link = AsWiki::escape(ename)
       if repository.exist?(ename) || name =~ /[^:]+:[^:]+/ || 

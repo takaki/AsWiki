@@ -24,32 +24,17 @@ module AsWiki
     ELEMENT = PLAINTEXT + [:UL, :OL]
     D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
     
-    def initialize(str)
+    def initialize(str,name='')
+      @name = name
       @s = Scanner.new(str)
       @wikinames = []
-      @plugin = AsWiki::Plugin.new
-
+      @plugin = AsWiki::Plugin.new(name)
+      
       @tree = parse
     end
     attr_reader :tree, :wikinames
-    def wikilinks
-      repository = AsWiki::Repository.new
-      return @wikinames.delete_if{|w| w =~ /:[^:]/ }.map{|l| 
-	expandwikiname(l, $pname)}.uniq.map{|l| 
-	[l, repository.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
-	"#{wikilink(CGI::escapeHTML(l[0]))}(#{modified(l[1])})\n" }
-    end
+
     private 
-    def modified(t)
-      return '-' unless t
-      dif = (Time.now - t).to_i
-      dif = dif / 60
-      return "#{dif}m" if dif <= 60
-      dif = dif / 60
-      return "#{dif}h" if dif <= 24
-      dif = dif / 24
-      return "#{dif}d"
-    end
 
     
     def next_token
@@ -297,11 +282,11 @@ module AsWiki
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
 	  @wikinames << @token[1]
-	  node << wikilink(@token[1])
+	  node << wikilink(@token[1], @name)
 	when :WIKINAME2
 	  name = @token[1][2..-3]
 	  @wikinames << name 
-	  node << wikilink(name)
+	  node << wikilink(name, @name)
 	when :URI
 	  node << Amrita::e(:a, Amrita::a(:href, @token[1])){@token[1]}
 	when :MOINHREF

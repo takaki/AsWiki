@@ -24,19 +24,19 @@ module AsWiki
     end
     def onview(line, b, e, av=[])
       session = CGI::Session.new(CGI::new, {'tmpdir' => 'session'})
-      session['pname'] = $pname
+      session['pname'] = @name
       session['plugin'] = self.type
 
       mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
       name = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
       page = BDB::Btree.open("attach/page.db", nil, BDB::CREATE)
 
-      files =  page.select{|key,value| value == $pname}.collect{|key,val| key}
+      files =  page.select{|key,value| value == @name}.collect{|key,val| key}
       item = files.sort{|a,b| name[a] <=> name[b]}.collect{|f| {
 	  :dllink => $CGIURL + "?c=download;num=#{f}", 
 	  # :name => CGI::escapeHTML( name[f]) ,
 	  :name => name[f],
-	  :rmlink => $CGIURL + "?c=delete;p=#{$pname};num=#{f}", 
+	  :rmlink => $CGIURL + "?c=delete;p=#{@name};num=#{f}", 
 	} }
 
       data ={:_session_id => session.session_id,

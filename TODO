@@ -1,8 +1,8 @@
 -*- outline -*-
 
 * High
+  - できるだけAmrita::eは使わない。
   - pre problem(amrita 待ち)
-  - attachの選択
   - RCSの選択
   - session_id を渡す目的でCGI.newをしない
   - 逆リンク…普通にやると全検索になるから…

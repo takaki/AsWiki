@@ -1,3 +1,7 @@
+2002-10-29  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki.cgi: add $USEATTACH to choice attach plugin use or not.
+
 2002-10-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki: merge parts template patch (tnx Taku).

@@ -5,7 +5,10 @@
 $TOPPAGENAME = 'IndexPage'
 $TIMEFORMAT  ="%F/%T %z"
 $BASEDIR     = '.'
+$USEATTACH   = true
 # $SAFE = 1
+
+load ('aswiki.conf')
 
 require 'cgi'
 
@@ -17,7 +20,10 @@ require 'aswiki/interwiki'
 require 'aswiki/backup'
 require 'aswiki/pagedata'
 require 'aswiki/cgi'
-require 'aswiki/attachdb'
+
+if $USEATTACH
+  require 'aswiki/attachdb'
+end
 
 require 'digest/md5'
 require 'amrita/template'
@@ -34,13 +40,17 @@ MetaPages = {
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
   include AsWiki::Util
-  load ('aswiki.conf')
   Dir::chdir $BASEDIR
   Amrita::TemplateFileWithCache::set_cache_dir('cache')
   AsWiki::Node::load_parts_template unless defined? $aswiki_parts_template_loaded
   $aswiki_parts_template_loaded = true
   repository = AsWiki::Repository.new('.')
-  Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
+  Dir.glob('plugin/*.rb').select {|p| 
+    $USEATTACH or p != 'plugin/attach.rb' # XXX
+  }.each{|p| 
+    require p.untaint  
+  }
+
   cgi = FCGI.new
   c = cgi.value('c')[0]
   c = c.nil? ? 'v' : c

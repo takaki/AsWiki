@@ -297,6 +297,9 @@ module AsWiki
 	  node << wikilink(name, @name)
 	when :URI
 	  node << Amrita::e(:a, Amrita::a(:href, @token[1])){@token[1]}
+	  # tn = @nodeclass.new('Url')
+	  # tn << {:url=>@token[1],:text=>@token[1]}
+	  # node << tn.expand
 	when :MOINHREF
 	  url, key = @token[1][1..-2].split
 	  if /\Aimg:/ =~ url 

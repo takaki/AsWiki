@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki branch.1.0 2)
+(Project-Version aswiki branch.1.0 3)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki branch.1.0 1)
+(Parent-Version aswiki branch.1.0 2)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 23 Jun 2004 11:19:47 +0900")
+(Checkin-Time "Wed, 23 Jun 2004 11:28:50 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -201,7 +201,7 @@
 ;; Files added by populate at Sun, 24 Nov 2002 00:58:47 +0900,
 ;; to version 0.64(w), by takaki:
 
-  (template/PageBase.html (aswiki/b/21_PageBase.h 1.7.1.1 664))
+  (template/PageBase.html (aswiki/b/21_PageBase.h 1.7.1.2 664))
 
 ;; Files added by populate at Mon, 02 Dec 2002 01:07:52 +0900,
 ;; to version 0.75(w), by takaki:

@@ -3,6 +3,7 @@
 * High
 
 * Low
+  - recentpage unlimited
   - search
   - tdiary theme
   - PATH_INFO
@@ -20,6 +21,7 @@
   - UnitTestを手抜きするな。とくに日本語。
 
 * idea
+  - tdiary plugin?
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - XML-RPC?
   - subsubsection toc?

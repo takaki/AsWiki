@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 93)
+(Project-Version aswiki 1.0 1)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 92)
+(Parent-Version aswiki 0 93)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Fri, 17 Jan 2003 22:56:47 +0900")
+(Checkin-Time "Thu, 30 Jan 2003 21:34:47 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -31,7 +31,7 @@
 ;; to version 0.2(w), by takaki:
 
   
-  (ChangeLog (aswiki/4_ChangeLog 1.61 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.62 664))
   (aswiki/node.rb (aswiki/5_node.rb 1.31 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.22 664))
 
@@ -76,10 +76,10 @@
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.52 664))
+  (TODO (aswiki/29_TODO 1.53 664))
   
   
-  (template/Page/View.html (aswiki/32_ViewPage.h 1.38 664))
+  (template/Page/View.html (aswiki/32_ViewPage.h 1.39 664))
   (aswiki/page.rb (aswiki/33_page.rb 1.33 664))
 
 ;; Files added by populate at Wed, 10 Apr 2002 23:11:24 +0900,
@@ -103,7 +103,7 @@
 ;; to version 0.16(w), by takaki:
 
   (plugin/2chbbs.rb (aswiki/43_2chbbs.rb 1.20 664))
-  (plugin/core.rb (aswiki/44_core.rb 1.25 664))
+  (plugin/core.rb (aswiki/44_core.rb 1.26 664))
   (text/InterWikiName (aswiki/45_InterWikiN 1.4 644))
   (template/plugin/list.html (aswiki/46_list.html 1.4 664))
   (template/plugin/2chbbs.html (aswiki/47_2chbbs.htm 1.4 664))
@@ -121,7 +121,7 @@
 ;; Files added by populate at Mon, 10 Jun 2002 00:55:36 +0900,
 ;; to version 0.23(w), by takaki:
 
-  (Makefile (aswiki/b/2_setup.sh 1.11 664))
+  (Makefile (aswiki/b/2_setup.sh 1.12 664))
   (text/HelpPage (aswiki/b/3_HelpPage 1.5 664))
 
 ;; Files added by populate at Mon, 05 Aug 2002 21:09:25 +0900,
@@ -179,7 +179,7 @@
 ;; Files added by populate at Mon, 07 Oct 2002 22:04:28 +0900,
 ;; to version 0.53(w), by takaki:
 
-  (aswiki/attachdb.rb (aswiki/b/16_attachdb.r 1.7 664))
+  (aswiki/attachdb.rb (aswiki/b/16_attachdb.r 1.8 664))
 
 
   (template/Node.html (aswiki/b/17_parts.html 1.11 664))
@@ -201,7 +201,7 @@
 ;; Files added by populate at Sun, 24 Nov 2002 00:58:47 +0900,
 ;; to version 0.64(w), by takaki:
 
-  (template/PageBase.html (aswiki/b/21_PageBase.h 1.6 664))
+  (template/PageBase.html (aswiki/b/21_PageBase.h 1.7 664))
 
 ;; Files added by populate at Mon, 02 Dec 2002 01:07:52 +0900,
 ;; to version 0.75(w), by takaki:

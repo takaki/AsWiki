@@ -76,7 +76,8 @@ module AsWiki
 	@env.begin(@page, @name){|txn, db|
 	  page, name = db
 	  ret = page.select{|key,value| value == pname}.map{|key,val| key}.
-	    sort{|a,b| name[a] <=> name[b]}.collect{|f| 
+	    sort{|a,b| a.to_i <=> b.to_i }.
+	    collect{|f| 
 	    {
 	      :id     => "##{f}",
 	      :dllink => cgiurl([['c','download'],['num',f]]), 

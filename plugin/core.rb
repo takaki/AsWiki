@@ -10,7 +10,7 @@ module AsWiki
     Name = 'recentpages'
     include AsWiki::Util
     def onview(line, b, e, av)
-      count = (av[1] || 100 ).to_i
+      count = (av[1] || 100).to_i
       @data = {:data =>
 	@repository.attrlist.sort{|a,b| b[1] <=> a[1]}[0,count].map{|l| 
 	  {:plink => wikilink(l[0]), :timestamp => timestr(l[1])}

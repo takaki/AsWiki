@@ -1,13 +1,12 @@
 -*- outline -*-
 
 * High
-  - escape at hn
 
 * Low
   - rewrite orphand page plugin
+  - sanitize img: by amrita feature
   - attach ; attachment -> pathname
   - automatic img link?
-  - subsubsection toc?
   - rcs keyword proble
   - pre problem(amrita 待ち)
   - session_id を渡す目的でCGI.newをしない
@@ -19,10 +18,8 @@
   - UnitTestを手抜きするな。とくに日本語。
 
 * idea
-  - attach display bug gsub
-  - pre pre bug ???
+  - subsubsection toc?
   - partial edit link bug
-  - type -> class
   - -w
   - Nora or CGIKit
   - moinhref; rel uri?
@@ -34,6 +31,11 @@
   - graphviz 用出力(趣味やね)
 
 * done
+  - pre pre bug ???
+  - type -> class
+  - attach display bug gsub
+  - Debian
+  - escape at hn
   - partial edit and confilic edit 
   - make text,template and RCS path config option
   - parts template again

@@ -22,8 +22,8 @@ module AsWiki
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
     DECORATION = [:EM, :STRONG]
     ESCAPE = [:ESCAPE_BEGIN, :ESCAPE_END]
-    TEXTLINE = WORD + TAG + [:EOL]
-    PLAINTEXT = TEXTLINE + DECORATION + ESCAPE
+    TEXTLINE = WORD + TAG + [:EOL] + ESCAPE
+    PLAINTEXT = TEXTLINE + DECORATION
     ELEMENT = PLAINTEXT + [:UL, :OL]
     D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
 
@@ -116,7 +116,6 @@ module AsWiki
       node = Node.new("H#{level}")
       next_token
       ret = textline
-      # ret = plaintext
       if level == 2
 	@tocnum = @tocnum + 1
 	@tocdata[-1][:partialedit] = cgiurl([['c', 'e'], ['p', @name],
@@ -250,14 +249,6 @@ module AsWiki
 	case @token[0]
 	when *TEXTLINE
 	  node << textline
-	when :ESCAPE_BEGIN
-	  next_token
-	  ret  = textblock(:ESCAPE_END)
-	  next_token
-	  node << ret
-	when :ESCAPE_END
-	  node << @token[1]
-	  next_token
 	when :STRONG
 	  node << decorate(:STRONG)
 	when :EM
@@ -318,6 +309,14 @@ module AsWiki
       node = Node.new('Textline')
       while true
 	case @token[0]
+	when :ESCAPE_BEGIN
+	  next_token
+	  ret  = textblock(:ESCAPE_END)
+	  # next_token
+	  node << ret
+	when :ESCAPE_END
+	  node << @token[1]
+	  next_token
 	when :OTHER, :SPACE, :WORD
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME

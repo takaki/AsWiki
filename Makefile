@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
 # $Format: "VERSION = $ProjectVersion$"$
-VERSION = 0.91
+VERSION = 0.92
 
 all:
 
@@ -16,4 +16,4 @@ clean:
 	find -name '*~' |xargs rm -f
 
 dist:
-	shtool tarball -d aswiki -c gzip -o ../aswiki-$(VERSION).tar.gz .
+	shtool tarball -d aswiki-$(VERSION) -c gzip -o ../aswiki-$(VERSION).tar.gz .

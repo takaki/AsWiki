@@ -1,0 +1,206 @@
+== heading
+ '== string return`  (= is from 2 to 6)) is heading.
+
+=== source
+{{{
+== 2
+=== 3
+==== 4
+===== 5
+====== 6
+}}}
+=== view
+== 2
+=== 3
+==== 4
+===== 5
+====== 6
+
+
+== WikiName
+The word treated as hyperlink (Wiki Name) is 
+written as WikiName or {{[[not_include_space_word]]}}
+{{[[not_include_space_word]]}} form use number, lower character and symbol.
+Wiki Name which is not created is printed as {{WikiName?}}.
+If you follow this link, you get edit page.
+It is written in regular expression ([A-Z][a-z0-9]+){2,} .
+If you change it, edit configuration file.
+
+
+=== source
+{{{
+* WikiName
+* AsWiki
+* [[lowercharacter]]
+}}}
+=== view
+* WikiName
+* AsWiki
+* [[lowercharacter]]
+
+=== interwikiname
+InterWikiName:WikiName form interwikiname.
+It is to link outer wiki site.
+ 
+
+inter wiki name is written in InterWikiName.
+{{[[...]]}} form wiki name with include `:' is 
+recoginized interwikiname.
+
+== name space
+AsWiki support name space. 
+link `./bar' in page `foo' is link `foo/bar',
+and `../bar' is `bar'.
+
+Strong name space is made by splitting by '//'.
+`Strong' means it split compete wiki name space.
+
+== list
+A line begin with `*' is list
+=== source
+{{{
+* a
+* b
+ * b-1
+ * b-2
+  * b-2-1
+ * b-3
+* c
+}}}
+=== view
+* a
+* b
+ * b-1
+ * b-2
+  * b-2-1
+ * b-3
+* c
+
+== description list
+A line begin `+' and paragraph is description list.
+
+=== source
+{{{
++ A
+about A.
++ B
+about B.
+}}}
+
+=== view
++ A
+about A.
++ B
+about B.
+
+== enumartion list
+begin with (number) is enumaration list.
+number may not be in order.
+
+=== source
+{{{
+(1) one
+(2) two
+(0) three
+}}}
+=== view
+(1) one
+(2) two
+(0) three
+
+== emphasis
+A word include two single quote is emphasized.
+A word include three single quote is more emphasized.
+
+=== source
+{{{
+''emtext''
+
+'''strong text'''
+}}}
+=== view
+''emtext''
+
+'''strong text'''
+
+== pre block
+ {{{, }}} is pre block.
+A view ia as is.
+
+=== source
+{{{
+ {{{
+ this 
+  is 
+   pre block
+  .
+ }}}
+}}}
+=== view
+{{{
+ this
+  is
+   pre block
+  .
+}}}
+
+== paragraph, break
+A line include only `.' is break line.
+finish with space and `.' is break line.
+A empty line is new paragraph
+
+== horizontal line
+=== source
+{{{
+----
+}}}
+=== view
+----
+
+== hyper link (moinhref)
+{{http://, ftp://, news://, mailto:}} is converted hyper link automatically.
+
+{{[URL description]}} is hyper link.
+img: added before URL is dispaly URL link image.
+
+=== source
+{{{
+* [http://www.assist.media.nagoya-u.ac.jp/ Assistant Staff]
+* [img:http://www.assist.media.nagoya-u.ac.jp/icons/apache_pb.gif Apache]
+}}}
+
+=== view
+* [http://www.assist.media.nagoya-u.ac.jp/ Assistant Staff]
+* [img:http://www.assist.media.nagoya-u.ac.jp/icons/apache_pb.gif Apache]
+
+== table
+table is wrtten by {{||}}.
+
+=== source
+{{{
+|| 1 || ''2'' || 3 ||
+|| a || b || '''c''' ||
+}}}
+=== view
+
+|| 1 || ''2'' || 3 ||
+|| a || b || '''c''' ||
+
+
+== escape
+A sentence include {{{{}} and }} is escaped.
+So, it is not convert HTML, print as is.
+
+=== source
+{{{
+* {{ WikiName [[WikiName]] }}
+* {{ [http://www/ abc] }}
+}}}
+
+=== display
+
+* {{ WikiName [[WikiName]] }}
+* {{ [http://www/ abc] }}
+
+== plugin
+#command is plugin

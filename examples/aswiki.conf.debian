@@ -1,0 +1,21 @@
+# -*- ruby -*-
+# You must edit.
+$CGIURL = 'http://localhost/~takaki/aswiki/aswiki.cgi'
+
+# You shoud edit.
+$TITLE = 'AsWiki'
+$LANG = 'ja'
+
+# You may edit.
+$TOPPAGENAME = 'IndexPage'
+$USEBACKUP = true
+$USEATTACH = true
+$USERSS    = true
+$ATTACH_SIZE_LIMIT =  1024 * 1024 * 10
+$TIMEFORMAT = "%Y-%m-%d/%H:%M:%S %z"
+$WIKINAMERE = /\A([A-Z][a-z]+){2,}\b/
+
+# You may NOT edit.
+$BASEDIR = '.'
+$DIR_TEMPLATE = '/usr/share/aswiki/template'
+$DIR_PLUGIN   = '/usr/share/aswiki/plugin'

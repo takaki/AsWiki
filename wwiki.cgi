@@ -7,9 +7,11 @@ require 'wwiki/repository'
 require 'wwiki/parser'
 require 'wwiki/page'
 require 'wwiki/exception'
+require 'wwiki/interwiki'
 
 require 'digest/md5'
-$METAPAGE = {
+
+metapage = {
   'RecentPages' => '#recentpages',
   'AllPages' => '#allpages'
 }
@@ -29,29 +31,37 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     case c
     when 'v'
       if name =~ /[^:]+:[^:]+/
-	raise 'interwikiname'
-      elsif $METAPAGE.key?(name)
-	p = WWiki::Parser.new($METAPAGE[name])
-	data = {:title => name, :content => p.tree.to_s, }
-	page  = WWiki::Page.new('Ro',data)
-      elsif $repository.exist?(name)
-	c = $repository.load(name)
-	p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
-	data = {:title => WWiki::unescape(name), 
-	  :content => p.tree.to_s,
-	  :edit => "#{$CGIURL}?c=e&p=#{name}",
-	  :recentpages => "#{$CGIURL}?c=v&p=RecentPages",
-	  :allpages => "#{$CGIURL}?c=v&p=AllPages",
-	  :lastmodified => $repository.mtime(name),
-	  :wikilinks => p.wikilinks,
-	}
-	page = WWiki::Page.new('View', data)
+	iname, iwiki = name.split(':') 
+	iwdb = WWiki::InterWikiDB.new
+	p iwdb
+	url = iwdb.url(iname)
+	# XXX code
+	cgi.out({'Status' => '302 REDIRECT',
+		  'Location' => "#{url}#{iwiki}"}){''}
       else
-	page = WWiki::editpage(name, '')
+	if metapage.key?(name)
+	  p = WWiki::Parser.new(metapage[name])
+	  data = {:title => name, :content => p.tree.to_s, }
+	  page  = WWiki::Page.new('Ro',data)
+	elsif $repository.exist?(name)
+	  c = $repository.load(name)
+	  p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
+	  data = {:title => WWiki::unescape(name), 
+	    :content => p.tree.to_s,
+	    :edit => "#{$CGIURL}?c=e&p=#{name}",
+	    :recentpages => "#{$CGIURL}?c=v&p=RecentPages",
+	    :allpages => "#{$CGIURL}?c=v&p=AllPages",
+	    :lastmodified => $repository.mtime(name),
+	    :wikilinks => p.wikilinks,
+	  }
+	  page = WWiki::Page.new('View', data)
+	else
+	  page = WWiki::editpage(name, '')
+	end
+	cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+	  page.to_s
+	}
       end
-      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	page.to_s
-      }
     when 'e'
       c = $repository.load(name)
       page = WWiki::editpage(name, c)

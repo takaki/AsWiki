@@ -62,7 +62,7 @@ module WWiki
 	  else
 	    q.push [:OTHER, tmp]
 	  end
-	elsif tmp = sc.scan(/\A([A-Z][a-z]+){2,}/)
+	elsif tmp = sc.scan(/\A([A-Z][a-z]+){2,}\b/)
 	  q.push [:WIKINAME1, tmp]
 	elsif tmp = sc.scan(/\A\[\[\S+?\]\]/)
 	  q.push [:WIKINAME2, tmp]

@@ -9,6 +9,10 @@ require 'wwiki/page'
 require 'wwiki/exception'
 
 require 'digest/md5'
+$METAPAGE = {
+  'RecentPages' => '#recentpages',
+  'AllPages' => '#allpages'
+}
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
   load ('wwiki.conf')
@@ -26,15 +30,21 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     when 'v'
       if name =~ /[^:]+:[^:]+/
 	raise 'interwikiname'
+      elsif $METAPAGE.key?(name)
+	p = WWiki::Parser.new($METAPAGE[name])
+	data = {:title => name, :content => p.tree.to_s, }
+	page  = WWiki::Page.new('Ro',data)
       elsif $repository.exist?(name)
 	c = $repository.load(name)
 	p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
-	data = {:title => WWiki::unescape(name), :content => p.tree.to_s,
-	  :edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'},
-	  :recentpages => E(:a, A(:href, "#{$CGIURL}?c=h")){'RecentPages'},
-	  :allpages => E(:a, A(:href, "#{$CGIURL}?c=a")){'AllPages'},
+	data = {:title => WWiki::unescape(name), 
+	  :content => p.tree.to_s,
+	  :edit => "#{$CGIURL}?c=e&p=#{name}",
+	  :recentpages => "#{$CGIURL}?c=v&p=RecentPages",
+	  :allpages => "#{$CGIURL}?c=v&p=AllPages",
 	  :lastmodified => $repository.mtime(name),
-	  :wikilinks => p.wikilinks }
+	  :wikilinks => p.wikilinks,
+	}
 	page = WWiki::Page.new('View', data)
       else
 	page = WWiki::editpage(name, '')
@@ -45,20 +55,6 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     when 'e'
       c = $repository.load(name)
       page = WWiki::editpage(name, c)
-      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	page.to_s
-      }
-    when 'a'
-      p = WWiki::Parser.new('#allpages')
-      data = {:title => 'AllPages', :content => p.tree.to_s, }
-      page  = WWiki::Page.new('Ro',data)
-      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	page.to_s
-      }
-    when 'h'
-      p = WWiki::Parser.new('#recentpages')
-      data = {:title => 'RecentPages', :content => p.tree.to_s, }
-      page  = WWiki::Page.new('Ro',data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	page.to_s
       }
@@ -89,7 +85,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     end
   rescue WWiki::RuntimeError
     data = {:title => $!.type, :content => $!.message + "\n",
-      :edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
+    }
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       WWiki::Page.new('Error', data).to_s
     }
@@ -97,7 +93,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   rescue Exception
     data = {:title => $!.type, :content => $!.to_s + "\n" + 
       $!.backtrace.join("\n"),
-      :edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
+   } 
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       WWiki::Page.new('Error', data).to_s
     }

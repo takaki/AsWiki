@@ -7,10 +7,8 @@ module WWiki
   def WWiki::editpage(name, content)
     include Obaq::HtmlGen
     data = {:title => name, :content => CGI::escapeHTML(content.to_s),
-      :hidden => [e(:input, {:type => 'hidden', :name => 'p', :value => name}),
-	e(:input, {:type => 'hidden', :name => 'c', :value =>'s'}),
-	e(:input, {:type => 'hidden', :name => 'md5sum', :value => 
-	    Digest::MD5::new(content.to_s)})],
+      :name => name,
+      :md5sum => Digest::MD5::new(content.to_s),
     }
     page = WWiki::Page.new('Edit', data)
     return page

@@ -29,7 +29,8 @@ module WWiki
 	    q.push [:PLUGIN, tmp]
 	  elsif tmp = sc.scan(/\A +\*/)
 	    q.push [:UL, tmp]
-	  elsif tmp = sc.scan(/\A +\d+\./)
+	  # elsif tmp = sc.scan(/\A +\d+\./)
+	  elsif tmp = sc.scan(/\A +\(\d+\)/)
 	    q.push [:OL, tmp]
 	  elsif tmp = sc.scan(/\A +\+ */)
 	    q.push [:DL, tmp]

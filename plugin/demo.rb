@@ -1,13 +1,11 @@
 require 'wwiki/plugin'
+require 'cgi/session'
 
 module WWiki
   class NowPlugin < Plugin
     Name = 'now'
-    def to_s
-      return @val
-    end
     def onview(line, b, e, av=[])
-      @val = Time.now.to_s
+      @view = Time.now.to_s
     end
   end
 end
@@ -15,11 +13,38 @@ end
 module WWiki
   class PrintblockPlugin < Plugin
     Name = 'printblock'
-    def to_s
-      return @val
-    end
     def onview(line, b, e, av=[])
-      @val = line.map{|l| b=b+1 ;"#{b-1}: #{l}<br>\n" }.to_s 
+      @view = line.map{|l| b=b+1 ;"#{b-1}: #{l}<br>\n" }.to_s 
     end
   end
 end
+module WWiki
+  class ListPlugin < Plugin
+    Name = 'list'
+    def onpost(session)
+      pname = session['pname']
+      file = $repository.read(pname)
+      file[session['begin'].to_i-1, 0 ] = " * #{CGI.new['item']}\n"
+      $repository.save(pname, file.to_s)
+    end
+    def onview(line, b, e, av=[])
+      session = CGI::Session.new(CGI::new) #, {'tmpdir' => 'attr'})
+      session['pname'] = $pname
+      session['plugin'] = self.type
+      session['begin'] = b
+      session['end'] = e
+      data = {:hidden => [e(:input, {:type => 'hidden', 
+			      :name => '_session_id', 
+			      :value => session.session_id}),
+	  e(:input, {:type => 'hidden', :name => 'c', :value => 'post'})]}
+      form = load_template.expand(data)
+      form.each do |e|
+	if e[:action]
+	  e[:action] = "#{CGIURL}"
+	end
+      end
+      @view = form.to_s
+    end
+  end
+end
+

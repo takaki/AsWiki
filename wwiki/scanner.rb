@@ -33,7 +33,7 @@ module WWiki
 	    q.push [:OL, tmp]
 	  elsif tmp = sc.scan(/\A +\+ */)
 	    q.push [:DL, tmp]
-	  elsif tmp = sc.scan(/\A={1,6}/)
+	  elsif tmp = sc.scan(/\A={2,6}/)
 	    q.push [:HN_BEGIN, tmp]
 	  elsif tmp = sc.scan(/\A---- *$/)
 	    q.push [:HR, tmp]

@@ -18,6 +18,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   c =  c.to_s == '' ? 'v' : c
   name = cgi['p'][0]
   name = name.to_s == '' ? $TOPPAGENAME : name
+  $pname = name
   begin
     case c
     when 'v'
@@ -60,6 +61,13 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     when 's'
       content = cgi['content'][0] # XXX
       $repository.save(name, content)
+      cgi.out({'Status' => '302 REDIRECT', 'Content-Type' => 'text/html',
+		'Location' => "#{$CGIURL}?c=v&p=#{name}"}){''}
+    when 'post'
+      session = CGI::Session.new(cgi) # ,{'tmpdir' => 'attr'})
+      pc = session['plugin']
+      plugin = eval(pc + '.new')
+      plugin.onpost(session)
       cgi.out({'Status' => '302 REDIRECT', 'Content-Type' => 'text/html',
 		'Location' => "#{$CGIURL}?c=v&p=#{name}"}){''}
     else

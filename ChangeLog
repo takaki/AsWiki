@@ -1,3 +1,9 @@
+2002-04-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* 記録をさぼっていたがまた書きはじめる。
+	
+	* plugin/demo.rb: postのdemo。
+
 2002-04-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* wwiki/node.rb: SimpleDelegatorは猛烈に遅いのでやめる。

@@ -29,7 +29,7 @@ module WWiki
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false
       f.deleteln = false
-      # return tree
+      # return tree.to_a
       return f.format(tree)
     end
   end

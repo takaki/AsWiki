@@ -26,6 +26,9 @@ module WWiki
 	return line.to_s
       end
     end
+    def to_s
+      return @view
+    end
     private
     def load_template
       tmplfile = File.join('template', 'plugin', self.type::Name + '.html')

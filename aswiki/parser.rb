@@ -57,6 +57,14 @@ module AsWiki
     def next_token
       @token = @s.next_token
     end
+    def current_indent       # To handle indents of ul and ol at onece
+      indent = 0
+      indent = $1.size if @token[1] =~ /^(\s*)/
+
+      ## Original
+      ## indent = @token[1].size
+      return indent
+    end
     def parse
       @line = 1
       node = Node.new('Root')
@@ -66,9 +74,9 @@ module AsWiki
 	when *PLAINTEXT
 	  node << paragraph
 	when :UL
-	  node << ul
+	  node << simple_list('Ul')
 	when :OL
-	  node << ol
+	  node << simple_list('Ol')
 	when :BLANK       
 	  node << blank
 	when :DL          
@@ -175,11 +183,11 @@ module AsWiki
       end
       return node
     end
-    def ul
-      node = Node.new('Ul')
-      indent = @token[1].size
+    def simple_list(kind = 'Ol') # kind = 'Ol' or 'Ul'
+      node = Node.new(kind)
+      indent = current_indent
       next_token
-      node << catch(:ulend) do
+      node << catch(:simple_list_end) do
 	while true
 	  case @token[0]
 	  when *ELEMENT
@@ -187,20 +195,6 @@ module AsWiki
 	  else
 	    break
 	  end
-	end
-      end
-      return node
-    end
-    def ol
-      node = Node.new('Ol')
-      indent = @token[1].size
-      next_token
-      while true
-	case @token[0]
-	when *ELEMENT
-	  node << element(indent)
-	else
-	  break
 	end
       end
       return node
@@ -267,24 +261,26 @@ module AsWiki
 	when *PLAINTEXT
 	  node << plaintext
 	when :UL
-	  if indent == @token[1].size
+          cur_indent = current_indent
+	  if indent == cur_indent
 	    next_token
 	    break
-	  elsif indent < @token[1].size
-	    node << ul
-	  elsif indent > @token[1].size
-	    throw :ulend, node
+	  elsif indent < cur_indent
+	    node << simple_list('Ul')
+	  elsif indent > cur_indent
+	    throw :simple_list_end, node
 	  else
 	    raise RangeError
 	  end
 	when :OL          
-	  if indent == @token[1].size
+          cur_indent = current_indent
+	  if indent == cur_indent
 	    next_token
 	    break
-	  elsif indent < @token[1].size
-	    node << ol
-	  elsif indent > @token[1].size
-	    break
+	  elsif indent < cur_indent
+	    node << simple_list('Ol')
+	  elsif indent > cur_indent
+	    throw :simple_list_end, node
 	  else
 	    raise RangeError
 	  end

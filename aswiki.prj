@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 1.0.branch 1)
+(Project-Version aswiki 1.0.branch 2)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki branch.1.0 8)
-(Version-Log "")
+(Parent-Version aswiki 1.0.branch 1)
+(Version-Log "apply TANAKA's ol bug fix")
 (New-Version-Log "")
-(Checkin-Time "Wed, 25 Aug 2004 10:11:45 +0900")
+(Checkin-Time "Wed, 25 Aug 2004 10:13:39 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -20,7 +20,7 @@
 ;; to version 0.0(w), by takaki:
 
   (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.11 664))
-  (aswiki/parser.rb (aswiki/1_parser.rb 1.42.1.1 664))
+  (aswiki/parser.rb (aswiki/1_parser.rb 1.42.1.1.1.1 664))
 
 ;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
 ;; to version 0.1(w), by takaki:

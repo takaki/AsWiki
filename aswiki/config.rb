@@ -34,5 +34,6 @@ $metapages = {
   'NotCreatedPages' => '#notcreatedpages',
   'PluginList' => '#pluginlist',
   'ReverseLinkList' => '#reverselinklist',
+  'SearchPage' => '#search',
 }
 

@@ -37,7 +37,8 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 
   cgi = CGI::new # XXX
   c    = (cgi.value('c')[0] or 'v')
-  name = ((cgi.path_info and cgi.path_info[1..-1]) or cgi.value('p')[0] or $TOPPAGENAME)
+  name = ((cgi.path_info and cgi.path_info[1..-1]) or 
+	  cgi.value('p')[0] or $TOPPAGENAME)
   begin
     begin
       if AsWiki::HandlerTable.key?(c)

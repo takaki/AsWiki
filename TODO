@@ -1,6 +1,8 @@
 -*- outline -*-
 
 * High
+  - regexp 0200-
+  - search namazu
   - PATH_INFO
   - tdiary theme
   - retry
@@ -37,65 +39,5 @@
   - graphviz 用出力(趣味やね)
 
 * done
-  - save error const???
-  - partial edit link bug
-  - sanitize img: by amrita feature
-  - img: 
-  - pre pre bug ???
-  - type -> class
-  - attach display bug gsub
-  - Debian
-  - escape at hn
-  - partial edit and confilic edit 
-  - make text,template and RCS path config option
-  - parts template again
-  - english message catalogue
-  - reverse link (save time hook)
-  - name space expand allways
-  - print edit line.n - line.m
-  - partial edit
-  - MergeTemplate?
-  - 0 size delete ?(gc)
-  - inline escape
-  - LinkCountPage
-  - カレントディレクトリ。デフォルトでネームスペースに属するか?
-  - imgだけはinline?
-  - 空白の入り方がどうも?
-  - notcreated pages interwiki
-  - $BASEDIRは必要か
-  - include object tag
-  - strong name space
-  - RSS
-  - plugin parts template
-  - Backup - RCS ではなくて，text rotate。あるいはしないとかの選択。
-  - attachの切り離し
-  - history の raw page
-  - toc
-  - Page templateの統合  
-  - 決め打ち日本語の問題(plugin)。
-  - できるだけAmrita::eは使わない。
-  - factory
-  - bug expand_attr compact_space
-  - plugin compile
-  - i18n framework
-  - img: mailto 
-  - AttachManager transaction
-  - attach brushup
-  - plugin#load_templateの改善
-  - lastmodified: format, (127d) 
-  - attache escape
-  - 遅延評価は意味がなし。parseの中でElementを展開すること。
-  - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 
 * abandoned
-  - Namazuで検索? Wiki内でする必要は?
-  - ページに対する属性。継承?
-  - mergeの導入(plugin)
-  - session に Nameで保存 初期化のタイミングとかで無理
-  - #minibbs
-  - #minimemo
-  - #nikki?
-  - $print_error
-  - $dobackup
-  - header のナンバリング => CSS2
-  - hashed plugin => Walrusでつくるとき考える

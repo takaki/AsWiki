@@ -141,11 +141,11 @@ module AsWiki
       if repository.exist?(elink) || elink =~ /[^:]+:[^:]+/ || 
 	  $metapages.has_key?(elink)
 	return Node.new('WikiName') << {
-	  :url => cgiurl([['c','v']],elink),
+	  :url => cgiurl([],elink),
 	  :text => name}
       else
 	return Node.new('WikiNameNE') << { 
-	  :url => cgiurl([['c','v']], elink),
+	  :url => cgiurl([], elink),
 	  :text => name }
       end
     end
@@ -163,8 +163,9 @@ module AsWiki
       return "#{dif}d"
     end
     def cgiurl(arg, path=nil)
-      return $CGIURL + (path and "/#{path}").to_s + "?" +
-	arg.map{|k,v| AsWiki::escape(k) + '=' + AsWiki::escape(v.to_s)}.join(';')
+      return $CGIURL + (path and ("/" + path)).to_s + 
+	(arg.empty? ? '' : "?" + 
+	 arg.map{|k,v| AsWiki::escape(k) + '=' + AsWiki::escape(v.to_s)}.join(';'))
     end
   end
 end

@@ -1,4 +1,15 @@
+2003-02-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 1.1.3
+
+	* aswiki/pagedata.rb: changed  css file relative path to absolute
+	path and config parameter.
+
+	* plugin/search.rb: added search plugin
+
 2003-02-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/util.rb: use PAHT_INFO for link.
 
 	* release: 1.1.2
 

@@ -241,4 +241,43 @@ module AsWiki
       makeeditpage(cgi, e.pname, '(Edit Conflict)' + e.pname,  e.body)
     end
   end
+
+  class RawHandler < Handler
+    if $USERSS
+      HandlerTable['rss'] = self      
+    end
+    def initialize(cgi, name)
+      super
+      c = @repository.load(name)
+      tmplfile = File.join('template','RSS.xml')
+      template = Amrita::TemplateFileWithCache[tmplfile]
+      template.expand_attr = true
+      template.use_compiler = true
+      template.xml = true
+      template.asxml = true
+
+
+      count = 15 
+      data = {
+	:title => $TITLE,
+	:language => $LANG,
+	:link => $CGIURL,
+	:description => "#{$TITLE}: RecentPages",
+	:data => @repository.attrlist.sort{|a,b| b[1] <=> a[1]}[0..count].map{|l| 
+	  {
+	    :title => l[0],
+	    :link  => "#{$CGIURL}?c=v;p=#{l[0]}",
+	    :description => timestr(l[1]),
+	  }
+	}
+      }
+      
+      @str = ''
+      template.expand(@str, data)
+
+      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/rss'}){
+	@str
+      }
+    end
+  end
 end

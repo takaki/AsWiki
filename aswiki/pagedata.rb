@@ -45,7 +45,7 @@ module AsWiki
 	super(pd, 'PageTitle')
       end 
       def title
-	@pd.title
+	$TITLE + ': ' + @pd.title
       end
       def revision 
 	@pd.revision

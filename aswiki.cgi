@@ -8,6 +8,8 @@ $BASEDIR     = '.'
 $USEBACKUP   = true
 $USEATTACH   = true
 $LANG        = 'ja'
+$TITLE       = 'AsWiki'
+$USERSS      = false
 $ATTACH_SIZE_LIMIT =  1024 * 1024 * 10
 # $SAFE = 1
 

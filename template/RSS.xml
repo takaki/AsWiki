@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="EUC-JP"?>
+<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"
+"http://my.netscape.com/publish/formats/rss-0.91.dtd">
+<rss version="0.91">
+<channel> 
+<title it="title">AsWiki</title>
+<language id="language">ja</language>
+<link id="link">http://www.assist.media.nagoya-u.ac.jp/ASDP/index.cgi</link>
+<description><span id="title"></span>: RecentChanges</description>
+<item id="data">
+<title id="title"></title>
+<link><span id="link"></span></link>
+<description id="description"></description>
+</item>
+</channel>
+</rss>

@@ -1,11 +1,7 @@
 -*- outline -*-
 
 * High
-  - plugin parts template
   - strong name space
-  - attachの切り離し
-  - Backup - RCS ではなくて，text rotate。あるいはしないとかの選択。
-  - RSS
   - page initialize and publish
   - pre problem(amrita 待ち)
   - session_id を渡す目的でCGI.newをしない
@@ -36,6 +32,10 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - RSS
+  - plugin parts template
+  - Backup - RCS ではなくて，text rotate。あるいはしないとかの選択。
+  - attachの切り離し
   - history の raw page
   - toc
   - Page templateの統合  

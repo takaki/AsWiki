@@ -1,5 +1,8 @@
 2002-09-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* plugin: fix two plugin problem. (same session_id created! so,
+	do flock same file).
+
 	* release: 0.43
 
 	* aswiki/util.rb: restart namespace feature.

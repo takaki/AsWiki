@@ -27,7 +27,8 @@ module AsWiki
       @repository.save(pname, file.to_s)
     end
     def onview(line, b, e, av=[])
-      session = CGI::Session.new(CGI::new, {'tmpdir' => 'session'})
+      session = CGI::Session.new(CGI::new, {'tmpdir' => 'session',
+				   'new_session' => true})
       session['pname'] = @name
       session['plugin'] = self.type
       session['begin'] = b

@@ -1,6 +1,7 @@
 -*- outline -*-
 
 * High
+  - AttachManager transaction
   - mod_ruby
   - Namazuで検索
   - $print_error
@@ -17,6 +18,9 @@
 * idea
   - ページに対する属性。継承?
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
+
+* done
+  - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 
 * abandoned
   - header のナンバリング => CSS2

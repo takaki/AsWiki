@@ -33,7 +33,7 @@ module AsWiki
     Name = 'metapages'
     include AsWiki::Util
     def onview(line, b, e, av)
-      data = {:data => MetaPages.collect{|k,v| wikilink(k)}}
+      data = {:data => MetaPages.keys.sort.collect{|k| wikilink(k)}}
       load_template.expand(@view, data)
       @view = Amrita::noescape{@view}
     end

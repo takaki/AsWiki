@@ -150,20 +150,21 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	raise AsWiki::TimestampMismatchError
       end
       cgi.params.each{|key, value| session[key] = value}
-      plugin = eval(session['plugin'] + '.new(@name)')
+      plugin = eval(session['plugin'] + '.new(name)')
       plugin.onpost(session)
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
 		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
+      exit
     when 'attach'
       cgi['_session_id'][0] = cgi.sval('_session_id') # xXXX
       session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
-      plugin = eval(session['plugin'] + '.new')
+      plugin = eval(session['plugin'] + '.new(name)')
       plugin.onpost(session, cgi['file'])
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
 		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
     when 'download'
       mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
-      name = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
+      namedb = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
       page = BDB::Btree.open("attach/page.db", nil, BDB::CREATE)
       num  = cgi['num'][0]
       
@@ -173,17 +174,17 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 		'Last-Modified' => 
 		CGI::rfc1123_date(File::stat(pathname).mtime),
 		"Content-Disposition" => 
-		%Q|attachment; filename="#{name[num]}"| }
+		%Q|attachment; filename="#{name[num]}"|}
 	      ){ open(pathname).read }
     when 'delete' # XXX plugin onpost?
       mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
-      name = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
+      namedb = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
       page = BDB::Btree.open("attach/page.db", nil, BDB::CREATE)
       num  = cgi['num'][0]
       pathname = File.join('attach', num)
       File::unlink(pathname)
       mime.delete(num)
-      name.delete(num)
+      namedb.delete(num)
       page.delete(num)
       cgi.out({'Status' => '302 REDIRECT', 
 		'Location' => "#{$CGIURL}?c=v;p=#{name}"}){''}

@@ -31,11 +31,13 @@ module AsWiki
       @repository.save(pname, file.to_s)
     end
     def onview(line, b, e, av=[])
-      session = CGI::Session.new(CGI::new, {'tmpdir' => 'session'})
+      session = CGI::Session.new(CGI::new, {'new_session'=>true,
+				   'tmpdir' => 'session'})
       session['pname'] = @name
       session['plugin'] = self.type
       session['begin'] = b
       session['end'] = e
+      # session.close
       data = {:session_id => session.session_id,
 	:md5sum =>  Digest::MD5::new(@repository.load(@name).to_s).to_s}
       load_template.expand(@view, data)

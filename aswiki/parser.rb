@@ -28,7 +28,7 @@ module AsWiki
       @name = name
       @s = Scanner.new(str)
       @wikinames = []
-      @plugin = AsWiki::Plugin.new(name)
+      @plugin = AsWiki::Plugin.new(@name)
       
       @tree = parse
     end

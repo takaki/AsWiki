@@ -7,30 +7,28 @@ require 'delegate'
 
 require 'wwiki/scanner'
 
-require 'obaq/htmlgen'
-require 'obaq/htmlparser'
-require 'obaq/htmlcompiler'
+# require 'obaq/htmlgen'
+# require 'obaq/htmlparser'
+# require 'obaq/htmlcompiler'
 
-# require 'amrita/template'
+require 'amrita/template'
 
 module WWiki 
   class Node
     def initialize(template)
       @node = []
       tmplfile = File.join('template', 'Node', template + '.html')
-      @template = Obaq::HtmlParser.parse_file(tmplfile)
-      # @tmpl = Amrita::TemplateFile.new(tmplfile)
+      # @template = Obaq::HtmlParser.parse_file(tmplfile)
+      @template = Amrita::TemplateFile.new(tmplfile)
     end
     def <<(item)
       @node << item
     end
     def to_s
+      s = ''
       data = {:data => @node}
-      tree = @template.expand(data)
-      f = Obaq::HtmlGen::Formatter.new
-      f.escape = false
-      f.deleteln = false
-      return f.format(tree)
+      @template.expand(s, data)
+      return Amrita::noescape{s}
     end
   end
 end

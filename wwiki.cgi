@@ -2,10 +2,10 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-$LOAD_PATH.push '/usr/lib/ruby/1.6'
+# $LOAD_PATH.push '/usr/lib/ruby/1.6'
 
 require 'cgi'
-require 'obaq/htmlgen'
+# require 'obaq/htmlgen'
 
 require 'wwiki/repository'
 require 'wwiki/parser'
@@ -16,7 +16,7 @@ require 'wwiki/backup'
 
 require 'digest/md5'
 
-# require 'amrita/template'
+require 'amrita/template'
 
 # $SAFE = 1
 
@@ -29,7 +29,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   load ('wwiki.conf')
   repository = WWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
-  include Obaq::HtmlGen
+  # include Obaq::HtmlGen
   cgi = CGI.new
   class << cgi
     def multipartcheck
@@ -73,7 +73,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
 	  data = {:title => name, 
 	    # :content => Amrita::noescape{p.tree.to_s},
-	    :content => p.tree.to_s,
+	    :content => Amrita::noescape{p.tree.to_s},
 	    :edit => "#{$CGIURL}?c=e;p=#{WWiki::escape(name)}",
 	    :toppage => "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}",
 	    :recentpages => "#{$CGIURL}?c=v;p=RecentPages",
@@ -82,14 +82,14 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    :diffpage => "#{$CGIURL}?c=d;p=#{WWiki::escape(name)}",
 	    :helppage => "#{$CGIURL}?c=v;p=HelpPage",
 	    :lastmodified => repository.mtime(name),
-	    :wikilinks => p.wikilinks,
+	    :wikilinks => Amrita::noescape{p.wikilinks},
 	  }
 	  page = WWiki::Page.new('View', data)
 	else
 	  page = WWiki::editpage(name, '')
 	end
 	cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	  page.to_s
+	  page.to_s 
 	}
       end
     when 'e'

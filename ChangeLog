@@ -1,3 +1,7 @@
+2002-09-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* wwiki: Amrita baseに移行。
+
 2002-08-10  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* plugin/attach.rb: attachlistをattachに統合。
@@ -16,7 +20,7 @@
 
 2002-04-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* 記録をさぼっていたがまた書きはじめる。
+	* ChangeLog: 記録をさぼっていたがまた書きはじめる。
 	
 	* plugin/demo.rb: postのdemo。
 

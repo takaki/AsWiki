@@ -91,11 +91,14 @@ module WWiki
       repository = WWiki::Repository.new
       link = WWiki::escape(ename)
       if repository.exist?(ename) || name =~ /[^:]+:[^:]+/
-	return e(:a, {:href =>"#{$CGIURL}?c=v;p=#{link}"}){
+	return Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")){
 	  WWiki::unescape(name)}
       else
-	return WWiki::unescape(name) + 
-	  e(:a, {:href, "#{$CGIURL}?c=v;p=#{link}"}){%q|?|}.to_s
+	[WWiki::unescape(name) ,
+	  Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")){"?"}]
+#	return Amrita::noescape{
+#	  WWiki::unescape(name) + 
+#	    Amrita::e(:a, Amrita::a(:href,"#{$CGIURL}?c=v;p=#{link}")){"?"}.to_s }
       end
     end
   end

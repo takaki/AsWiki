@@ -36,13 +36,8 @@ module WWiki
       session['plugin'] = self.type
       session['begin'] = b
       session['end'] = e
-      data = {:hidden => [e(:input, {:type => 'hidden', 
-			      :name => '_session_id', 
-			      :value => session.session_id}),
-	  e(:input, {:type => 'hidden', :name => 'c', :value => 'post'}),
-	  e(:input, {:type => 'hidden', :name => 'md5sum', :value => 
-	      Digest::MD5::new(@repository.load($pname).to_s)})
-	]}
+      data = {:session_id => session.session_id,
+	:md5sum =>  Digest::MD5::new(@repository.load($pname).to_s)}
       form = load_template.expand(data)
       @view = form.to_s
     end

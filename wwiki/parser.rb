@@ -5,7 +5,7 @@ require 'strscan'
 require 'uri/common'
 require 'delegate'
 
-require 'obaq/htmlgen'
+# require 'obaq/htmlgen'
 
 require 'wwiki/scanner'
 require 'wwiki/node'
@@ -14,7 +14,7 @@ require 'wwiki/plugin'
 
 module WWiki
   class Parser
-    include Obaq::HtmlGen
+#    include Obaq::HtmlGen
     include WWiki::Util
     WORD  = [:SPACE, :OTHER, :WORD]
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
@@ -80,9 +80,9 @@ module WWiki
 	  node << Node.new('Hr')
 	  next_token
 	when :PLUGIN  
-	  node << plugin
+	  node << Amrita::noescape{plugin}
 	when :PLUGIN_BEGIN
-	  node << plugin_block
+	  node << Amrita::noescape{plugin_block}
 	when :PRE_BEGIN   
 	  node << preblock
 	when :TABLE_BEGIN 
@@ -303,16 +303,17 @@ module WWiki
 	  @wikinames << name 
 	  node << wikilink(name)
 	when :URI
-	  node << E(:a, A(:href, @token[1])){@token[1]}
+	  node << Amrita::e(:a, Amrita::a(:href, @token[1])){@token[1]}
 	when :MOINHREF
 	  url, key = @token[1][1..-2].split
 	  if /\Aimg:/ =~ url 
-	    node << E(:img, A(:src,$'), A(:alt, key))
+	    node << Amrita::e(:img, Amrita::a(:src,$'),
+			      Amrita::a(:alt,key))
 	  else
-	    node << E(:a, A(:href, url)){key}
+	    node << Amrita::e(:a, Amrita::a(:href,url)){key}
 	  end
 	when :ENDPERIOD
-	  node << E(:br)
+	  node << Amrita::e(:br)
 	when :EOL
 	  node << "\n"
 	  eol

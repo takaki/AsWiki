@@ -1,5 +1,17 @@
+2002-09-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.41
+
+	* aswiki/backup.rb: rename Backup#backup to Backup#ci.
+	remove Backup#getrecentbackupdataandmtime.
+	remove Backup#getbackupdattandmtime.
+	
+	* aswiki/util.rb: adjust for libalgorithm-diff-ruby 0.4.
+
 2002-09-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* release: 0.40
+	
 	* aswiki/page.rb: use Amrita::TemplateFileWithCache.
 
 	* aswiki/backup.rb: new methods Backup#rlog.

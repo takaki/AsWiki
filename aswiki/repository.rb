@@ -23,7 +23,7 @@ module AsWiki
     def save(name, str)
       (open(textname(name),'w') << str.gsub(/\r\n/, "\n")).close
       backup = AsWiki::Backup.new(@basedir)
-      backup.backup(textname(name))
+      backup.ci(textname(name))
     end
     
     def mtime(name)

@@ -113,7 +113,12 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     when 'd'
       backup = AsWiki::Backup.new('.')
       cn  = repository.load(name)
-      co, = backup.getrecentbackupdataandmtime(AsWiki::escape(name))
+      log = backup.rlog(name)
+      if log.length > 1
+	co = backup.co(name, log[1][0])
+      else
+	co = ''
+      end
       data = {
 	:title => 'Diff of ' + name ,
 	:content => CGI::escapeHTML(AsWiki::diff(co,cn).to_s)

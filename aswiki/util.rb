@@ -2,7 +2,7 @@
 # This program is distributed under the GNU GPL 2.
 
 require 'cgi'
-require 'diff'
+require 'algorithm/diff'
 
 module AsWiki
   def AsWiki::escape(s)
@@ -12,14 +12,7 @@ module AsWiki
     return CGI::unescape(s)
   end
   def AsWiki::diff(a,b)
-    d = Diff.new(a,b)
-    f = []
-
-    d.diffs.each{|x| 
-      x.each{|e| 
-	f << e
-      }
-    }
+    f = Diff::diff(a,b)
 
     c = []
     ai = 0
@@ -27,10 +20,10 @@ module AsWiki
     i = 0
     r = []
     while x = f.shift
-      if x[0] == '+'
+      if x[0] == :+
 	while bi < x[1]
 	  if b[bi] != a[ai]
-	    raise 'not match'
+	    raise 'not match 1'
 	  end
 	  # print "#{bi} = #{b[bi]}"
 	  r << "#{bi} = #{b[bi]}"
@@ -38,12 +31,14 @@ module AsWiki
 	  bi += 1
 	end
 	# print  "#{bi} #{x[0]} #{x[2]}"
-	r << "#{bi} #{x[0]} #{x[2]}"
-	bi += 1
-      elsif x[0] == '-'
+	x[2].each{|l|
+	  r << "#{bi} #{x[0]} #{l}"
+	  bi += 1
+	}
+      elsif x[0] == :-
 	while ai < x[1]
 	  if b[bi] != a[ai]
-	    raise 'not match'
+	    raise 'not match 2'
 	  end
 	  # print  "#{bi} = #{b[bi]}"
 	  r << "#{bi} = #{b[bi]}"
@@ -51,8 +46,10 @@ module AsWiki
 	  bi += 1
 	end
 	# print  "#{bi} #{x[0]} #{x[2]}"
-	r << "#{bi} #{x[0]} #{x[2]}"
-	ai += 1
+	x[2].each{|l|
+	  r << "#{bi} #{x[0]} #{l}"
+	  ai += 1
+	}
       else
 	raise '???'
       end
@@ -60,7 +57,7 @@ module AsWiki
 
     while ai < a.size
       if b[bi] != a[ai]
-	raise 'not match'
+	raise 'not match 3'
       end
       # print  "#{bi} = #{b[bi]}\n"
       r << "#{bi} = #{b[bi]}"
@@ -68,7 +65,6 @@ module AsWiki
       bi += 1
     end
     return r
-
   end
   
   module Util

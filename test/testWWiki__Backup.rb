@@ -21,31 +21,32 @@ class TestAsWiki__Backup < RUNIT::TestCase
     Dir.rmdir('test/RCS')
     Dir.rmdir('test/text')
   end
-  def test_backup
+
+  def test_ci
+    fname = 'test/text/testbackup'
+    bname = 'test/RCS/testbackup,v'
+    s = "1\n"
+    (open(fname ,'w') << s).close
+    @c.ci(fname)
+    # system("ci -l -q -zLT -d'2002/01/01 00:00:00' #{fname} #{bname}")
+    # @c.ci('test/text/test')
+    assert_equal(s, File.readlines("|co -p -q #{bname}").to_s)
+  end
+
+  def test_co
     fname = 'test/text/testbackup'
     bname = 'test/RCS/testbackup,v'
     s = "1\n"
     (open(fname ,'w') << s).close
     system("ci -l -q -zLT -d'2002/01/01 00:00:00' #{fname} #{bname}")
-    @c.backup('test/text/test')
+    @c.co('test/text/test',1)
     assert_equal(s, File.readlines("|co -p -q #{bname}").to_s)
-  end
-
-  def test_getbackupdataandmtime
-    data = @c.getbackupdataandmtime('test',1)
-    assert_equal([["1\n"],Time.parse('2002/01/01 00:00:00')] ,data)
-  end
-
-  def test_getrecentbackupdataandmtime
-    data = @c.getrecentbackupdataandmtime('test')
-    assert_equal([["1\n"],Time.parse('2002/01/01 00:00:00')] ,data)
   end
 
   def test_rlog
     data = @c.rlog('test')
     assert_equal([[2,Time.parse('2002/01/01 01:00:00')],
 		   [1,Time.parse('2002/01/01 00:00:00')]] ,data)
-		 
   end
 
   def test_s_new

@@ -93,3 +93,17 @@ dl
   width: 80%;
   }
 
+div.diffold 
+{
+  background-color: #FFFF80;
+  border-style:none;
+  border-width:thin;
+  width:99%;
+}
+div.diffnew 
+{
+  background-color: #80FF80;
+  border-style:none;
+  border-width:thin;
+  width:99%;
+  }

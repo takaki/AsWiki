@@ -15,6 +15,7 @@ module AsWiki
 
     public
     def rlog(name, rev=nil)
+      name = quotemeta(name)
       log = []
       if rev
 	command = "|rlog -zLT -r1.#{rev} #{backupname(name)}"
@@ -35,28 +36,15 @@ module AsWiki
     end
 
     def co(name, rev)
+      name = quotemeta(name)
       return File.readlines("|co -r1.#{rev} -p -q #{backupname(name)}")
     end
 
-    def backup(fname)
-      fname = quotemeta(fname)
-      if ! system("ci -l -q -zLT #{fname} #{backupname(fname)}")
+    def ci(name)
+      name = quotemeta(name)
+      if ! system("ci -l -q -zLT #{name} #{backupname(name)}")
 	raise
       end
-    end
-
-    def getrecentbackupdataandmtime(name)
-      log = rlog(name)
-      if log.length > 1
-	f = co(name, log[1][0])
-      else
-	f = ''
-      end
-      return [f, log[1][1]] 
-    end
-
-    def getbackupdataandmtime(name, rev)
-      return [co(name, rev), rlog(name, rev)[0][1]]
     end
 
     private

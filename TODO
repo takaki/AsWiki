@@ -3,8 +3,8 @@
 * High
   - diff0.4に対応
   - Namazuで検索
-  - $dobackup
   - $print_error
+  - $dobackup
   - Page templateの統合  
   - NotCreatedPages
   - OrphanedPages
@@ -22,6 +22,6 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * abandoned
-  - header のナンバリング => CSS
+  - header のナンバリング => CSS2
   - hashed plugin => Walrusでつくるとき考える
   

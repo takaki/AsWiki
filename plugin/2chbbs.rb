@@ -2,14 +2,12 @@
 # This program is distributed under the GNU GPL 2.
 
 require 'aswiki/plugin'
-require 'obaq/htmlgen'
 require 'cgi/session'
 require 'aswiki/util'
 
 module AsWiki
   class W2chBBSPlugin < Plugin
     Name = '2chbbs'
-    include Obaq::HtmlGen
     include AsWiki::Util
     def onpost(session)
       pname = session['pname']

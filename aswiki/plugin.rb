@@ -42,9 +42,9 @@ module AsWiki
       if pc = PluginTable[cmd]
 	p = pc.new(@name)
 	v = p.onview(line, b, e, av)
-	return p
+	# return p 
 	# return p
-	# return v
+	return v # XXX
 	# return p
       else
 	return line.to_s
@@ -63,8 +63,8 @@ module AsWiki
 #       return template
 #     end
 
-    def load_parts(partname=self.class::Name.capitalize,
-		   filename=self.class::Name)
+    def load_parts(filename=self.class::Name,
+		   partname=self.class::Name.capitalize)
       tmplfile = File.join('template', 'plugin', filename + '.html')
       pt = Amrita::TemplateFileWithCache[tmplfile]
       pt.expand_attr = true

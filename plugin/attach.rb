@@ -29,5 +29,21 @@ module AsWiki
     end
     attr_reader :data
   end
+  class AttachIncludePlugin < Plugin
+    Name = 'attachinclude'
+    # #attachinclude num
+    def onview(line, b, e, av=[])
+      num = av[1]
+      adb =  AsWiki::AttachDB.new
+      ret = adb.querybynum(num)
+      @data = {
+	:url  => cgiurl([['c','download'],['num',num]]),
+	:mime => ret[:type],
+	:name => ret[:filename],
+      }
+
+      load_parts('attach')
+    end
+  end
 end
 

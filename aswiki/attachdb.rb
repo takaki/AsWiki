@@ -78,10 +78,27 @@ module AsWiki
 	  ret = page.select{|key,value| value == pname}.map{|key,val| key}.
 	    sort{|a,b| name[a] <=> name[b]}.collect{|f| 
 	    {
+	      :id     => "##{f}",
 	      :dllink => cgiurl([['c','download'],['num',f]]), 
 	      :name   => name[f],
 	      :rmlink => cgiurl([['c','delete'],['p',pname],['num',f]]),
 	    }
+	  }
+	}
+	return ret
+      rescue BDB::LockDead
+	txn.abort
+	raise 
+      end
+    end
+    def querybynum(num)
+      begin
+	ret = {}
+	@env.begin(@mime, @name){|txn, db|
+	  mime, name = db
+	  ret =  {
+	    :type => mime[num],
+	    :filename => name[num]
 	  }
 	}
 	return ret

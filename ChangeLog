@@ -1,3 +1,13 @@
+2002-12-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.78
+
+	* aswiki/plugin.rb: load_parts methods argument turn change.
+
+	* aswiki/attachdb.rb: add querybynum method(for attachinclude).
+
+	* plugin/attach.rb: attachinclude plugin.
+
 2002-12-02  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/scanner.rb: WikiName regexp has been config parameter.

@@ -45,7 +45,7 @@ module AsWiki
 	:msg_2chbbs_write => msg_2chbbs_write,
       }
       # @view = load_template.expand_tree(data)
-      load_parts('W2chbbs')
+      load_parts('2chbbs','W2chbbs')
     end
     attr_reader :data
 

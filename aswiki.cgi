@@ -35,7 +35,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 #    require p.untaint  
 #  }n
   $plugin_list.each{|p| 
-    require p.untaint  
+    require "#$DIR_PLUGIN/#{p}".untaint  
   }
 
   cgi = CGI::new # XXX

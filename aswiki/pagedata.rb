@@ -9,9 +9,8 @@ require 'aswiki/revlink'
 module AsWiki
   class PageData
     include AsWiki::Util
-    include Amrita::ExpandByMember
+    # include Amrita::ExpandByMember
     include AsWiki::I18N
-
     def initialize(name)
       @name = name
       @r = AsWiki::Repository.new('.')
@@ -27,14 +26,57 @@ module AsWiki
       @historypage = cgiurl([['c', 'h'], ['p', pname]])
       @diffpage    = cgiurl([['c', 'd'], ['p', pname]])
       @helppage    = cgiurl([['c', 'v'], ['p', 'HelpPage']])
-
     end
+    def setup
+      @sb = self.clone
+      @sb.sb = @sb
+      extend Amrita::ExpandByMember
+    end
+    attr_accessor :sb
     attr_reader :edit,:recentpages,:toppage,:allpages,:rawpage,
       :diffpage,:helppage, :historypage
     attr_reader :tree, :wikinames,:name
     attr_accessor :revision, :timestamp, :body, :md5sum, :title,
       :pagetype
     attr_accessor :ebol, :eeol
+
+    module PageParts    
+    end
+    def PageData::load_parts_template(pagetype)
+      pt = Amrita::TemplateFileWithCache["template/Page/#{pagetype}.html"]
+      pt.expand_attr = true
+      pt.install_parts_to(PageParts)
+    end
+    def parts_extend(parts)
+      data = @sb.clone
+      extend PageParts.const_get(parts)
+    end
+
+    def menubar
+      data = @sb.clone
+      data.parts_extend('Menubar')
+      return data
+    end
+    def pagetitle
+      data = @sb.clone
+      data.parts_extend('Pagetitle')
+      return data
+    end
+    def pageheader
+      data = @sb.clone
+      data.parts_extend('Pageheader')
+      return data
+    end
+    def pagebody
+      data = @sb.clone
+      data.parts_extend('Pagebody')
+      return data
+    end
+    def pagefooter
+      data = @sb.clone
+      data.parts_extend('Pagefooter')
+      return data
+    end
     
     def parsefile
       c = @r.load(@name)

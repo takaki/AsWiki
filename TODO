@@ -2,8 +2,6 @@
 
 * High
   - rewrite orphand page plugin
-  - parts template
-  - english message catalogue
 
 * Low
   - attach ; attachment -> pathname
@@ -32,6 +30,8 @@
   - graphviz 用出力(趣味やね)
 
 * done
+  - parts template again
+  - english message catalogue
   - reverse link (save time hook)
   - name space expand allways
   - print edit line.n - line.m

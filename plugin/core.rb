@@ -98,8 +98,8 @@ module AsWiki
       return self
     end
   end
-  class LinkPageCountPlugin < Plugin
-    Name = 'linkpagecount'
+  class ReverseLinkListPlugin < Plugin
+    Name = 'reverselinklist'
     def onview(line, b, e, av)
       @r = AsWiki::Repository.new('.')
       pages = {}

@@ -1,4 +1,24 @@
+2002-12-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.89
+
+	* aswiki/pagedata.rb: #setup; use tricky code to avoid
+	amrita-1.0.1's compiler bug.
+
+	* aswiki/page.rb: use PartsTemplate again.
+
+	* plugin/core.rb: rename PageReferencesPlugin to ReverseLinkList.
+
+	* template/Node/parts.html: WikiNameNE; change '?' position to
+	WikiName previous. Is is advice of `The Wiki Way'.
+	
 2002-12-29  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* plugin/core.rb: rename LinkPageCountPlugin to
+	PageReferencesPlugin.
+
+	* template/plugin/pagereferences.html: rename LinkPageCount to
+	PageReferences.
 
 	* release: 0.88
 

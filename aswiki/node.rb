@@ -15,8 +15,6 @@ module AsWiki
     def Node::load_parts_template
       pt = Amrita::TemplateFileWithCache["template/Node/parts.html"]
       pt.expand_attr = true
-      # pt.use_compiler = true
-      # pt.set_hint(Amrita::DictionaryData)
       pt.install_parts_to(PartsModule)
     end
 

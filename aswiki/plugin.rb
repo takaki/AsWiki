@@ -50,22 +50,10 @@ module AsWiki
 	return line.to_s
       end
     end
-#    def to_s
-#      STDERR.puts @view.type
-#      return @view
-#    end
     private
-#     def load_template(filename=self.type::Name)
-#       tmplfile = File.join('template', 'plugin', filename + '.html')
-#       template = Amrita::TemplateFileWithCache[tmplfile]
-#       template.expand_attr = true
-#       template.use_compiler = true
-#       return template
-#     end
-
     def load_parts(filename=self.class::Name,
 		   partname=self.class::Name.capitalize)
-      tmplfile = File.join('template', 'plugin', filename + '.html')
+      tmplfile = File.join($DIR_TEMPLATE, 'plugin', filename + '.html')
       pt = Amrita::TemplateFileWithCache[tmplfile]
       pt.expand_attr = true
       pt.use_compiler = true

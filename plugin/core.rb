@@ -49,7 +49,7 @@ module AsWiki
     @@run = false
     def onview(line, b, e, av)
       return nil if @@run == true
-      @r = AsWiki::Repository.new('.')
+      @r = AsWiki::Repository.new
       @checked = {} # i want Set ...
       @queue   = {}
       @@run = true
@@ -64,7 +64,7 @@ module AsWiki
     private 
     def markandsweep(pname)
       @checked[pname] = true
-      AsWiki::Parser.new(@r.load(pname).to_s, pname).wikinames.
+      AsWiki::Parser.new(FileScanner[pname], pname).wikinames.
 	uniq.each{|n|
 	if @r.exist?(n) and not @queue.key?(n) and not @checked.key?(n)
 	  @queue[n] = true
@@ -81,10 +81,10 @@ module AsWiki
     Name = 'notcreatedpages'
     include AsWiki::Util
     def onview(line, b, e, av)
-      @r = AsWiki::Repository.new('.')
+      @r = AsWiki::Repository.new
       pages = {}
       @r.namelist.each{|p|
-	AsWiki::Parser.new(@r.load(p).to_s, p).wikinames.uniq.each{|n|
+	AsWiki::Parser.new(FileScanner[p], p).wikinames.uniq.each{|n|
 	  if n !~ /\A\w+:[A-Z]\w+(?!:)/
 	    pages[n] = true
 	  end
@@ -101,12 +101,12 @@ module AsWiki
   class ReverseLinkListPlugin < Plugin
     Name = 'reverselinklist'
     def onview(line, b, e, av)
-      @r = AsWiki::Repository.new('.')
+      @r = AsWiki::Repository.new
       pages = {}
       rl = RevLink.new
       rl.clear
       @r.namelist.each{|p|
-	lm = AsWiki::Parser.new(@r.load(p).to_s, p).wikinames.uniq.
+	lm = AsWiki::Parser.new(FileScanner[p], p).wikinames.uniq.
 	  delete_if{|n| n =~ /\A\w+:[A-Z]\w+(?!:)/}
 	lm.each{|n|
 	  if pages.has_key?(n)

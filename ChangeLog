@@ -1,3 +1,28 @@
+2003-01-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/attachdb.rb: fixed querybynum return include nil Hash.
+
+2003-01-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/handler.rb: EditPage; fixed(?) confilic with partial-edit
+	merge bug.
+
+	* aswiki/pagedata.rb: remove dirty trick(require amrita-1.0.2).
+
+	* aswiki/repository.rb: changed #initialize arugment.
+
+	* aswiki/backup.rb: changed #initialize argument.
+
+	* aswiki.cgi: use class insted of type.
+
+	* aswiki/config.rb: set default configuration value.
+
+	* aswiki/scanner.rb: FileScanner; file scan data cached scanner.
+
+	* aswiki/parser.rb: change initialize argument String to
+	AsWiki::Scanner.
+	fixed no h2 tocdata link bug.
+	
 2002-12-30  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.89

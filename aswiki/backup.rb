@@ -6,8 +6,8 @@ require 'aswiki/util.rb'
 
 module AsWiki
   class RCSBackup
-    def initialize(basedir)
-      @dir = File.join(basedir, 'RCS')
+    def initialize(dir=$DIR_RCS)
+      @dir = dir
     end
     public
     def rlog(name, rev=nil)
@@ -36,7 +36,7 @@ module AsWiki
 
     def ci(name)
       # if ! system("ci -l -q -zLT #{textname(name)} #{backupname(name)}")
-      if ! system("ci -l -q -zLT text/#{AsWiki::escape(name)} #{backupname(name)}".untaint) # XXX XXX XXX
+      if ! system("ci -l -q -zLT  #$DIR_TEXT/#{AsWiki::escape(name)} #{backupname(name)}".untaint) # XXX XXX XXX
 	raise IOError, name
       end
     end

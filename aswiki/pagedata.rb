@@ -3,17 +3,17 @@
 
 require 'aswiki/parser'
 require "aswiki/i18n/#{$LANG}"
-require 'aswiki/merge'
+require 'aswiki/util'
 require 'aswiki/revlink'
 
 module AsWiki
   class PageData
     include AsWiki::Util
-    # include Amrita::ExpandByMember
+    include Amrita::ExpandByMember
     include AsWiki::I18N
     def initialize(name)
       @name = name
-      @r = AsWiki::Repository.new('.')
+      @r = AsWiki::Repository.new
 
       @title    = $TITLE + ': ' + name
 
@@ -27,11 +27,6 @@ module AsWiki
       @diffpage    = cgiurl([['c', 'd'], ['p', pname]])
       @helppage    = cgiurl([['c', 'v'], ['p', 'HelpPage']])
     end
-    def setup
-      @sb = self.clone
-      @sb.sb = @sb
-      extend Amrita::ExpandByMember
-    end
     attr_accessor :sb
     attr_reader :edit,:recentpages,:toppage,:allpages,:rawpage,
       :diffpage,:helppage, :historypage
@@ -43,54 +38,47 @@ module AsWiki
     module PageParts    
     end
     def PageData::load_parts_template(pagetype)
-      pt = Amrita::TemplateFileWithCache["template/Page/#{pagetype}.html"]
+      pt = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,"Page/#{pagetype}.html")]
       pt.expand_attr = true
       pt.install_parts_to(PageParts)
     end
     def parts_extend(parts)
-      data = @sb.clone
-      extend PageParts.const_get(parts)
-    end
-
-    def menubar
-      data = @sb.clone
-      data.parts_extend('Menubar')
+      data = self.clone
+      data.extend PageParts.const_get(parts)
       return data
+    end
+    def menubar
+      return parts_extend('Menubar')
     end
     def pagetitle
-      data = @sb.clone
-      data.parts_extend('Pagetitle')
-      return data
+      return parts_extend('Pagetitle')
     end
     def pageheader
-      data = @sb.clone
-      data.parts_extend('Pageheader')
-      return data
+      return parts_extend('Pageheader')
     end
     def pagebody
-      data = @sb.clone
-      data.parts_extend('Pagebody')
-      return data
+      return parts_extend('Pagebody')
     end
     def pagefooter
-      data = @sb.clone
-      data.parts_extend('Pagefooter')
-      return data
+      return parts_extend('Pagefooter')
     end
     
     def parsefile
-      c = @r.load(@name)
+      # c = @r.load(@name)
       @timestamp = @r.mtime(@name)
-      parsetext(c.to_s)
+      @p = AsWiki::Parser.new(FileScanner[@name], @name)
+      @wikinames = @p.wikinames
+      @body = @p.tree
+
     end
     def parsetext(c)
-      @p = AsWiki::Parser.new(c.to_s, @name)
+      @p = AsWiki::Parser.new(Scanner.new(c.to_s), @name)
       @wikinames = @p.wikinames
       @body = @p.tree
     end
 
     def logtable
-      backup = AsWiki::Backup.new('.')
+      backup = AsWiki::Backup.new
       return backup.rlog(@name).map{|l| 
 	{ :revision => {
 	    :url=> cgiurl([['c','h'], ['p',@name], ['rev',l[0]]]),

@@ -27,18 +27,20 @@ module AsWiki
     ELEMENT = PLAINTEXT + [:UL, :OL]
     D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
 
-    def initialize(str,name='')
+    def initialize(scanner, name='')
       @name = name
-      @s = Scanner.new(str)
+      @s = scanner
       @rawwikinames = []
       @plugin = AsWiki::Plugin.new(@name)
-      
-      # @nodeclass =  maketree ? Node : DummyNode
+
       @tocdata = []
       @tocnum  = 0
 
       @tocdata = [{:number => "##{@tocnum}", :text => '', 
-	  :msg_edit => msg_edit,}]
+	  :msg_edit => msg_edit,
+	  :partialedit => cgiurl([['c', 'e'], ['p', @name],
+				   ['ebol',1],
+				   ['eeol',0]])}]
       @lastbol = 1
       
       @tree = parse
@@ -113,7 +115,8 @@ module AsWiki
       lineno = @line
       node = Node.new("H#{level}")
       next_token
-      ret = textline
+      # ret = textline
+      ret = plaintext
       if level == 2
 	@tocnum = @tocnum + 1
 	@tocdata[-1][:partialedit] = cgiurl([['c', 'e'], ['p', @name],

@@ -13,7 +13,7 @@ module AsWiki
     end
 
     def Node::load_parts_template
-      pt = Amrita::TemplateFileWithCache["template/Node/parts.html"]
+      pt = Amrita::TemplateFileWithCache[File.join($DIR_TEMPLATE,'Node.html')]
       pt.expand_attr = true
       pt.install_parts_to(PartsModule)
     end

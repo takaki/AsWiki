@@ -8,7 +8,7 @@ module AsWiki
   HandlerTable = {}
   class Handler
     def initialize(cgi, name)
-      @repository = AsWiki::Repository.new('.')
+      @repository = AsWiki::Repository.new
     end
   end
   class ViewHandler < Handler
@@ -65,7 +65,7 @@ module AsWiki
     def initialize(cgi, name)
       super
       rev = cgi.value('rev')[0].to_i
-      backup = AsWiki::Backup.new('.')
+      backup = AsWiki::Backup.new
       if rev == 0
 	rev = backup.rlog(name)[0][0]
       end
@@ -88,7 +88,7 @@ module AsWiki
     def initialize(cgi, name)
       super
       rev = cgi.value('rev')[0].to_i
-      backup = AsWiki::Backup.new('.')
+      backup = AsWiki::Backup.new
       if rev == 0
 	rev = backup.rlog(name)[0][0]
       end
@@ -113,7 +113,7 @@ module AsWiki
       revnew = cgi.value('rn')[0].to_i
       revold = cgi.value('ro')[0].to_i
 
-      backup = AsWiki::Backup.new('.')
+      backup = AsWiki::Backup.new
       log = backup.rlog(name)
 
       cn = revnew == 0 ? @repository.load(name) : backup.co(name, revnew)
@@ -139,7 +139,10 @@ module AsWiki
 	c = @repository.load(name)
 	if cgi.value('md5sum')[0] !=  Digest::MD5::new(c.to_s).to_s
 	  bl = body.map{|l| l.sub("\r\n", "\n")}
-	  raise AsWiki::SaveConflict.new(name, AsWiki::merge(c, bl, false))
+	  bol = (cgi.value('ebol')[0] or 1).to_i
+	  eol = (cgi.value('eeol')[0] or c.size).to_i
+	  cs  = c[bol-1...eol]
+	  raise AsWiki::SaveConflict.new(name, AsWiki::merge(cs, bl, false))
 	end
 
 	bol = (cgi.value('ebol')[0] or 1).to_i
@@ -157,7 +160,7 @@ module AsWiki
     HandlerTable['post'] = self      
     def initialize(cgi, name)
       super
-      session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
+      session = CGI::Session.new(cgi ,{'tmpdir' => $DIR_SESSION}) # XXX
       if cgi['md5sum'][0] != 
 	  Digest::MD5::new(@repository.load(session['pname']).to_s).to_s
 	raise AsWiki::TimestampMismatch
@@ -176,7 +179,7 @@ module AsWiki
     def initialize(cgi, name)
       super
       cgi['_session_id'][0] = cgi.value('_session_id')[0] # XXXX cgi/session bug
-      session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
+      session = CGI::Session.new(cgi ,{'tmpdir' => $DIR_SESSION}) # XXX
       plugin = AsWiki::Plugin::PluginTableByType[session['plugin']].new(name)
       plugin.onpost(session, cgi['file'])
       AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',session['pname']]]))
@@ -230,9 +233,13 @@ module AsWiki
 	pd.ebol   = bol
 	pd.eeol   = eol
       else
+	bol = (cgi.value('ebol')[0] or 1).to_i # XXX 
+	eol = (cgi.value('eeol')[0] or c.size).to_i # XXX
 	pd.body   = body
-	pd.ebol   = 1
-	pd.eeol   = c.to_a.size # XXX ???
+	# pd.ebol   = 1
+	# pd.eeol   = c.to_a.size # XXX ???
+	pd.ebol   = bol
+	pd.eeol   = eol
       end
       page = AsWiki::Page.new('Edit', pd)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
@@ -264,9 +271,10 @@ module AsWiki
     def initialize(cgi, name)
       super
       c = @repository.load(name)
-      tmplfile = File.join('template','RSS.xml')
+      tmplfile = File.join($DIR_TEMPLATE,'RSS.xml')
       template = Amrita::TemplateFileWithCache[tmplfile]
       template.expand_attr = true
+      template.pre_format = true
       template.use_compiler = true
       template.xml = true
       template.asxml = true

@@ -4,8 +4,27 @@
 require 'strscan'
 require 'uri/common'
 require 'delegate'
+require 'pstore'
 
 module AsWiki
+  module FileScanner
+    def FileScanner::[](pname)
+      pspath = File.join($DIR_CACHE, "#{AsWiki::escape(pname)}.scan")
+      ps = PStore.new(pspath.untaint)
+      r = Repository.new
+      ps.transaction do |s| 
+	if r.mtime(pname) > File.mtime(pspath) or not s.root?('scan')
+	  scan = Scanner.new(r.load(pname).to_s)
+	  s['scan'] = scan
+	  # STDERR.puts "NOT #{pname}"
+	  return scan
+	else	  
+	  # STDERR.puts "HIT #{pname}"
+	  return s['scan']
+	end	    
+      end
+    end
+  end
   class Scanner
     PAT_URI =  /\A#{URI::REGEXP::PATTERN::X_ABS_URI}/xn
     C128 = [128].pack('C')

@@ -6,7 +6,7 @@ require 'dbm'
 module AsWiki
   class RevLink
     def initialize
-      @db = DBM::new('cache/revlink')
+      @db = DBM::new(File.join($DIR_CACHE,'revlink'))
     end
     def clear
       @db.clear

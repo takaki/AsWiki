@@ -1,4 +1,5 @@
 require 'rubyunit'
+require 'aswiki/conf.rb'
 require 'aswiki/parser.rb'
 
 class TestAsWiki__Parser < RUNIT::TestCase

@@ -8,9 +8,8 @@ require 'aswiki/parser'
 
 module AsWiki
   class Repository
-    def initialize(basedir='.')
-      @dir = File.join(basedir ,'text')
-      @basedir = basedir
+    def initialize(dir=$DIR_TEXT)
+      @dir = dir
     end
 
     def exist?(name)
@@ -24,10 +23,11 @@ module AsWiki
     def save(name, str)
       (open(textname(name),'w') << str.gsub(/\r\n/, "\n")).close
       RevLink.new.regist(name,
-			 AsWiki::Parser.new(str, name).wikinames.uniq.
+			 AsWiki::Parser.new(FileScanner[name], name).
+			 wikinames.uniq.
 			 delete_if{|n| n =~ /\A\w+:[A-Z]\w+(?!:)/})
       
-      backup = AsWiki::Backup.new(@basedir)
+      backup = AsWiki::Backup.new
       backup.ci(name)
       if File.size(textname(name)) <= 1
 	File.unlink(textname(name))

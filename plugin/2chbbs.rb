@@ -31,10 +31,10 @@ module AsWiki
       @repository.save(pname, file.to_s)
     end
     def onview(line, b, e, av=[])
-      session = CGI::Session.new(CGI::new, {'tmpdir' => 'session',
+      session = CGI::Session.new(CGI::new, {'tmpdir' => $DIR_SESSION,
 				   'new_session' => true})
       session['pname'] = @name
-      session['plugin'] = self.type
+      session['plugin'] = self.class
       session['begin'] = b
       session['end'] = e
       session['number'] = av[1].to_i

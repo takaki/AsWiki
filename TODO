@@ -1,12 +1,13 @@
 -*- outline -*-
 
 * High
-  - rewrite orphand page plugin
+  - escape at hn
+  - attach display bug gsub
 
 * Low
+  - rewrite orphand page plugin
   - attach ; attachment -> pathname
   - automatic img link?
-  - pre pre bug
   - subsubsection toc?
   - rcs keyword proble
   - pre problem(amrita 待ち)
@@ -19,6 +20,9 @@
   - UnitTestを手抜きするな。とくに日本語。
 
 * idea
+  - pre pre bug ???
+  - partial edit link bug
+  - type -> class
   - -w
   - Nora or CGIKit
   - moinhref; rel uri?
@@ -30,6 +34,8 @@
   - graphviz 用出力(趣味やね)
 
 * done
+  - partial edit and confilic edit 
+  - make text,template and RCS path config option
   - parts template again
   - english message catalogue
   - reverse link (save time hook)

@@ -40,9 +40,9 @@ module AsWiki
     end
     def onview(line, b, e, av=[])
       session = CGI::Session.new(CGI::new, {'new_session'=>true,
-				   'tmpdir' => 'session'})
+				   'tmpdir' => $DIR_SESSION})
       session['pname'] = @name
-      session['plugin'] = self.type
+      session['plugin'] = self.class
       session['begin'] = b
       session['end'] = e
       # session.close

@@ -15,10 +15,10 @@ module AsWiki
       adb.savefile(pname, file[0])
     end
     def onview(line, b, e, av=[])
-      session = CGI::Session.new(CGI::new, {'tmpdir' => 'session',
+      session = CGI::Session.new(CGI::new, {'tmpdir' => $DIR_SESSION,
 				   'new_session'=>true})
       session['pname'] = @name
-      session['plugin'] = self.type
+      session['plugin'] = self.class
 
       adb =  AsWiki::AttachDB.new
       @data ={:_session_id => session.session_id,

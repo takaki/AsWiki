@@ -6,7 +6,7 @@ require 'bdb'
 module AsWiki
   class AttachDB
     def initialize
-      @env = BDB::Env.new("attach", BDB::CREATE|BDB::INIT_TRANSACTION,
+      @env = BDB::Env.new($DIR_ATTACH, BDB::CREATE|BDB::INIT_TRANSACTION,
 			  {:set_lk_detect => BDB::LOCK_DEFAULT})
       @file = @env.open_db(BDB::Btree, "file", nil, BDB::CREATE)
       @time = @env.open_db(BDB::Btree, "time", nil, BDB::CREATE)
@@ -97,7 +97,7 @@ module AsWiki
 	@env.begin(@mime, @name){|txn, db|
 	  mime, name = db
 	  ret =  {
-	    :type => mime[num],
+	    :type => (mime[num] or ''),
 	    :filename => name[num]
 	  }
 	}

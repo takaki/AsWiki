@@ -5,8 +5,7 @@ require 'time.rb'
 require 'aswiki/util.rb'
 
 module AsWiki
-
-  class Backup
+  class RCSBackup
     def initialize(basedir)
       @dir = File.join(basedir, 'RCS')
     end
@@ -50,4 +49,6 @@ module AsWiki
       return File.join(@dir, AsWiki::escape(fname) + ',v')
     end
   end
+
+  Backup = RCSBackup
 end

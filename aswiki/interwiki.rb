@@ -10,7 +10,7 @@ module AsWiki
       @code = {}
       repository = AsWiki::Repository.new
       c = repository.load('InterWikiName')
-      r = /\s+\*\s*\[(\S+)\s+(\S+)\]\s*(\S+)?/
+      r = /\s*\*\s*\[(\S+)\s+(\S+)\]\s*(\S+)?/
       c.each {|l|
 	if m = r.match(l)
 	  @url[m[2]] = m[1]

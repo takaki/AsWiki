@@ -30,14 +30,10 @@ module AsWiki
 	    q.push [:PLUGIN_END, tmp]
 	  elsif tmp = sc.scan(/\A#.+$/)
 	    q.push [:PLUGIN, tmp]
-	  # elsif tmp = sc.scan(/\A +\*/)
 	  elsif tmp = sc.scan(/\A *\*/)
 	    q.push [:UL, tmp]
-	  # elsif tmp = sc.scan(/\A +\d+\./)
-	  # elsif tmp = sc.scan(/\A +\(\d+\)/)
 	  elsif tmp = sc.scan(/\A *\(\d+\)/)
 	    q.push [:OL, tmp]
-	  # elsif tmp = sc.scan(/\A +\+ */)
 	  elsif tmp = sc.scan(/\A *\+ */)
 	    q.push [:DL, tmp]
 	  elsif tmp = sc.scan(/\A={2,6}/)
@@ -63,10 +59,10 @@ module AsWiki
 	elsif tmp = sc.scan(/\A\w+:[A-Z]\w+(?!:)/)
 	  q.push [:INTERWIKINAME, tmp]
 	elsif tmp = sc.scan(PAT_URI) 
-	  if URI::extract(tmp, ['http','https','ftp','news','mailto',]) != []
-	    q.push [:URI, tmp]
-	  else
+	  if URI::extract(tmp, %w[http https ftp news mailto]).empty?
 	    q.push [:OTHER, tmp]
+	  else
+	    q.push [:URI, tmp]
 	  end
 	# elsif tmp = sc.scan(/\A([A-Z][a-z]+){2,}\b/)
 	elsif tmp = sc.scan(/\A([A-Z]+[a-z]+){2,}\b/)

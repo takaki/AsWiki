@@ -1,5 +1,13 @@
+2002-11-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.63
+
+	* aswiki/handler.rb: editpage handler
+
 2002-11-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* release: 0.62
+	
 	* Makefile: renamed from setup.sh.
 
 	* aswiki/parser.rb: remove Amrita::e. use parts template.
@@ -42,7 +50,7 @@
 
 2002-10-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* plugin/core.rb: NotCreatedPagesPlugin bug fix.z
+	* plugin/core.rb: NotCreatedPagesPlugin bug fix.
 
 2002-10-04  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 

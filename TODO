@@ -1,6 +1,7 @@
 -*- outline -*-
 
 * High
+  - page initialize and publish
   - -w
   - page 統合
   - session に Nameで保存

@@ -24,11 +24,8 @@ require 'cgi'
 
 require 'aswiki/handler'
 require 'aswiki/repository'
-require 'aswiki/parser'
 require 'aswiki/page'
 require 'aswiki/exception'
-require 'aswiki/interwiki'
-require 'aswiki/backup'
 require 'aswiki/pagedata'
 require 'aswiki/cgi'
 
@@ -67,26 +64,8 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       else
 	raise AsWiki::RuntimeError, "Unknown Command '#{c}'\n"
       end
-    rescue AsWiki::EditPageCall
-      pname   = $!.pname
-      body    = $!.body
-      message = $!.message
-      begin
-	c = repository.load(pname) 
-      rescue Errno::ENOENT
-	c = ''
-      end
-      if body.nil?
-	body = c
-      end
-      pd = AsWiki::PageData.new(name)
-      pd.md5sum = Digest::MD5::new(c.to_s).to_s
-      pd.title  = (message ? '(Edit Confilct)' : '') + pname 
-      pd.body   = body
-      page = AsWiki::Page.new('Edit', pd)
-      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	page.to_s
-      }
+    rescue AsWiki::EditPageCall, AsWiki::SaveConflict
+      AsWiki::HandlerTable[$!.class].new(cgi, $!)
     end
   rescue AsWiki::AsWikiError
     pd = AsWiki::PageData.new($!.type.to_s)
@@ -95,7 +74,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       AsWiki::Page.new('Error', pd).to_s
     }
   rescue Exception
-    pd = AsWiki::PageData.new('Script Error: ' + $!.type.to_s)
+    pd = AsWiki::PageData.new('Program Error: ' + $!.type.to_s)
     pd.body = Amrita::pre { Amrita::e(:code) {
 	$!.to_s + "\n" +  $!.backtrace.join("\n") # XXX pre
       }

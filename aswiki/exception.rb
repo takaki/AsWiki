@@ -7,12 +7,17 @@ module AsWiki
   class TimestampMismatch < AsWikiError
   end
   class EditPageCall < AsWikiError
-    def initialize(pname, body=nil, message=nil)
+    def initialize(pname)
+      @pname = pname
+    end
+    attr_reader :pname
+  end
+  class SaveConflict < EditPageCall
+    def initialize(pname, body)
       @pname = pname
       @body  = body
-      @message = message
     end
-    attr_reader :pname, :body, :message
+    attr_reader :pname, :body
   end
 end
 

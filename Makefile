@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
-# $Format: "VERSION = $ProjectVersion$ "$
-VERSION = 0.62 
+# $Format: "VERSION = $ProjectVersion$"$
+VERSION = 0.63
 
 all:
 

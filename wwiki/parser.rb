@@ -7,6 +7,7 @@ require 'obaq/htmlgen'
 require 'wwiki/scanner'
 require 'wwiki/node'
 require 'wwiki/util'
+require 'wwiki/plugin'
 
 module WWiki
   class Parser
@@ -21,9 +22,12 @@ module WWiki
     
     def initialize(str)
       @s = Scanner.new(str)
+      @wikilinks = []
+      @plugin = WWiki::Plugin.new
+
       @tree = parse
     end
-    attr_reader :tree
+    attr_reader :tree, :wikilinks
     private 
     def next_token
       @token = @s.next_token
@@ -91,7 +95,6 @@ module WWiki
       return  node
     end
     def plugin_block
-      node  = nil
       block = [] << (@token[1]+"\n")
       block_b = @line
       if :EOL == next_token[0] then eol else node << syntax_error end
@@ -110,12 +113,12 @@ module WWiki
 	end
       end
       block_e = @line 
-      return node << @plugins.onview(@session, block, block_b, block_e)
+      return @plugin.onview(block, block_b, block_e)
     end
     def plugin
       node = @token[1]
       next_token
-      return @plugins.onview(@session, [node.to_s], @line, 0)
+      return @plugin.onview(node.to_a, @line, 0)
     end
 
     def dl
@@ -270,11 +273,12 @@ module WWiki
 	when :OTHER, :SPACE, :WORD
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
-	  node << E(:a, A(:href, $CGIURL + '?c=v&p=' + WWiki::escape(@token[1]))
-		    ) {@token[1]}
+	  @wikilinks << @token[1]
+	  node << WWiki::wikilink(@token[1])
 	when :WIKINAME2
 	  name = @token[1][2..-3]
-	  node << E(:a, A(:href, $CGIURL + '?c=v&p=' + name)){name}
+	  @wikilinks << name 
+	  node << WWiki::wikilink(name)
 	when :URI
 	  node << E(:a, A(:href, @token[1])){@token[1]}
 	when :MOINHREF
@@ -288,7 +292,6 @@ module WWiki
 	  node << E(:br)
 	when :EOL
 	  eol
-	  # node << "\n" 
 	  break
 	else
 	  break
@@ -310,7 +313,6 @@ module WWiki
 	  line = ""
 	  eol 
 	when endtag 
-	  next_token
 	  break
 	else line << @token[1] 
 	  next_token
@@ -322,6 +324,7 @@ module WWiki
       node = Node.new('Pre')
       next_token
       node << textblock(:PRE_END).to_s
+      next_token # XXX
       return node 
     end
     def eol

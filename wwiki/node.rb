@@ -9,15 +9,21 @@ require 'obaq/htmlparser'
 require 'obaq/htmlcompiler'
 
 module WWiki 
-  class Node < DelegateClass(Array)
+  class Node # < DelegateClass(Array)
+    # class Node  < DelegateClass(Array)
     # include Obaq::HtmlCompiler
     def initialize(template)
-      super([])
+      @node = []
+      # super([])
       tmplfile = File.join('template', 'Node', template + '.html')
       @template = Obaq::HtmlParser.parse_file(tmplfile)
     end
+    def <<(item)
+      @node << item
+    end
     def to_s
-      data = {:data => self.to_a}
+      data = {:data => @node}
+      # data = {:data => self.to_a}
       tree = @template.expand(data)
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false

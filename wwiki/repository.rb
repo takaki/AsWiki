@@ -1,25 +1,32 @@
 require 'wwiki/backup'
-require 'delegate'
+require 'wwiki/util'
+
 
 module WWiki
   class Repository
     def initialize(basedir)
       @dir = File.join(basedir ,'text')
+      @basedir = basedir
+    end
+
+    def exist?(name)
+      return File.exist?(textname(name))
     end
 
     def read(name, id=nil) 
-      return File.readlines(File.join(@dir,name))
+      return File.readlines(textname(name))
     end
     
     def save(name, str)
-      backup = WWiki::Backup.new(basedir)
-      fname = File.join(@dir,name)
-      backup.backup(fname)
-      (open(fname ,'w') << str.gsub(/\r\n/, "\n")).close
+      if exist?(name)
+	backup = WWiki::Backup.new(@basedir)
+	backup.backup(textname(name))
+      end
+      (open(textname(name),'w') << str.gsub(/\r\n/, "\n")).close
     end
     
     def mtime(name)
-      return File.mtime(File.join(@dir,name))
+      return File.mtime(textname(name))
     end
 
     def namelist
@@ -29,6 +36,10 @@ module WWiki
     def attrlist
       return Dir.open(@dir).select{|f| test(?f, File.join(@dir, f) )}.
 	map{|f| [f, mtime(f)]}
+    end
+    private
+    def textname(name)
+      return File.join(@dir, WWiki::escape(name))
     end
   end
 end

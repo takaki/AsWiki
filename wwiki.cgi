@@ -10,27 +10,44 @@ require 'wwiki/page'
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
   load ('wwiki.conf')
+  Dir.glob('plugin/*.rb').each{|p| require p}
   include Obaq::HtmlGen
   cgi = CGI.new
   c = cgi['c'][0]
   c =  c.to_s == '' ? 'v' : c
+  name = cgi['p'][0]
+  name = name.to_s == '' ? $TOPPAGENAME : name
   begin
     case c
     when 'v'
-      repository = WWiki::Repository.new('.')
-      name = cgi['p'][0]
-      name = name.to_s == '' ? $TOPPAGENAME : name
-      c = repository.read(name)
-      p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
-      data = {:title => name, :content => p.tree.to_s,
-	:edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
+      rep = WWiki::Repository.new('.')
+      if rep.exist?(name)
+	c = rep.read(name)
+	p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
+	data = {:title => name, :content => p.tree.to_s,
+	  :edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'},
+	  :lastmodified => rep.mtime(name),
+	  :wikilinks => p.wikilinks.map{|l| "#{WWiki::wikilink(l)}\n" } }
+	page = WWiki::Page.new('View', data)
+      else
+	data = {:title => name, :content => CGI::escapeHTML(''),
+	  :edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
+	page = WWiki::Page.new('Edit', data)
+	page.tree.each do |e|
+	  case e[:action]
+	  when 'save'
+	    e[:action] = "#{$CGIURL}"
+	  end
+	  if e[:name] == 'p'
+	    e[:value] = name
+	  end
+	end
+      end
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	WWiki::Page.new('View', data).to_s
+	page.to_s
       }
     when 'e'
       repository = WWiki::Repository.new('.')
-      name = cgi['p'][0]
-      name = name == '' ? $TOPPAGENAME : name
       c = repository.read(name)
       data = {:title => name, :content => CGI::escapeHTML(c.to_s),
 	:edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
@@ -49,12 +66,11 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       }
     when 's'
       repository = WWiki::Repository.new('.')
-      name = cgi['p'][0] # XXX
-      name = name == '' ? $TOPPAGENAME : name # XXX
       content = cgi['content'][0] # XXX
       repository.save(name, content)
       cgi.out({'Status' => '302 REDIRECT', 'Content-Type' => 'text/html',
 		'Location' => "#{$CGIURL}?c=v&p=#{name}"}){''}
+    when 'hoge'
     else
       raise 
     end

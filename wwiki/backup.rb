@@ -13,7 +13,7 @@ module WWiki
       end
     end
     def getrecentbackupdataandmtime(name)
-      return nil if !existsbackupfile(name);
+      return nil if ! exist?(name);
       f = File.readlines("|co -p -q " + backupname(name))
       mtime = ''
       File.foreach("|rlog -zLT " + backupname(name)) do |l|
@@ -26,7 +26,7 @@ module WWiki
     end
 
     def list_backups(name)
-      return nil if !existsbackupfile(name);
+      return nil if !exist?(name);
       n = []
       id = nil
       mtime = nil
@@ -42,7 +42,7 @@ module WWiki
       return n
     end
     def getbackupdataandmtime(name, id)
-      return nil if !existsbackupfile(name);
+      return nil if !exist?(name);
       fn = backupname(name)
       mtime = nil
       f = File.readlines("|co -p -q -r1.#{id} #{fn}")
@@ -54,12 +54,13 @@ module WWiki
       end
       return [f, Time.parse(mtime)]
     end
+
     private
+    def exist?(name)
+      File.exist?(backupname(name))
+    end
     def backupname(fname)
       return File.join(@dir, File.basename(fname) + ',v')
-    end
-    def existsbackupfile(name)
-      test(?e, backupname(name).untaint)
     end
   end
 end

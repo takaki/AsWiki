@@ -23,12 +23,12 @@ module WWiki
     Name = 'list'
     def onpost(session)
       pname = session['pname']
-      file = $repository.read(pname)
+      file = $repository.load(pname)
       file[session['begin'].to_i-1, 0 ] = " * #{CGI.new['item']}\n"
       $repository.save(pname, file.to_s)
     end
     def onview(line, b, e, av=[])
-      session = CGI::Session.new(CGI::new) #, {'tmpdir' => 'attr'})
+      session = CGI::Session.new(CGI::new, {'tmpdir' => 'attr'})
       session['pname'] = $pname
       session['plugin'] = self.type
       session['begin'] = b
@@ -36,13 +36,11 @@ module WWiki
       data = {:hidden => [e(:input, {:type => 'hidden', 
 			      :name => '_session_id', 
 			      :value => session.session_id}),
-	  e(:input, {:type => 'hidden', :name => 'c', :value => 'post'})]}
+	  e(:input, {:type => 'hidden', :name => 'c', :value => 'post'}),
+	  e(:input, {:type => 'hidden', :name => 'md5sum', :value => 
+	      Digest::MD5::new($repository.load($pname).to_s)})
+	]}
       form = load_template.expand(data)
-      form.each do |e|
-	if e[:action]
-	  e[:action] = "#{CGIURL}"
-	end
-      end
       @view = form.to_s
     end
   end

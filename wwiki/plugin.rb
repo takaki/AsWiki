@@ -30,8 +30,8 @@ module WWiki
       return @view
     end
     private
-    def load_template
-      tmplfile = File.join('template', 'plugin', self.type::Name + '.html')
+    def load_template(filename=self.type::Name)
+      tmplfile = File.join('template', 'plugin', filename + '.html')
       Obaq::HtmlParser.parse_file(tmplfile)
     end
   end

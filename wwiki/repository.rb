@@ -13,7 +13,7 @@ module WWiki
       return File.exist?(textname(name))
     end
 
-    def read(name, id=nil) 
+    def load(name, id=nil) 
       return File.readlines(textname(name))
     end
     

@@ -1,21 +1,18 @@
 require 'obaq/htmlgen'
 require 'obaq/htmlparser'
 require 'wwiki/util'
+require 'digest/md5'
 
 module WWiki
   def WWiki::editpage(name, content)
     include Obaq::HtmlGen
     data = {:title => name, :content => CGI::escapeHTML(content.to_s),
-      :p => e(:input, {:type => 'hidden', :name => 'p', 
-		:value => WWiki::escape(name)})
+      :hidden => [e(:input, {:type => 'hidden', :name => 'p', :value => name}),
+	e(:input, {:type => 'hidden', :name => 'c', :value =>'s'}),
+	e(:input, {:type => 'hidden', :name => 'md5sum', :value => 
+	    Digest::MD5::new(content.to_s)})],
     }
     page = WWiki::Page.new('Edit', data)
-    page.tree.each do |e|
-      case e[:action]
-      when 'save'
-	e[:action] = "#{$CGIURL}"
-      end
-    end
     return page
   end
   class Page

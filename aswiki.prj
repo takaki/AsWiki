@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 14)
+(Project-Version aswiki 0 15)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 13)
+(Parent-Version aswiki 0 14)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Sat, 27 Apr 2002 12:38:33 +0900")
+(Checkin-Time "Sun, 28 Apr 2002 00:14:33 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -55,12 +55,12 @@
 ;; to version 0.5(w), by takaki:
 
   (test/testWWiki__Repository.rb (aswiki/15_testWWiki_ 1.4 664))
-  (wwiki/repository.rb (aswiki/16_repository 1.6 664))
+  (wwiki/repository.rb (aswiki/16_repository 1.7 664))
 
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (wwiki.cgi (aswiki/17_wwiki.cgi 1.7 755))
+  (wwiki.cgi (aswiki/17_wwiki.cgi 1.8 755))
   (text/SamplePage (aswiki/18_SampleText 1.3 644))
   (template/Node/Hr.html (aswiki/19_HrNode.htm 1.1 664))
   (template/Node/Pre.html (aswiki/20_PreNode.ht 1.1 664))
@@ -76,17 +76,17 @@
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.4 664))
+  (TODO (aswiki/29_TODO 1.5 664))
   (template/Node/Table.html (aswiki/30_TableNode. 1.1 664))
   (template/Node/Dl.html (aswiki/31_DlNode.htm 1.1 664))
   (template/Page/View.html (aswiki/32_ViewPage.h 1.4 664))
-  (wwiki/page.rb (aswiki/33_page.rb 1.5 664))
+  (wwiki/page.rb (aswiki/33_page.rb 1.6 664))
 
 ;; Files added by populate at Wed, 10 Apr 2002 23:11:24 +0900,
 ;; to version 0.8(w), by takaki:
 
   (wwiki.conf (aswiki/34_wwiki.conf 1.1 664))
-  (template/Page/Edit.html (aswiki/35_EditPage.h 1.2 664))
+  (template/Page/Edit.html (aswiki/35_EditPage.h 1.3 664))
   (template/Page/Error.html (aswiki/36_ErrorPage. 1.2 664))
   (template/Node/Blank.html (aswiki/37_BlankNode. 1.1 664))
   (template/Node/Plaintext.html (aswiki/38_PlaintextN 1.1 664))
@@ -95,9 +95,9 @@
 ;; Files added by populate at Thu, 11 Apr 2002 23:29:26 +0900,
 ;; to version 0.10(w), by takaki:
 
-  (plugin/demo.rb (aswiki/40_demo.rb 1.2 664))
-  (wwiki/plugin.rb (aswiki/41_plugin.rb 1.3 664))
-  (wwiki/util.rb (aswiki/42_util.rb 1.3 664))
+  (plugin/demo.rb (aswiki/40_demo.rb 1.3 664))
+  (wwiki/plugin.rb (aswiki/41_plugin.rb 1.4 664))
+  (wwiki/util.rb (aswiki/42_util.rb 1.4 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

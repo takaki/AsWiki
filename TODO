@@ -1,12 +1,13 @@
 -*- outline -*-
 
 * High
+  - PATH_INFO
+  - tdiary theme
+  - retry
 
 * Low
   - recentpage unlimited
   - search
-  - tdiary theme
-  - PATH_INFO
   - extention of InterWikiName
   - rewrite orphand page plugin
   - attach ; attachment -> pathname

@@ -5,6 +5,7 @@ require 'aswiki/util'
 require 'digest/md5'
 
 require 'amrita/template'
+# require 'amrita/merge'
 # include Amrita
 
 module AsWiki

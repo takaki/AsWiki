@@ -78,8 +78,13 @@ module AsWiki
 	  q.push [:TABLE_END, tmp]
 	elsif tmp = sc.scan(/\A\|\|/)
 	  q.push [:TABLE, tmp]
-	elsif tmp = sc.scan(/\A\[\S+ +\S+?\]/)
+	# elsif tmp = sc.scan(/\A\[\S+ +\S+?\]/)
+	elsif tmp = sc.scan(/\A\[\S+ +[^]]+?\]/)
 	  q.push [:MOINHREF, tmp]
+	elsif tmp = sc.scan(/\A\{\{/)
+	  q.push [:ESCAPE_BEGIN, tmp]
+	elsif tmp = sc.scan(/\A\}\}/)
+	  q.push [:ESCAPE_END, tmp]
 	elsif tmp = sc.scan(/\A'''/)
 	  q.push [:STRONG, tmp]
 	elsif tmp = sc.scan(/\A''/)

@@ -98,8 +98,8 @@ module AsWiki
       return self
     end
   end
-  class PageLinkCount < Plugin
-    Name = 'pagelinkcount'
+  class LinkPageCountPlugin < Plugin
+    Name = 'linkpagecount'
     def onview(line, b, e, av)
       @r = AsWiki::Repository.new('.')
       pages = {}
@@ -116,7 +116,7 @@ module AsWiki
       plist = pages.map{|k,v| {
 	  :linkcount => v.size,
 	  :plink  => wikilink(k),
-	  :pages => v.sort.map{|p| [wikilink(p)," "] }
+	  :pages => v.sort.map{|p| [wikilink(p),"\n"] }
 	}
       }.sort{|a,b| b[:linkcount] <=> a[:linkcount]}
       @data = {:data => plist}

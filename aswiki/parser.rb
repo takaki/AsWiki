@@ -19,8 +19,9 @@ module AsWiki
     WORD  = [:SPACE, :OTHER, :WORD]
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
     DECORATION = [:EM, :STRONG]
+    ESCAPE = [:ESCAPE_BEGIN, :ESCAPE_END]
     TEXTLINE = WORD + TAG + [:EOL]
-    PLAINTEXT = TEXTLINE + DECORATION 
+    PLAINTEXT = TEXTLINE + DECORATION + ESCAPE
     ELEMENT = PLAINTEXT + [:UL, :OL]
     D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
 
@@ -231,6 +232,14 @@ module AsWiki
 	case @token[0]
 	when *TEXTLINE
 	  node << textline
+	when :ESCAPE_BEGIN
+	  next_token
+	  ret  = textblock(:ESCAPE_END)
+	  next_token
+	  node << ret
+	when :ESCAPE_END
+	  node << @token[1]
+	  next_token
 	when :STRONG
 	  node << decorate(:STRONG)
 	when :EM
@@ -305,7 +314,7 @@ module AsWiki
 	  tn << {:url=>@token[1],:text=>@token[1]}
 	  node << tn
 	when :MOINHREF
-	  url, key = @token[1][1..-2].split
+	  url, key = @token[1][1..-2].split(/\s+/, 2)
 	  if /\Aimg:(http|https)/ =~ url  # XXX
 	    tn = Node.new('MoinhrefImg')
 	    tn << {:url => $1 + $', :alt => key}
@@ -341,6 +350,9 @@ module AsWiki
 	  line = ""
 	  eol 
 	when endtag 
+	  if not line.empty?
+	    node << line
+	  end
 	  break
 	else line << @token[1] 
 	  next_token

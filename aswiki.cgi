@@ -14,7 +14,7 @@ $USERSS      = false
 $WIKINAMERE  = /\A([A-Z][a-z0-9]*){2,}\b/ # AsWiki local rule
 $ATTACH_SIZE_LIMIT =  1024 * 1024 * 10
 # $SAFE = 1
-$CGIURL = "http://"+ENV['HTTP_HOST']+ENV['SCRIPT_NAME']
+# $CGIURL = "http://"+ENV['HTTP_HOST']+ENV['SCRIPT_NAME']
 
 load ('aswiki.conf')
 
@@ -25,7 +25,7 @@ $metapages = {
   'OrphanedPages' => '#orphanedpages',
   'NotCreatedPages' => '#notcreatedpages',
   'PluginList' => '#pluginlist',
-  'PageLinkCount' => '#pagelinkcount',
+  'LinkPageCount' => '#linkpagecount',
 }
 
 require 'cgi'

@@ -3,6 +3,7 @@
 
 require 'aswiki/parser'
 require "aswiki/i18n/#{$LANG}"
+# require 'aswiki/merge'
 # require 'delegate'
 
 module AsWiki
@@ -155,6 +156,9 @@ module AsWiki
     def menubar
       MenuBar.new(self)
     end
+#    def pagedata
+#      MergeTemplate.new
+#    end
     def pagetitle
       PageTitle.new(self)
     end

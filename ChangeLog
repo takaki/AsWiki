@@ -1,4 +1,19 @@
+2002-12-15  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.83
+
+	* aswiki/repository.rb: GC (unlink zero size file).
+
+2002-12-14  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki/scanner.rb: moinhref allow link label which contain
+	space.
+
+	* aswiki/parser.rb: add escaped text({{ and }}).
+
 2002-12-09  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* plugin/core.rb: rename PageLinkCount to LinkPageCount.
 
 	* release: 0.82
 

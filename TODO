@@ -1,16 +1,15 @@
 -*- outline -*-
 
 * High
+  - MergeTemplate?
   - english catalogue
-  
+
 * Low
   - subsubsection toc?
-  - rcs keyword
-  - inline escape
+  - rcs keyword proble
   - pre problem(amrita 待ち)
   - session_id を渡す目的でCGI.newをしない
   - page initialize and publish
-  - 0 size delete ?
   - ci でtextname Backupをmoduleにしてしまえばいい。include
   - UnitTestを手抜きするな。とくに日本語。
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
@@ -28,6 +27,8 @@
   - graphviz 用出力(趣味やね)
 
 * done
+  - 0 size delete ?(gc)
+  - inline escape
   - LinkCountPage
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
   - imgだけはinline?

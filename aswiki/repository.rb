@@ -25,6 +25,9 @@ module AsWiki
       backup = AsWiki::Backup.new(@basedir)
       # backup.ci(textname(name))
       backup.ci(name)
+      if File.zero?(textname(name))
+	File.unlink(textname(name))
+      end
     end
   
     def mtime(name)

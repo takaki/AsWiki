@@ -19,5 +19,10 @@ module AsWiki
 
     def msg_ver_pre; '第' end
     def msg_ver_post; '版' end
+
+    def msg_2chbbs_anonymous; '名無しさん' end
+    def msg_2chbbs_from; '名前' end
+    def msg_2chbbs_date; '投稿日' end
+    def msg_2chbbs_weekstr; %w[日 月 火 水 木 金 土] end
   end
 end

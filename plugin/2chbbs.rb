@@ -5,25 +5,25 @@ require 'aswiki/plugin'
 require 'cgi/session'
 require 'aswiki/util'
 
-
 module AsWiki
   class W2chBBSPlugin < Plugin
     Name = '2chbbs'
     include AsWiki::Util
-    Anonymous = '名無しさん'
-    From = '名前'
-    Date = '投稿日'
-    Weekstr = %w[日 月 火 水 木 金 土]
+    include AsWiki::I18N
+    alias anonymous msg_2chbbs_anonymous
+    alias from msg_2chbbs_from
+    alias date msg_2chbbs_date
+    alias weekstr msg_2chbbs_weekstr
     def onpost(session)
       pname = session['pname']
       number = session['number'].to_i + 1
-      poster = (session['poster'] != '' ? session['poster'] : Anonymous)
+      poster = (session['poster'] != '' ? session['poster'] : anonymous)
       name = (session['mail'] != '' ? 
 		"[mailto:#{session['mail']} #{poster}]" :
 		"[[#{poster}]]")
       t = Time.now
-      time = t.strftime("%Y/%m/%d (#{weekstr(t.wday)}) %R")
-      data = "\n#{number}: #{From}: #{name} #{Date}: #{time} \n\n" +
+      time = t.strftime("%Y/%m/%d (#{weekstr[t.wday]}) %R")
+      data = "\n#{number}: #{from}: #{name} #{date}: #{time} \n\n" +
 	session['textdata'] + "\n"
       file = @repository.load(pname)
       file[session['begin'].to_i-1, 0 ] = data
@@ -44,10 +44,10 @@ module AsWiki
       }
       @view = load_template.expand_tree(data)
     end
-    private
-    def weekstr(i)
-      return Weekstr[i] 
-    end
+#    private
+#    def weekstr(i)
+#      return Weekstr[i] 
+#    end
   end
 end
 

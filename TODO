@@ -1,9 +1,9 @@
 -*- outline -*-
 
 * High
+  - Nora or CGIKit
   - page initialize and publish
   - -w
-  - page 統合
   - session に Nameで保存
   - menuのcss fixed
   - pre problem(amrita 待ち)
@@ -13,17 +13,13 @@
   - nora
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - history の raw page
-  - 決め打ち日本語の問題(plugin)。
   - $BASEDIRは必要か
   - AutomaticLinkは表示だけか。むやみとlinkしてもね。
   - UnitTestを手抜きするな。とくに日本語。
   - ci でtextname Backupをmoduleにしてしまえばいい。include
   - imgだけはinline?
   - toc
-  - #minibbs
   - mergeの導入(plugin)
-  - #minimemo
-  - #nikki?
   - mod_ruby
   - Namazuで検索
   - Page templateの統合  
@@ -39,6 +35,7 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - 決め打ち日本語の問題(plugin)。
   - できるだけAmrita::eは使わない。
   - factory
   - bug expand_attr compact_space
@@ -54,6 +51,9 @@
   - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 
 * abandoned
+  - #minibbs
+  - #minimemo
+  - #nikki?
   - $print_error
   - $dobackup
   - header のナンバリング => CSS2

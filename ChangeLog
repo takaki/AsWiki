@@ -1,3 +1,7 @@
+2002-11-22  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* plugin/2chbbs.rb: i18n.
+
 2002-11-21  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* release: 0.63

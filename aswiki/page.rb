@@ -5,20 +5,21 @@ require 'aswiki/util'
 require 'digest/md5'
 
 require 'amrita/template'
-
+# include Amrita
 
 module AsWiki
   class Page
     def initialize(template ,data)
-      @str = ''
       tmplfile = File.join('template','Page', template + '.html')
       # Amrita::TemplateFileWithCache::set_cache_dir('cache')
-      # template = Amrita::TemplateFileWithCache[tmplfile]
+      template = Amrita::TemplateFileWithCache[tmplfile]
       # template = Amrita::TemplateFile.new(tmplfile)
-      template = Amrita::TemplateFile.new(tmplfile)
       template.expand_attr = true
+      template.use_compiler = true
+      # template.debug_compiler = true
       # template.prettyprint 
-      @str = template.expand('', data)
+      @str = ''
+      template.expand(@str, data)
     end
     
     def to_s

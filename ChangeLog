@@ -1,3 +1,7 @@
+2002-10-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* aswiki: merge parts template patch (tnx Taku).
+
 2002-10-11  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
 	* aswiki/scanner.rb: :UL, :OL and :DL do not need space of begin

@@ -300,7 +300,7 @@ module AsWiki
 	when :MOINHREF
 	  url, key = @token[1][1..-2].split
 	  if /\Aimg:/ =~ url 
-	    node << Amrita::e(:img, Amrita::a(:src,$'),
+	    node << Amrita::e(:img, Amrita::a(:src,$'), #' this commet is for emacs ruby-mode
 			      Amrita::a(:alt,key))
 	  else
 	    node << Amrita::e(:a, Amrita::a(:href,url),
@@ -341,12 +341,10 @@ module AsWiki
       return node
     end
     def preblock
-      node = @nodeclass.new('Pre')
       next_token
-      # node << Amrita::CompactSpace.new {textblock(:PRE_END).join}
-      node << textblock(:PRE_END).join
+      ret = Amrita::e(:pre, :class=>"code") { Amrita::CompactSpace.new(false) { textblock(:PRE_END).join  } } # XXX use template ???
       next_token # XXX
-      return node.expand
+      return ret 
     end
     def eol
       @line +=1

@@ -4,9 +4,9 @@
 module AsWiki
   class AsWikiError < RuntimeError
   end
-  class TimestampMismatch < AsWiki::AsWikiError
+  class TimestampMismatch < AsWikiError
   end
-  class EditPageCall < AsWiki::AsWikiError
+  class EditPageCall < AsWikiError
     def initialize(pname, body=nil, message=nil)
       @pname = pname
       @body  = body

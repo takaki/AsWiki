@@ -2,7 +2,11 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2 or later.
 
+$TOPPAGENAME = 'IndexPage'
+$TIMEFORMAT  ="%F/%T %z"
+$BASEDIR     = '.'
 # $SAFE = 1
+
 require 'cgi'
 
 require 'aswiki/repository'
@@ -17,12 +21,7 @@ require 'aswiki/attachdb'
 
 require 'digest/md5'
 require 'amrita/template'
-
-# default value. if you think change them, use 'aswiki.conf'.
-$TOPPAGENAME = 'IndexPage'
-$TIMEFORMAT  ="%F/%T %z"
-$BASEDIR     = '.'
-# $SAFE = 1
+require 'amrita/format'
 
 MetaPages = {
   'MetaPages'   => '#metapages',
@@ -36,6 +35,10 @@ MetaPages = {
 if $0 == __FILE__ or defined?(MOD_RUBY)
   include AsWiki::Util
   load ('aswiki.conf')
+  Dir::chdir $BASEDIR
+  Amrita::TemplateFileWithCache::set_cache_dir('cache')
+  AsWiki::Node::load_parts_template unless defined? $aswiki_parts_template_loaded
+  $aswiki_parts_template_loaded = true
   repository = AsWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
   cgi = FCGI.new
@@ -64,7 +67,10 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    raise AsWiki::EditPageCall.new(name)
 	  end
 	  cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
-	    page.to_s 
+	    # $xxxx = 0 unless defined? $xxxx
+	    # $xxxx += 1
+	    # page.to_s + $xxxx.to_s + ':' + $$.to_s
+	    page.to_s
 	  }
 	end
       when 'e'
@@ -73,7 +79,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	c = repository.load(name)
 	data = {
 	  :title => name ,
-	  :body => c.to_s
+	  :body => Amrita::pre { Amrita::e(:code) {  c.to_s  } } # XXX parts template ??
 	}
 	page = AsWiki::Page.new('Raw', data)
 	cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
@@ -180,16 +186,26 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       }
     end
   rescue AsWiki::AsWikiError
-    data = {:title => $!.type.to_s , :body => $!.message + "\n"}
+    data = {:title => $!.type.to_s , 
+      :body => Amrita::pre { Amrita::e(:code) {
+	  $!.message + "\n"}
+      }
+    }
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+      # $! + $@.join +
       AsWiki::Page.new('Error', data).to_s
     }
   rescue Exception
-    data = {:title => $!.type.to_s,
-      :body => $!.to_s + "\n" +  $!.backtrace.join("\n"),
-   } 
+    data = {:title => 'Script Error: ' + $!.type.to_s,
+      :body => Amrita::pre { Amrita::e(:code) {
+	  $!.to_s + "\n" +  $!.backtrace.join("\n") # XXX pre
+	} 
+      } # XXX parts template ??
+    } 
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       AsWiki::Page.new('Error', data).to_s
     }
   end    
 end
+
+

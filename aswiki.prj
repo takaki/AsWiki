@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 55)
+(Project-Version aswiki 0 56)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 54)
+(Parent-Version aswiki 0 55)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Fri, 25 Oct 2002 10:38:12 +0900")
+(Checkin-Time "Sat, 26 Oct 2002 17:30:44 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -20,7 +20,7 @@
 ;; to version 0.0(w), by takaki:
 
   (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.9 664))
-  (aswiki/parser.rb (aswiki/1_parser.rb 1.28 664))
+  (aswiki/parser.rb (aswiki/1_parser.rb 1.30 664))
 
 ;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
 ;; to version 0.1(w), by takaki:
@@ -30,9 +30,9 @@
 ;; Files added by populate at Wed, 03 Apr 2002 14:59:48 +0900,
 ;; to version 0.2(w), by takaki:
 
-  (template/Node/Li.html (aswiki/3_LiNode.htm 1.4 664))
-  (ChangeLog (aswiki/4_ChangeLog 1.26 664))
-  (aswiki/node.rb (aswiki/5_node.rb 1.22 664))
+  
+  (ChangeLog (aswiki/4_ChangeLog 1.27 664))
+  (aswiki/node.rb (aswiki/5_node.rb 1.24 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.14 664))
 
 ;; Files added by populate at Thu, 04 Apr 2002 10:35:33 +0900,
@@ -43,61 +43,61 @@
 ;; Files added by populate at Sat, 06 Apr 2002 23:56:01 +0900,
 ;; to version 0.4(w), by takaki:
 
-  (template/Node/Ol.html (aswiki/8_OlNode.htm 1.2 664))
-  (template/Node/Root.html (aswiki/9_RootNode.h 1.3 664))
-  (template/Node/Ul.html (aswiki/10_UlNode.htm 1.2 664))
-  (template/Node/Paragraph.html (aswiki/11_ParagraphN 1.3 664))
-  (template/Node/Element.html (aswiki/12_TextNode.h 1.3 664))
+  
+  
+  
+  
+  
   (test/testWWiki__Backup.rb (aswiki/13_testWWiki_ 1.9 664))
-  (aswiki/backup.rb (aswiki/14_backup.rb 1.13 664))
+  (aswiki/backup.rb (aswiki/14_backup.rb 1.15 664))
 
 ;; Files added by populate at Mon, 08 Apr 2002 00:17:39 +0900,
 ;; to version 0.5(w), by takaki:
 
   (test/testWWiki__Repository.rb (aswiki/15_testWWiki_ 1.6 664))
-  (aswiki/repository.rb (aswiki/16_repository 1.14 664))
+  (aswiki/repository.rb (aswiki/16_repository 1.15 664))
 
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (aswiki.cgi (aswiki/17_wwiki.cgi 1.40.1.1 755))
+  (aswiki.cgi (aswiki/17_wwiki.cgi 1.42 755))
   (text/SamplePage (aswiki/18_SampleText 1.4 644))
-  (template/Node/Hr.html (aswiki/19_HrNode.htm 1.1 664))
-  (template/Node/Pre.html (aswiki/20_PreNode.ht 1.3 664))
-  (template/Node/H6.html (aswiki/21_HN6Node.ht 1.1 664))
-  (template/Node/H5.html (aswiki/22_HN5Node.ht 1.1 664))
-  (template/Node/H4.html (aswiki/23_HN4Node.ht 1.1 664))
-  (template/Node/H3.html (aswiki/24_HN3Node.ht 1.1 664))
-  (template/Node/H2.html (aswiki/25_HN2Node.ht 1.1 664))
-  (template/Node/H1.html (aswiki/26_HN1Node.ht 1.1 664))
-  (template/Node/Strong.html (aswiki/27_StrongNode 1.1 664))
-  (template/Node/Em.html (aswiki/28_EmNode.htm 1.2 664))
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.24 664))
-  (template/Node/Table.html (aswiki/30_TableNode. 1.1 664))
-  (template/Node/Dl.html (aswiki/31_DlNode.htm 1.2 664))
-  (template/Page/View.html (aswiki/32_ViewPage.h 1.25.1.1 664))
-  (aswiki/page.rb (aswiki/33_page.rb 1.23 664))
+  (TODO (aswiki/29_TODO 1.25 664))
+  
+  
+  (template/Page/View.html (aswiki/32_ViewPage.h 1.27 664))
+  (aswiki/page.rb (aswiki/33_page.rb 1.25 664))
 
 ;; Files added by populate at Wed, 10 Apr 2002 23:11:24 +0900,
 ;; to version 0.8(w), by takaki:
 
   (aswiki.conf (aswiki/34_wwiki.conf 1.6 664))
   (template/Page/Edit.html (aswiki/35_EditPage.h 1.18 664))
-  (template/Page/Error.html (aswiki/36_ErrorPage. 1.12 664))
-  (template/Node/Blank.html (aswiki/37_BlankNode. 1.1 664))
-  (template/Node/Plaintext.html (aswiki/38_PlaintextN 1.1 664))
-  (template/Node/Textline.html (aswiki/39_TextlineNo 1.1 664))
+  (template/Page/Error.html (aswiki/36_ErrorPage. 1.13 664))
+  
+  
+  
 
 ;; Files added by populate at Thu, 11 Apr 2002 23:29:26 +0900,
 ;; to version 0.10(w), by takaki:
 
   (plugin/demo.rb (aswiki/40_demo.rb 1.14 664))
   (aswiki/plugin.rb (aswiki/41_plugin.rb 1.12 664))
-  (aswiki/util.rb (aswiki/42_util.rb 1.21 664))
+  (aswiki/util.rb (aswiki/42_util.rb 1.23 664))
 
 ;; Files added by populate at Sat, 18 May 2002 23:38:58 +0900,
 ;; to version 0.16(w), by takaki:
@@ -111,17 +111,17 @@
   (template/plugin/allpages.html (aswiki/49_allpages.h 1.3 664))
   (template/Page/Ro.html (aswiki/50_Ro.html 1.14 664))
   (aswiki/interwiki.rb (aswiki/51_interwiki. 1.4 664))
-  (aswiki/exception.rb (aswiki/b/0_exception. 1.7 664))
+  (aswiki/exception.rb (aswiki/b/0_exception. 1.8 664))
 
 ;; Files added by populate at Fri, 24 May 2002 23:42:44 +0900,
 ;; to version 0.19(w), by takaki:
 
-  (template/Page/Raw.html (aswiki/b/1_Raw.html 1.12 664))
+  (template/Page/Raw.html (aswiki/b/1_Raw.html 1.14 664))
 
 ;; Files added by populate at Mon, 10 Jun 2002 00:55:36 +0900,
 ;; to version 0.23(w), by takaki:
 
-  (setup.sh (aswiki/b/2_setup.sh 1.6 664))
+  (setup.sh (aswiki/b/2_setup.sh 1.7 664))
   (text/HelpPage (aswiki/b/3_HelpPage 1.1 664))
 
 ;; Files added by populate at Mon, 05 Aug 2002 21:09:25 +0900,
@@ -129,7 +129,7 @@
 
   (README (aswiki/b/4_README 1.3 664))
   (COPYING (/usr/share/common-licenses/GPL) :symlink)
-  (plugin/attach.rb (aswiki/b/5_attach.rb 1.11 664))
+  (plugin/attach.rb (aswiki/b/5_attach.rb 1.13 664))
   (template/plugin/attach.html (aswiki/b/6_attach.htm 1.3 664))
 
 ;; Files added by populate at Wed, 07 Aug 2002 00:04:10 +0900,
@@ -179,7 +179,28 @@
 ;; Files added by populate at Mon, 07 Oct 2002 22:04:28 +0900,
 ;; to version 0.53(w), by takaki:
 
-  (aswiki/attachdb.rb (aswiki/b/16_attachdb.r 1.1 664))
+  (aswiki/attachdb.rb (aswiki/b/16_attachdb.r 1.3 664))
+
+
+  (template/Node/parts.html (aswiki/b/17_parts.html 1.2 664)))
+(Merge-Parents
+  (0.54.taku.1 complete
+    (aswiki/parser.rb aswiki/parser.rb aswiki/parser.rb r) (template/Node/Li.html template/Node/Li.html () d)
+    (aswiki/node.rb aswiki/node.rb aswiki/node.rb r) (template/Node/Ol.html template/Node/Ol.html () d)
+    (template/Node/Root.html template/Node/Root.html () d) (template/Node/Ul.html template/Node/Ul.html () d)
+    (template/Node/Paragraph.html template/Node/Paragraph.html () d) (template/Node/Element.html template/Node/Element.html () d)
+    (aswiki/backup.rb aswiki/backup.rb aswiki/backup.rb r) (aswiki/repository.rb aswiki/repository.rb aswiki/repository.rb r)
+    (aswiki.cgi aswiki.cgi aswiki.cgi m) (template/Node/Hr.html template/Node/Hr.html () d)
+    (template/Node/Pre.html template/Node/Pre.html () d) (template/Node/H6.html template/Node/H6.html () d)
+    (template/Node/H5.html template/Node/H5.html () d) (template/Node/H4.html template/Node/H4.html () d)
+    (template/Node/H3.html template/Node/H3.html () d) (template/Node/H2.html template/Node/H2.html () d)
+    (template/Node/H1.html template/Node/H1.html () d) (template/Node/Strong.html template/Node/Strong.html () d)
+    (template/Node/Em.html template/Node/Em.html () d) (template/Node/Table.html template/Node/Table.html () d)
+    (template/Node/Dl.html template/Node/Dl.html () d) (template/Page/View.html template/Page/View.html template/Page/View.html m)
+    (aswiki/page.rb aswiki/page.rb aswiki/page.rb r) (template/Node/Blank.html template/Node/Blank.html () d)
+    (template/Node/Plaintext.html template/Node/Plaintext.html () d) (template/Node/Textline.html template/Node/Textline.html () d)
+    (aswiki/util.rb aswiki/util.rb aswiki/util.rb r) (template/Page/Raw.html template/Page/Raw.html template/Page/Raw.html r)
+    (setup.sh setup.sh setup.sh r) (plugin/attach.rb plugin/attach.rb plugin/attach.rb r)
+    (aswiki/attachdb.rb aswiki/attachdb.rb aswiki/attachdb.rb r) (() () template/Node/parts.html a))
 )
-(Merge-Parents)
 (New-Merge-Parents)

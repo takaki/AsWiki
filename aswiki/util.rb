@@ -140,13 +140,16 @@ module AsWiki
       elink = expandwikiname(link, base)
       if repository.exist?(elink) || elink =~ /[^:]+:[^:]+/ || 
 	  $metapages.has_key?(elink)
-	return Node.new('WikiName') << {
+	return Node::parts[:WikiName][{
 	  :url => cgiurl([],elink),
-	  :text => name}
+	  :text => name}]
       else
-	return Node.new('WikiNameNE') << { 
-	  :url => cgiurl([], elink),
-	  :text => name }
+	return Node::parts.create_amulet(:WikiNameNE,[
+					   {
+					     :url => cgiurl([], elink),
+					     :text => name
+					   }
+					 ] )
       end
     end
     def timestr(t)

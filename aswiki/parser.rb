@@ -44,8 +44,9 @@ module AsWiki
 				   ['eeol',0]], @name)}]
       @lastbol = 1
       
+      @parts = Node::parts
+
       @tree = parse
-      @nodefactory = NodeFactory.new
     end
     attr_reader :tree, :tocdata
     def wikinames
@@ -60,7 +61,7 @@ module AsWiki
     end
     def parse
       @line = 1
-      node = Node.new('Root')
+      node = [] 
       next_token
       while true
 	case @token[0]
@@ -80,7 +81,7 @@ module AsWiki
 	when :HN_BEGIN    
 	  node << hn
 	when :HR          
-	  node << Node.new('Hr')
+	  node << @parts[:Hr][]
 	  next_token
 	when :PLUGIN  
 	  node << plugin
@@ -96,7 +97,7 @@ module AsWiki
 	  node << syntax_error
 	end
       end 
-      return node
+      return @parts[:Root][node]
     end
     def blank
       next_token
@@ -115,7 +116,7 @@ module AsWiki
     def hn
       level = @token[1].size
       lineno = @line
-      node = Node.new("H#{level}")
+      node = []
       next_token
       ret = textline
       if level == 2
@@ -133,7 +134,7 @@ module AsWiki
       else
 	node << {:number => nil, :text=> ret}
       end
-      return node
+      return @parts["H#{level}".intern][node]
     end
     def plugin_block
       block = [] << (@token[1]+"\n")
@@ -163,7 +164,7 @@ module AsWiki
     end
 
     def dl
-      node = Node.new('Dl')
+      node = []
       while true
 	next_token
 	node << { :title => textline,  :doc => element}
@@ -174,10 +175,10 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      return @parts[:Dl][node]
     end
     def ul
-      node = Node.new('Ul')
+      node = []
       indent = @token[1].size
       next_token
       node << catch(:ulend) do
@@ -190,10 +191,10 @@ module AsWiki
 	  end
 	end
       end
-      return node
+      return @parts[:Ul][node]
     end
     def ol
-      node = Node.new('Ol')
+      node = []
       indent = @token[1].size
       next_token
       while true
@@ -204,10 +205,10 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      return @parts[:Ol][node]
     end
     def table
-      node = Node.new('Table')
+      node = []
       while true
 	case @token[0]
 	when :TABLE_BEGIN
@@ -221,7 +222,7 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      return @parts[:Table][node]
     end
     def table_tr
       col = []
@@ -241,12 +242,12 @@ module AsWiki
       return {:col => col}
     end
     def paragraph
-      node = Node.new('Paragraph')
+      node = []
       node << plaintext
-      return node
+      return @parts[:Paragraph][node]
     end
     def plaintext
-      node = Node.new('Plaintext')
+      node = []
       while true
 	case @token[0]
 	when *TEXTLINE
@@ -259,10 +260,10 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      return @parts[:Plaintext][node]
     end
     def element(indent=0)
-      node = Node.new('Element')
+      node = []
       while true
 	case @token[0]
 	when *PLAINTEXT
@@ -293,22 +294,22 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      return @parts[:Element][node]
     end
     def decorate(tag)
       next_token
-      node = Node.new(D_TAG[tag])
+      node = []
       node  << textline
       if @token[0] == tag 
 	next_token
       else                
 	node << syntax_error
       end
-      return node
+      return @parts.create_amulet(D_TAG[tag].intern,node)
     end
 
     def textline
-      node = Node.new('Textline')
+      node = []
       while true
 	case @token[0]
 	when :ESCAPE_BEGIN
@@ -329,26 +330,26 @@ module AsWiki
 	  # node << wikilink(name, @name) # XXX
 	  node << wikilink(expandwikiname(name, @name))
 	when :URI
-	  tn = Node.new('Url')
+	  tn = []
 	  tn << {:url=>@token[1],:text=>@token[1]}
-	  node << tn
+	  node << @parts[:Url][tn]
 	when :MOINHREFIMG
-	  tn = Node.new('MoinhrefImg')
+	  tn = []
 	  urlt, key = @token[1][1..-2].split(/\s+/, 2)
 	  url = Amrita::Sanitizer::sanitize_url(urlt[4..-1], {'http' => true, 'https' => true})
  	  tn << {:url => url, :alt => key}
-	  node << tn
+	  node << @parts[:MoinhrefImg][tn]
 	when :MOINHREF
 	  allowedscheme = {'http' => true, 'https' => true, 'file' => true, 
 	    'news' => true, 'ftp' => true, 'mailto' => true }
-	  tn = Node.new('Moinhref')
+	  tn = []
 	  url, key = @token[1][1..-2].split(/\s+/, 2)
 	  url = Amrita::Sanitizer::sanitize_url(url,allowedscheme)
 
 	  tn << {:url => url, :text => key }
-	  node << tn
+	  node << @parts[:Moinhref][*tn]
 	when :ENDPERIOD
-	  node << Node.new('Br')
+	  node << @parts[:Br][]
 	when :EOL
 	  node << "\n"
 	  eol
@@ -358,7 +359,7 @@ module AsWiki
 	end
 	next_token
       end
-      return node
+      return @parts[:Textline][node]
     end
     def textblock(endtag)
       node = []
@@ -385,7 +386,8 @@ module AsWiki
     end
     def preblock
       next_token
-      ret = Amrita::e(:pre, :class=>"code") { Amrita::CompactSpace.new(false) { textblock(:PRE_END).join  } } # XXX use template ???
+      # ret = Amrita::e(:pre, :class=>"code") { Amrita::CompactSpace.new(false) { textblock(:PRE_END).join  } } # XXX use template ???
+      ret = @parts[:pre][textblock(:PRE_END).join]
       next_token
       return ret 
     end

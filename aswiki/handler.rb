@@ -137,6 +137,7 @@ module AsWiki
       if body[-1,1] != "\n"; body << "\n" ;end
       begin
 	c = @repository.load(name)
+        orig = c.dup
 	if cgi.value('md5sum')[0] !=  Digest::MD5::new(c.to_s).to_s
 	  bl = body.map{|l| l.sub("\r\n", "\n")}
 	  bol = (cgi.value('ebol')[0] or 1).to_i
@@ -147,10 +148,12 @@ module AsWiki
 	bol = (cgi.value('ebol')[0] or 1).to_i
 	eol = (cgi.value('eeol')[0] or c.size).to_i
 	c[bol-1...eol] = body.to_s
-	body = c.to_s
+        body = c.to_s.gsub("\r\n","\n")
       rescue Errno::ENOENT
       end
-      @repository.save(name, body)
+      if orig.to_s != body 
+        @repository.save(name, body)
+      end
       AsWiki::redirectpage(cgi, cgiurl([['c','v']],name))
     end
   end

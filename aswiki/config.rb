@@ -34,5 +34,13 @@ $metapages = {
   'NotCreatedPages' => '#notcreatedpages',
   'PluginList' => '#pluginlist',
   'ReverseLinkList' => '#reverselinklist',
+  'SearchPage' => '#search',
 }
 
+$plugin_list = [
+  '2chbbs.rb',
+#  'attach.rb',
+  'core.rb',
+  'demo.rb',
+#  'search.rb',
+]

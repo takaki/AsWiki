@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
-# $Format: "VERSION = $ProjectVersion$"$
-VERSION = 1.0.2.1
+# $Format: "VERSION = $ProjectMajorVersion$"$
+VERSION = branch.1.0
 
 all:
 

@@ -116,5 +116,13 @@ a.notexist
     color: #FF2222;
 }
 
+a:hover
+{ 
+  }
+
+a:active
+{ 
+  }
+
 a.external {
 }

@@ -1,5 +1,5 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
-# This program is distributed under the GNU GPL 2.
+# This program is distributed under the GNU GPL 2 or later.
 
 require 'aswiki/plugin'
 require 'cgi/session'
@@ -11,7 +11,7 @@ module AsWiki
     Name = '2chbbs'
     include AsWiki::Util
     Anonymous = '名無しさん'
-    MyName = '名前'
+    From = '名前'
     Date = '投稿日'
     Weekstr = %w[日 月 火 水 木 金 土]
     def onpost(session)
@@ -22,9 +22,8 @@ module AsWiki
 		"[mailto:#{session['mail']} #{poster}]" :
 		"[[#{poster}]]")
       t = Time.now
-      time = sprintf('%d/%d/%d (%s) %02d:%02d', t.year, t.mon, t.day, 
-		     weekstr(t.wday), t.hour, t.min)
-      data = "\n#{number}: #{MyName}: #{name} #{Date}: #{time} \n\n" +
+      time = t.strftime("%Y/%m/%d (#{weekstr(t.wday)}) %R")
+      data = "\n#{number}: #{From}: #{name} #{Date}: #{time} \n\n" +
 	session['textdata'] + "\n"
       file = @repository.load(pname)
       file[session['begin'].to_i-1, 0 ] = data

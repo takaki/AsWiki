@@ -7,6 +7,6 @@
 
 mkdir RCS
 mkdir session
-mkdir cache
+# mkdir cache
 mkdir attach
 # mkdir text

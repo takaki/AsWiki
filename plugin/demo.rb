@@ -1,5 +1,5 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
-# This program is distributed under the GNU GPL 2.
+# This program is distributed under the GNU GPL 2 or later.
 
 require 'aswiki/plugin'
 require 'cgi/session'

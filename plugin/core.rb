@@ -1,5 +1,5 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
-# This program is distributed under the GNU GPL 2.
+# This program is distributed under the GNU GPL 2 or later.
 
 require 'aswiki/plugin'
 require 'aswiki/util'
@@ -76,7 +76,7 @@ module AsWiki
       @r = AsWiki::Repository.new('.')
       pages = {}
       @r.namelist.each{|p|
-	AsWiki::PageData.new(p,false).wikinames.uniq.each{|n|
+	AsWiki::Parser.new(@r.load(p).to_s, p, false).wikinames.uniq.each{|n|
 	  if n !~ /\A\w+:[A-Z]\w+(?!:)/
 	    pages[n] = true
 	  end

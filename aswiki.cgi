@@ -1,6 +1,6 @@
 #! /usr/bin/ruby 
 # Copyritght (c) 2002 TANIGUCHI Takaki
-# This program is distributed under the GNU GPL 2.
+# This program is distributed under the GNU GPL 2 or later.
 
 # $SAFE = 1
 require 'cgi'
@@ -61,14 +61,14 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    pd.parsefile
 	    page = AsWiki::Page.new('View', pd)
 	  else
-	    raise EditPageCall.new(name)
+	    raise AsWiki::EditPageCall.new(name)
 	  end
 	  cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
 	    page.to_s 
 	  }
 	end
       when 'e'
-	raise EditPageCall.new(name)
+	raise AsWiki::EditPageCall.new(name)
       when 'r'
 	c = repository.load(name)
 	data = {
@@ -118,7 +118,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  if cgi.value('md5sum')[0] !=  Digest::MD5::new(c).to_s
 	    bl = body.map{|l| l.sub("\r\n", "\n")}
 	    cl = c.map{|l| l}
-	    raise EditPageCall.new(name, AsWiki::merge(cl, bl, false),true)
+	    raise AsWiki::EditPageCall.new(name, AsWiki::merge(cl, bl, false),true)
 	  end
 	rescue Errno::ENOENT
 	end
@@ -128,7 +128,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	session = CGI::Session.new(cgi ,{'tmpdir' => 'session'}) # XXX
 	if cgi['md5sum'][0] != 
 	    Digest::MD5::new(repository.load(session['pname']).to_s).to_s
-	  raise TimestampMismatch
+	  raise AsWiki::TimestampMismatch
 	end
 	cgi.params.each{|key, value| session[key] = value}
 	plugin = AsWiki::Plugin::PluginTableByType[session['plugin']].new(name)
@@ -155,9 +155,9 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	adb.deletefile(num)
 	AsWiki::redirectpage(cgi, cgiurl([['c','v'],['p',name]]))
       else
-	raise AsWikiRuntimeError, "Unknown Command '#{c}'\n"
+	raise AsWiki::RuntimeError, "Unknown Command '#{c}'\n"
       end
-    rescue EditPageCall
+    rescue AsWiki::EditPageCall
       pname   = $!.pname
       body    = $!.body
       message = $!.message
@@ -179,7 +179,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	page.to_s
       }
     end
-  rescue AsWikiRuntimeError
+  rescue AsWiki::RuntimeError
     data = {:title => $!.type.to_s , :body => $!.message + "\n"}
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       AsWiki::Page.new('Error', data).to_s

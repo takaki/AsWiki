@@ -3,8 +3,8 @@ require 'time.rb'
 module WWiki
 
   class Backup
-    def initialize(dir)
-      @dir = dir
+    def initialize(basedir)
+      @dir = File.join(basedir, 'RCS')
     end
     public
     def backup(fname)

@@ -1,9 +1,11 @@
 require 'wwiki/backup'
+require 'delegate'
 
 module WWiki
-  class Repository
-    def initialize(dir)
-      @dir = dir 
+  class Repository < DelegateClass(Backup)
+    def initialize(basedir)
+      @dir = File.join(basedir ,'text')
+      super(WWiki::Backup.new(basedir))
     end
 
     def read(name, id=nil) 
@@ -11,7 +13,10 @@ module WWiki
     end
     
     def save(name, str)
-      (open(File.join(@dir,name),'w') << str.gsub(/\r\n/, "\n")).close
+      fname = File.join(@dir,name)
+      STDERR.puts str
+      backup(fname)
+      (open(fname ,'w') << str.gsub(/\r\n/, "\n")).close
     end
     
     def mtime(name)

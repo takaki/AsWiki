@@ -5,7 +5,7 @@ class TestWWiki__Backup < RUNIT::TestCase
 
   def setup
     STDIN.reopen('/dev/null')
-    @c = WWiki::Backup.new('test/RCS')
+    @c = WWiki::Backup.new('test')
     fname = 'test/text/test'
     bname = 'test/RCS/test,v'
     Dir.mkdir('test/RCS')

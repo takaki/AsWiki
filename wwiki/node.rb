@@ -1,41 +1,33 @@
 require 'strscan'
 require 'uri/common'
-# require 'delegate'
+require 'delegate'
 
 require 'wwiki/scanner'
 
 require 'obaq/htmlgen'
 require 'obaq/htmlparser'
+require 'obaq/htmlcompiler'
 
 module WWiki 
   class Node< DelegateClass(Array)
+=begin
+include Obaq
+include HtmlGen
+include HtmlCompiler
+=end
+    @@cache = {}
     def initialize(template)
       super([])
-      @tmplfile=File.join('template', template + 'Node.html')
+      tmplfile = File.join('template', template + 'Node.html')
+      @template = Obaq::HtmlParser.parse_file(tmplfile)
     end
     def to_s
-      template = Obaq::HtmlParser.parse_file(@tmplfile)
       data = {:data => self.to_a}
-      tree = template.expand(data)
+      tree = @template.expand(data)
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false
       f.deleteln = false
       return f.format(tree)
-    end
-    def parsetree
-      if self == []
-	return self.type
-      else
-	return {self.type => self.map{|n| 
-	    if n.is_a? Node
-	      n.parsetree
-	    else
-	      n
-	    end
-	  }
-	}
-
-      end
     end
   end
 end

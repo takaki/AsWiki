@@ -4,15 +4,17 @@ require 'delegate'
 
 require 'wwiki/scanner'
 require 'wwiki/node'
+require 'obaq/htmlgen'
 
 module WWiki
   class Parser
+    include Obaq::HtmlGen
     WORD  = [:SPACE, :OTHER, :WORD]
     TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
     DECORATION = [:EM, :STRONG]
     TEXTLINE = WORD + TAG + [:EOL]
-    PARAGRAPH = TEXTLINE + DECORATION 
-    TEXT = PARAGRAPH + [:UL, :OL]
+    PLAINTEXT = TEXTLINE + DECORATION 
+    ELEMENT = PLAINTEXT + [:UL, :OL]
     D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
     
     def initialize(str)
@@ -30,8 +32,12 @@ module WWiki
       next_token
       while true
 	case @token[0]
-	when *TEXT
-	  node << text
+	when *PLAINTEXT
+	  node << paragraph
+	when :UL
+	  node << ul
+	when :OL
+	  node << ol
 	when :BLANK       
 	  node << blank
 	when :DL          
@@ -72,7 +78,8 @@ module WWiki
 	  break
 	end
       end
-      return "<p>" # XXX
+      
+      return "\n"
     end
     def hn
       level = @token[1].size
@@ -113,7 +120,7 @@ module WWiki
       node = Node.new('Dl')
       while true
 	next_token
-	node << { :title => textline,  :doc => text}
+	node << { :title => textline,  :doc => element}
 	case @token[0]
 	when :DL 
 	  next
@@ -130,8 +137,8 @@ module WWiki
       node << catch(:ulend) do
 	while true
 	  case @token[0]
-	  when *TEXT
-	    node << text(indent)
+	  when *ELEMENT
+	    node << element(indent)
 	  else
 	    break
 	  end
@@ -145,8 +152,8 @@ module WWiki
       next_token
       while true
 	case @token[0]
-	when *TEXT
-	  node << text(indent)
+	when *ELEMENT
+	  node << element(indent)
 	else
 	  break
 	end
@@ -173,7 +180,7 @@ module WWiki
     def table_tr
       col = []
       while true
-	col << paragraph
+	col << plaintext
 	case @token[0]
 	when :TABLE_END
 	  eol
@@ -189,6 +196,11 @@ module WWiki
     end
     def paragraph
       node = Node.new('Paragraph')
+      node << plaintext
+      return node 
+    end
+    def plaintext
+      node = Node.new('Plaintext')
       while true
 	case @token[0]
 	when *TEXTLINE
@@ -203,12 +215,12 @@ module WWiki
       end
       return node
     end
-    def text(indent=0)
-      node = Node.new('Text')
+    def element(indent=0)
+      node = Node.new('Element')
       while true
 	case @token[0]
-	when *PARAGRAPH
-	  node << paragraph
+	when *PLAINTEXT
+	  node << plaintext
 	when :UL
 	  if indent == @token[1].size
 	    next_token
@@ -250,36 +262,36 @@ module WWiki
     end
 
     def textline
-      node = []
+      node = Node.new('Textline')
       while true
 	case @token[0]
 	when :OTHER, :SPACE, :WORD
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
-	  node << WikinameNode.new # (@token[1])
+	  node << E(:a, A(:href, 'http://' + @token[1])){@token[1]}
 	when :WIKINAME2
 	  name = @token[1][2..-3]
-	  node << WikinameNode.new # (name)
+	  node << E(:a, A(:href, 'http://' + name)){name}
 	when :URI
-	  node << ahref(@token[1],CGI::escapeHTML(@token[1]))
+	  node << E(:a, A(:href, @token[1])){@token[1]}
 	when :MOINHREF
 	  url, key = @token[1][1..-2].split
-	  url = CGI::unescapeHTML(url)
-	  if /\Aimg:/ =~ url then  node << %Q|<img src="#{$'}" alt="#{key}">|
-	  else node << ahref(url, CGI::escapeHTML(key))
-	  end
+	  node << E(:a, A(:href, url)){key}
+	  # if /\Aimg:/ =~ url then  node << %Q|<img src="#{$'}" alt="#{key}">|
+	  #  else node << ahref(url, CGI::escapeHTML(key))
+	  # end
 	when :ENDPERIOD
-	  node << "<br>"
+	  node << E(:br)
 	when :EOL
 	  eol
-	  node << "\n" 
+	  # node << "\n" 
 	  break
 	else
 	  break
 	end
 	next_token
       end
-      return node.to_s
+      return node
     end
     def textblock(endtag)
       node = []

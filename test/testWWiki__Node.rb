@@ -3,10 +3,6 @@ require 'wwiki/node.rb'
 
 class TestWWiki__Node < RUNIT::TestCase
 
-  def test_parsetree
-    # assert_fail("untested")
-  end
-
   def test_to_s
     # assert_fail("untested")
     c = WWiki::LiNode.new

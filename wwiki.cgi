@@ -4,24 +4,64 @@ require 'cgi'
 require 'wwiki/repository'
 require 'wwiki/parser'
 require 'wwiki/page'
+require 'obaq/htmlgen'
 
 if $0 == __FILE__ or defined?(MOD_RUBY)
+  load ('wwiki.conf')
+  include Obaq::HtmlGen
   cgi = CGI.new
   c = cgi['c'][0]
-  case c
-  when 'v'
-    repository = WWiki::Repository.new('text')
-    name = cgi['p'][0]
-    c = repository.read(name)
-    p = WWiki::Parser.new(c.to_s)
-    data = {:title => name, :content => p.tree.to_s}
-    print "Status: 200 OK\r\n"
-    print "Content-Type: text/html\r\n"
-    print "\r\n"
-    print WWiki::Page.new('ViewPage', data)
-  else
-    p c
-    raise 
-  end
+  c =  c.to_s == '' ? 'v' : c
+  begin
+    case c
+    when 'v'
+      repository = WWiki::Repository.new('.')
+      name = cgi['p'][0]
+      name = name.to_s == '' ? $TOPPAGENAME : name
+      c = repository.read(name)
+      p = WWiki::Parser.new(c.to_s)
+      data = {:title => name, :content => p.tree.to_s,
+	:edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
+      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+	WWiki::Page.new('ViewPage', data).to_s
+      }
+    when 'e'
+      repository = WWiki::Repository.new('.')
+      name = cgi['p'][0]
+      name = name == '' ? $TOPPAGENAME : name
+      c = repository.read(name)
+      data = {:title => name, :content => c.to_s,
+	:edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
+      page = WWiki::Page.new('EditPage', data)
+      page.tree.each do |e|
+	case e[:action]
+	when 'save'
+	  e[:action] = "#{$CGIURL}"
+	end
+	if e[:name] == 'p'
+	  e[:value] = name
+	end
+      end
+      cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+	page.to_s
+      }
+    when 's'
+      repository = WWiki::Repository.new('.')
+      name = cgi['p'][0] # XXX
+      name = name == '' ? $TOPPAGENAME : name # XXX
+      content = cgi['content'][0] # XXX
+      repository.save(name, content)
+      cgi.out({'Status' => '302 REDIRECT', 'Content-Type' => 'text/html',
+		'Location' => "#{$CGIURL}?c=v&p=#{name}"}){''}
+    else
+      raise 
+    end
+  rescue Exception
+    data = {:title => $!.type, :content => $!.backtrace.join("\n"),
+      :edit => E(:a, A(:href , "#{$CGIURL}?c=e&p=#{name}")){'Edit'}}
+    cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
+      WWiki::Page.new('ErrorPage', data).to_s
+    }
+  end    
 end
 

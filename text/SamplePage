@@ -1,9 +1,23 @@
-
 plain text
 
-''em text''
+''em text
+''
 
 '''strong text'''
+
+WikiName
+
+Inter:WikiName
+
+[[wikiname]]
+
+http://www.assist.media.nagoya-u.ac.jp/
+
+[http://www.assist.media.nagoya-u.ac.jp/ media-as]
+
+br .
+ .
+
 
 = h1
 
@@ -54,3 +68,4 @@ this
 plugin_block
 
 plugin
+

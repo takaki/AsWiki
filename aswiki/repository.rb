@@ -3,7 +3,8 @@
 
 require 'aswiki/backup'
 require 'aswiki/util'
-
+require 'aswiki/revlink'
+require 'aswiki/parser'
 
 module AsWiki
   class Repository
@@ -22,10 +23,13 @@ module AsWiki
     
     def save(name, str)
       (open(textname(name),'w') << str.gsub(/\r\n/, "\n")).close
+      RevLink.new.regist(name,
+			 AsWiki::Parser.new(str, name).wikinames.uniq.
+			 delete_if{|n| n =~ /\A\w+:[A-Z]\w+(?!:)/})
+      
       backup = AsWiki::Backup.new(@basedir)
-      # backup.ci(textname(name))
       backup.ci(name)
-      if File.zero?(textname(name))
+      if File.size(textname(name)) <= 1
 	File.unlink(textname(name))
       end
     end

@@ -3,7 +3,7 @@
 
 require 'aswiki/plugin'
 require 'aswiki/util'
-
+require 'aswiki/revlink'
 
 module AsWiki
   class RecentPagesPlugin < Plugin
@@ -103,17 +103,22 @@ module AsWiki
     def onview(line, b, e, av)
       @r = AsWiki::Repository.new('.')
       pages = {}
+      rl = RevLink.new
+      rl.clear
       @r.namelist.each{|p|
-	AsWiki::Parser.new(@r.load(p).to_s, p).wikinames.uniq.
-	  delete_if{|n| n =~ /\A\w+:[A-Z]\w+(?!:)/}.each{|n|
+	lm = AsWiki::Parser.new(@r.load(p).to_s, p).wikinames.uniq.
+	  delete_if{|n| n =~ /\A\w+:[A-Z]\w+(?!:)/}
+	lm.each{|n|
 	  if pages.has_key?(n)
 	    pages[n] << p
 	  else
 	    pages[n] = [p]
 	  end
 	}
+	rl.regist(p, lm)
       }
-      plist = pages.map{|k,v| {
+      plist = pages.map{|k,v| 
+	{
 	  :linkcount => v.size,
 	  :plink  => wikilink(k),
 	  :pages => v.sort.map{|p| [wikilink(p),"\n"] }

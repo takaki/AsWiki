@@ -4,6 +4,7 @@
 require 'aswiki/parser'
 require "aswiki/i18n/#{$LANG}"
 require 'aswiki/merge'
+require 'aswiki/revlink'
 
 module AsWiki
   class PageData
@@ -84,7 +85,16 @@ module AsWiki
 	  :pname => wikilink(CGI::escapeHTML(l[0])),  #, @name) ,
 	  :modified =>  modified(l[1])  }}
     end
-
+    def revlinks
+      RevLink.new.list(@name).map{|l| 
+	[l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i
+      }.map{|l|
+	{
+	  :pname => wikilink(CGI::escapeHTML(l[0])),  #, @name) ,
+	  :modified =>  modified(l[1])
+	}
+      }
+    end
   end
 end
 

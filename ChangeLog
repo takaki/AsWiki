@@ -1,4 +1,26 @@
+2002-12-29  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.88
+
+	* aswiki/i18n/en.rb: new file. I have no motivation, thus its
+	quality is not so high.
+
+	* aswiki/repository.rb: GC conditon change to file size less than
+	equal 1.
+
 2002-12-28  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* plugin/core.rb: LinkPageCount; add reverse link database
+	initialize routine.
+
+	* template/Page/View.html: reverse link
+
+	* aswiki/repository.rb: make save hook to update reverse link
+	database.
+	
+	* aswiki/revlink.rb: implement reverse link, but can not detect
+	deleeted wikilink automatically. Thus to view PageLinkCount for 
+	reflesh link info.
 
 	* release: 0.87
 

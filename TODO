@@ -1,7 +1,8 @@
 -*- outline -*-
 
 * High
-  - reverse link (save time hook)
+  - rewrite orphand page plugin
+  - parts template
   - english message catalogue
 
 * Low
@@ -17,9 +18,9 @@
   - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - mod_ruby
   - w3m-elでpostできない?
+  - UnitTestを手抜きするな。とくに日本語。
 
 * idea
-  - UnitTestを手抜きするな。とくに日本語。
   - -w
   - Nora or CGIKit
   - moinhref; rel uri?
@@ -31,6 +32,7 @@
   - graphviz 用出力(趣味やね)
 
 * done
+  - reverse link (save time hook)
   - name space expand allways
   - print edit line.n - line.m
   - partial edit

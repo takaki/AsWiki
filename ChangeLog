@@ -1,5 +1,7 @@
 2002-11-07  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* Makefile: renamed from setup.sh.
+
 	* aswiki/parser.rb: remove Amrita::e. use parts template.
 
 	* aswiki/handler.rb: handler class.
@@ -200,45 +202,46 @@
 
 2002-09-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* aswiki/scanner.rb: table を '|' から '||' に変更。'|' だと
-	本文中に置く方法がない。	
+	* aswiki/scanner.rb: table tag change from '|' to  '||'.
+	There is no method to place '|' in text.
 
-	* aswiki: 名前を AsWiki に変更。ファイル名も変更。
+	* aswiki: rename programe name to AsWiki. and filename too
 
-	* wwiki: amrita baseに移行。
+	* wwiki: change amrita base.
 
 2002-08-10  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* plugin/attach.rb: attachlistをattachに統合。
+	* plugin/attach.rb: merge attachlist into attach.
 
 2002-08-08  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* wwiki.cgi: attach が機能するようになった。
+	* wwiki.cgi: working  attach feature
 
 2002-07-25  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* wwiki.cgi: Sessionを保存するディレクトリをattrからsessionに変更。
+	* wwiki.cgi: Session save dirctory change from 'attr' to 
+	'session'.
 
 2002-07-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* wwiki/scanner.rb: tableを||から|に変更
+	* wwiki/scanner.rb: table tab change from || to |.
 
 2002-04-27  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* ChangeLog: 記録をさぼっていたがまた書きはじめる。
+	* ChangeLog: restart write changelog.
 	
 	* plugin/demo.rb: postのdemo。
 
 2002-04-03  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* wwiki/node.rb: SimpleDelegatorは猛烈に遅いのでやめる。
-	DelegateClassを使用する。
+	* wwiki/node.rb: stop use SimpleDelegator becase very slow.
+	use DelegateClass.
 	
 
 2002-04-01  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* wwiki: この日よりWWikiの作業を開始する。
+	* wwiki: begin to make WWiki.
 	
-	* formatter.rb: Scannerをクラスに分離。
+	* formatter.rb: split Scanner to class.
 	
 

@@ -1,6 +1,8 @@
-* AsWikiとは
+== What is AsWiki ?
 
-AsWikiはWikiEngineの一つです。
+AsWiki is WikiEngine.
 
+== require
 * ruby-1.6.7
 * libdb-ruby
+* RCS

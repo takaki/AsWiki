@@ -2,11 +2,8 @@
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
-# $LOAD_PATH.push '/usr/lib/ruby/1.6'
-
 # $SAFE = 1
 require 'cgi'
-# require 'obaq/htmlgen'
 
 require 'aswiki/repository'
 require 'aswiki/parser'
@@ -17,7 +14,6 @@ require 'aswiki/backup'
 require 'aswiki/pagedata'
 
 require 'digest/md5'
-
 require 'amrita/template'
 
 # $SAFE = 1
@@ -35,8 +31,6 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
   load ('aswiki.conf')
   repository = AsWiki::Repository.new('.')
   Dir.glob('plugin/*.rb').each{|p| require p.untaint} # XXX
-  # include Obaq::HtmlGen
-  cgi = CGI.new
   class << cgi
     def multipartcheck
       @multipart = false
@@ -64,22 +58,18 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       if name =~ /[^:]+:[^:]+/
 	iname, iwiki = name.split(':') 
 	iwdb = AsWiki::InterWikiDB.new
-	p iwdb
 	url = iwdb.url(iname)
-	# XXX code
 	cgi.out({'Status' => '302 REDIRECT',
 		  'Location' => "#{url}#{iwiki}"}){''}
       else
 	if MetaPages.key?(name)
 	  p = AsWiki::Parser.new(MetaPages[name])
-	  data = {:title => name, :content => p.tree.to_s, }
+	  data = {:title => name, :contents => p.tree.to_s, }
 	  page  = AsWiki::Page.new('Ro',data)
 	elsif repository.exist?(name)
-	  # c = repository.load(name)
-	  # p = AsWiki::Parser.new(c.to_s)
 	  pd = AsWiki::PageData.new(name)
 	  data = {:title => name, 
-	    :content => Amrita::noescape{pd.tree.to_s},
+	    :contents => Amrita::noescape{pd.tree.to_s},
 	    :edit => "#{$CGIURL}?c=e;p=#{AsWiki::escape(name)}",
 	    :toppage => "#{$CGIURL}?c=v;p=#{$TOPPAGENAME}",
 	    :recentpages => "#{$CGIURL}?c=v;p=RecentPages",
@@ -88,7 +78,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	    :diffpage => "#{$CGIURL}?c=d;p=#{AsWiki::escape(name)}",
 	    :helppage => "#{$CGIURL}?c=v;p=HelpPage",
 	    :lastmodified => repository.mtime(name),
-	    :wikilinks => Amrita::noescape{pd.wikilinks},
+	    :wikilinks => pd.wikilinks,
 	  }
 	  page = AsWiki::Page.new('View', data)
 	else
@@ -108,7 +98,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       c = repository.load(name)
       data = {
 	:title => 'Raw data of ' + name ,
-	:content => c.to_s
+	:contents => c.to_s
       }
       page = AsWiki::Page.new('Raw', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
@@ -125,7 +115,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       end
       data = {
 	:title => 'Diff of ' + name ,
-	:content => AsWiki::diff(co,cn) # .to_s
+	:contents => AsWiki::diff(co,cn) # .to_s
       }
       page = AsWiki::Page.new('Ro', data)
       cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
@@ -188,19 +178,18 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       page.delete(num)
       cgi.out({'Status' => '302 REDIRECT', 
 		'Location' => "#{$CGIURL}?c=v;p=#{name}"}){''}
-      
     else
       raise "Unknown Command '#{c}'<br>"
     end
   rescue AsWiki::RuntimeError
-    data = {:title => $!.type, :content => $!.message + "\n",
+    data = {:title => $!.type, :contents => $!.message + "\n",
     }
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){
       AsWiki::Page.new('Error', data).to_s
     }
 
   rescue Exception
-    data = {:title => $!.type, :content => $!.to_s + "\n" + 
+    data = {:title => $!.type, :contents => $!.to_s + "\n" + 
       $!.backtrace.join("\n"),
    } 
     cgi.out({'Status' => '200 OK', 'Content-Type' => 'text/html'}){

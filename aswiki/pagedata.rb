@@ -6,6 +6,7 @@ require 'aswiki/parser'
 module AsWiki
   class PageData
     include AsWiki::Util
+    # include Amrita::ExpandByMember
     def initialize(name)
       @name = name
       @r = AsWiki::Repository.new('.')
@@ -13,13 +14,17 @@ module AsWiki
       @p = AsWiki::Parser.new(c.to_s, name)
       @tree = @p.tree
       @wikinames = @p.wikinames
+
+      @title = name
     end
     attr_reader :tree, :wikinames
+    attr_accessor :title,:edit,:recentpages,:toppage,:allpages,:rawpage,
+      :diffpage,:helppage,:contents,:lastmodified
     def wikilinks
-      return @p.wikinames.delete_if{|w| w =~ /:[^:]/ }.map{|l| 
-	expandwikiname(l, @name)}.uniq.map{|l| 
-	[l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
-	"#{wikilink(CGI::escapeHTML(l[0]),@name)}(#{modified(l[1])})\n" }
+      return Amrita::noescape{ @p.wikinames.delete_if{|w|
+	  w =~ /:[^:]/ }.map{|l| expandwikiname(l, @name)}.uniq.map{|l| 
+	  [l, @r.mtime(l)]}.sort{|a,b| b[1].to_i <=> a[1].to_i}.map{|l|
+	  "#{wikilink(CGI::escapeHTML(l[0]),@name)}(#{modified(l[1])})\n" }}
     end
     def modified(t)
       return '-' unless t

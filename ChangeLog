@@ -1,6 +1,12 @@
+2002-09-24  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
+
+	* release: 0.45
+
 2002-09-23  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
-	* plugin: fix two plugin problem. (same session_id created! so,
+	* release: 0.44
+	
+	* plugin: fix two plugin problem. (same session_id created, so
 	do flock same file).
 
 	* release: 0.43

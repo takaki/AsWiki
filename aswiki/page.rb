@@ -11,7 +11,7 @@ module AsWiki
   def AsWiki::editpage(name, content)
     data = {:title => name, 
       # :content => CGI::escapeHTML(content.to_s),
-      :content => content.to_s,
+      :contents => content.to_s,
       :name => name,
       :md5sum => Digest::MD5::new(content.to_s).to_s,
       :helppage => "#{$CGIURL}?c=v;p=HelpPage",
@@ -28,6 +28,7 @@ module AsWiki
       template = Amrita::TemplateFile.new(tmplfile)
       template.expand_attr = true
       template.expand(@str, data)
+      @contents = @str
     end
     def to_s
       return @str

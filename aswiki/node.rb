@@ -20,8 +20,8 @@ module AsWiki
       @node = []
       tmplfile = File.join('template', 'Node', template + '.html')
       Amrita::TemplateFileWithCache::set_cache_dir('cache')
-      @template = Amrita::TemplateFileWithCache[tmplfile]
-      # @template = Amrita::TemplateFile.new(tmplfile)
+      # @template = Amrita::TemplateFileWithCache[tmplfile]
+      @template = Amrita::TemplateFile.new(tmplfile)
       # @template.pre_format = true
       # @template.use_compiler = true
     end

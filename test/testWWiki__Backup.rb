@@ -38,7 +38,7 @@ class TestAsWiki__Backup < RUNIT::TestCase
 
   def test_getrecentbackupdataandmtime
     data = @c.getrecentbackupdataandmtime('test')
-    assert_equal([["2\n"],Time.parse('2002/01/01 01:00:00')] ,data)
+    assert_equal([["1\n"],Time.parse('2002/01/01 00:00:00')] ,data)
   end
 
   def test_list_backups

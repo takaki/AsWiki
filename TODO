@@ -7,6 +7,8 @@
   - Page templateの統合  
   - NotCreatedPages
   - OrphanedPages
+  - rcsoutput のもうちょっとましな扱い。adhocすぎ。
+  - w3m-elでpostできない?
 
 * Wishlist
 ** hashed plugin

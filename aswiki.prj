@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 38)
+(Project-Version aswiki 0 39)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 37)
+(Parent-Version aswiki 0 38)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 18 Sep 2002 23:01:51 +0900")
+(Checkin-Time "Thu, 19 Sep 2002 12:27:05 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -31,7 +31,7 @@
 ;; to version 0.2(w), by takaki:
 
   (template/Node/Li.html (aswiki/3_LiNode.htm 1.4 664))
-  (ChangeLog (aswiki/4_ChangeLog 1.9 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.10 664))
   (aswiki/node.rb (aswiki/5_node.rb 1.15 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.11 664))
 
@@ -48,14 +48,14 @@
   (template/Node/Ul.html (aswiki/10_UlNode.htm 1.2 664))
   (template/Node/Paragraph.html (aswiki/11_ParagraphN 1.3 664))
   (template/Node/Element.html (aswiki/12_TextNode.h 1.3 664))
-  (test/testWWiki__Backup.rb (aswiki/13_testWWiki_ 1.5 664))
-  (aswiki/backup.rb (aswiki/14_backup.rb 1.7 664))
+  (test/testWWiki__Backup.rb (aswiki/13_testWWiki_ 1.6 664))
+  (aswiki/backup.rb (aswiki/14_backup.rb 1.8 664))
 
 ;; Files added by populate at Mon, 08 Apr 2002 00:17:39 +0900,
 ;; to version 0.5(w), by takaki:
 
   (test/testWWiki__Repository.rb (aswiki/15_testWWiki_ 1.6 664))
-  (aswiki/repository.rb (aswiki/16_repository 1.9 664))
+  (aswiki/repository.rb (aswiki/16_repository 1.10 664))
 
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
@@ -76,7 +76,7 @@
 ;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
 ;; to version 0.7(w), by takaki:
 
-  (TODO (aswiki/29_TODO 1.10 664))
+  (TODO (aswiki/29_TODO 1.11 664))
   (template/Node/Table.html (aswiki/30_TableNode. 1.1 664))
   (template/Node/Dl.html (aswiki/31_DlNode.htm 1.1 664))
   (template/Page/View.html (aswiki/32_ViewPage.h 1.15 664))
@@ -142,6 +142,11 @@
 
   ; (template/plugin/attachlist.html ())
 
+
+;; Files added by populate at Wed, 18 Sep 2002 23:40:30 +0900,
+;; to version 0.38(w), by takaki:
+
+  (default.css (aswiki/b/8_default.cs 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

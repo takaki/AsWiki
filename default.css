@@ -1,0 +1,21 @@
+BODY 
+{
+  background-color : rgb(230,250,253);
+  }	
+
+H2:before {
+  content: "AAA" counter(chapter) ;;
+  counter-increment: chapter ;
+  }
+
+H1, H2, H3, H4, H5, H6 
+{ 
+  background-color: rgb(240,240,240) ;
+  border-style: solid;
+  border-width: 5px;
+  border-top-color:    rgb(176,226,255);
+  border-right-color:  rgb(96,123,139);
+  border-bottom-color: rgb(141,182,205);
+  border-left-color:   rgb(164,211,238);
+  }
+

@@ -20,30 +20,43 @@ module AsWiki
       end
     end
     def getrecentbackupdataandmtime(name)
-      return nil if ! exist?(name);
-      f = File.readlines("|co -p -q " + backupname(name))
-      mtime = ''
+      found = false
+      head  = 1
+      mtimestr = '0'
+      # return nil if ! exist?(name);
       File.foreach("|rlog -zLT " + backupname(name)) do |l|
+	if l =~ /^head: 1.(\d+)/
+	  head = $1.to_i
+	end
 	if /^date: (\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\+\d\d);/ =~ l then
-	  mtime = $1
-	  break
+	  if found
+	    mtimestr = $1
+	    break
+	  else
+	    found = true
+	  end
 	end
       end
-      return [f, Time.parse(mtime)]
+      if head != 1
+	f = File.readlines("|co -r1.#{head-1} -p -q " + backupname(name))
+      else
+	f = ''
+      end
+      return [f, Time.parse(mtimestr)]
     end
 
     def list_backups(name)
       return nil if !exist?(name);
       n = []
       id = nil
-      mtime = nil
+      mtimestr = nil
       File.foreach("|rlog -zLT " + backupname(name)) do |l|
 	if /^revision \d+\.(\d+)/ =~ l then
 	  id = $1
 	end
 	if /^date: (\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\+\d\d);/ =~ l then
-	  mtime = $1
-	  n << [id.to_i, Time.parse(mtime)]
+	  mtimestr = $1
+	  n << [id.to_i, Time.parse(mtimestr)]
 	end
       end
       return n
@@ -51,15 +64,15 @@ module AsWiki
     def getbackupdataandmtime(name, id)
       return nil if !exist?(name);
       fn = backupname(name)
-      mtime = nil
+      mtimestr = nil
       f = File.readlines("|co -p -q -r1.#{id} #{fn}")
       File.foreach("|rlog -r1.#{id} -zLT #{fn}") do |l|
 	if /^date: (\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\+\d\d);/ =~ l then
-	  mtime = $1
+	  mtimestr = $1
 	  break
 	end
       end
-      return [f, Time.parse(mtime)]
+      return [f, Time.parse(mtimestr)]
     end
 
     private

@@ -1,4 +1,4 @@
-#! /usr/bin/env ruby
+#! /usr/bin/ruby 
 # Copyritght (c) 2002 TANIGUCHI Takaki
 # This program is distributed under the GNU GPL 2.
 
@@ -150,6 +150,33 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       plugin.onpost(session, cgi['file'])
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
 		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
+    when 'download'
+      mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
+      name = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
+      page = BDB::Btree.open("attach/page.db", nil, BDB::CREATE)
+      num  = cgi['num'][0]
+      
+      type = mime[num]
+      pathname = "attach/#{num}"
+      cgi.out({'type' => type,
+		'Last-Modified' => 
+		CGI::rfc1123_date(File::stat(pathname).mtime),
+		"Content-Disposition" => 
+		%Q|attachment; filename="#{name[num]}"| }
+	      ){ open(pathname).read }
+    when 'delete' # XXX plugin onpost?
+      mime = BDB::Btree.open("attach/mime.db", nil, BDB::CREATE)
+      name = BDB::Btree.open("attach/name.db", nil, BDB::CREATE)
+      page = BDB::Btree.open("attach/page.db", nil, BDB::CREATE)
+      num  = cgi['num'][0]
+      pathname = File.join('attach', num)
+      File::unlink(pathname)
+      mime.delete(num)
+      name.delete(num)
+      page.delete(num)
+      cgi.out({'Status' => '302 REDIRECT', 
+		'Location' => "#{$CGIURL}?c=v;p=#{$pname}"}){''}
+      
     else
       raise "Unknown Command '#{c}'<br>"
     end

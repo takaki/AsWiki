@@ -78,7 +78,8 @@ module AsWiki
 	  node << syntax_error
 	end
       end 
-      return node
+      node.expand
+      return node.tree
     end
     def blank
       next_token
@@ -92,7 +93,6 @@ module AsWiki
 	  break
 	end
       end
-      
       return "\n"
     end
     def hn
@@ -100,7 +100,8 @@ module AsWiki
       node = Node.new("H#{level}")
       next_token
       node << textline
-      return  node
+      node.expand
+      return node.tree
     end
     def plugin_block
       block = [] << (@token[1]+"\n")
@@ -141,7 +142,8 @@ module AsWiki
 	  break
 	end
       end
-      return node 
+      node.expand
+      return node.tree
     end
     def ul
       node = Node.new('Ul')
@@ -157,7 +159,8 @@ module AsWiki
 	  end
 	end
       end
-      return node 
+      node.expand
+      return node.tree
     end
     def ol
       node = Node.new('Ol')
@@ -171,7 +174,8 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      node.expand
+      return node.tree
     end
     def table
       node = Node.new('Table')
@@ -188,7 +192,8 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      node.expand
+      return node.tree
     end
     def table_tr
       col = []
@@ -210,7 +215,8 @@ module AsWiki
     def paragraph
       node = Node.new('Paragraph')
       node << plaintext
-      return node 
+      node.expand
+      return node.tree
     end
     def plaintext
       node = Node.new('Plaintext')
@@ -226,7 +232,8 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      node.expand
+      return node.tree
     end
     def element(indent=0)
       node = Node.new('Element')
@@ -260,7 +267,8 @@ module AsWiki
 	  break
 	end
       end
-      return node
+      node.expand
+      return node.tree
     end
     def decorate(tag)
       next_token
@@ -271,7 +279,8 @@ module AsWiki
       else                
 	node << syntax_error
       end
-      return node 
+      node.expand
+      return node.tree
     end
 
     def textline
@@ -310,7 +319,8 @@ module AsWiki
 	end
 	next_token
       end
-      return node
+      node.expand
+      return node.tree
     end
     def textblock(endtag)
       node = []
@@ -335,9 +345,16 @@ module AsWiki
     def preblock
       node = Node.new('Pre')
       next_token
-      node << textblock(:PRE_END).to_s
+      # node << Amrita::CompactSpace.new {textblock(:PRE_END).join}
+      node << textblock(:PRE_END).join
       next_token # XXX
-      return node 
+      node.expand
+      return node.tree
+      # XXX XXX XXX     
+      #       next_token
+      #       node = Amrita::pre(Amrita::a(:class, 'code')) { textblock(:PRE_END) }
+      #       next_token # XXX
+      #       return  node
     end
     def eol
       @line +=1

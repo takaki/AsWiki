@@ -1,5 +1,12 @@
 2002-09-26  TANIGUCHI Takaki  <takaki@assist.media.nagoya-u.ac.jp>
 
+	* release: 0.47
+	
+	* plugin/attach.rb: escape bug fix.
+
+	* aswiki/parser.rb: making html tree process changed top down to
+	botm up.
+
 	* release: 0.46
 
 	* aswiki/pagedata.rb: add edit,toppage, etc to use ExpandByMember

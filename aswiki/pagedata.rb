@@ -12,8 +12,9 @@ module AsWiki
       @r = AsWiki::Repository.new('.')
       c = @r.load(name)
       @p = AsWiki::Parser.new(c.to_s, name)
-      @tree = @p.tree
+      # @tree = @p.tree
       @wikinames = @p.wikinames
+      @contents = @p.tree
 
       @title = name
       @edit        = "#{$CGIURL}?c=e;p=#{AsWiki::escape(name)}"
@@ -26,7 +27,11 @@ module AsWiki
     end
     attr_reader :tree, :wikinames
     attr_accessor :title,:edit,:recentpages,:toppage,:allpages,:rawpage,
-      :diffpage,:helppage,:contents,:lastmodified
+      :diffpage,:helppage,:contents
+    def lastmodified
+      t = @r.mtime(@name)
+      t.strftime("%F %T %z") + " (#{modified(t)})"
+    end
     def wikilinks
       return Amrita::noescape{ @p.wikinames.delete_if{|w|
 	  w =~ /:[^:]/ }.map{|l| expandwikiname(l, @name)}.uniq.map{|l| 

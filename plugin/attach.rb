@@ -37,7 +37,7 @@ module AsWiki
 	  :dllink => $CGIURL + "?c=download;num=#{f}", 
 	  # :name => CGI::escapeHTML( name[f]) ,
 	  :name => name[f],
-	  :rmlink => $CGIURL + "?c=delete;p=#{@name};num=#{f}", 
+	  :rmlink => $CGIURL + "?c=delete;p=#{CGI::escape(@name)};num=#{f}", 
 	} }
 
       data ={:_session_id => session.session_id,

@@ -1,6 +1,14 @@
 -*- outline -*-
 
 * High
+  - toc
+  - plugin#load_templateの改善
+  - attache escape
+  - #minibbs
+  - #minimemo
+  - #nikki?
+  - mergeの導入
+  - lastmodified: format, (127d) 
   - session_id を渡す目的でCGI.newをしない
   - attach brushup
   - AttachManager transaction
@@ -14,7 +22,6 @@
   - 高速化 Parserは十分早い。だが，Amritaの展開が問題。
 
 * Low
-  - toc
   - デフォルトで./をつけるページ，付けないページ
 
 * idea
@@ -22,6 +29,7 @@
   - カレントディレクトリ。デフォルトでネームスペースに属するか?
 
 * done
+  - 遅延評価は意味がなし。parseの中でElementを展開すること。
   - pluginを2個ならべると起きる問題。flock…。なぜmozillaだけ?
 
 * abandoned

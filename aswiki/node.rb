@@ -13,27 +13,34 @@ require 'aswiki/scanner'
 
 require 'amrita/template'
 
+module Amrita
+  class TemplateFile
+    def expand_tree(model)
+      setup_template if need_update?
+      context = setup_context
+      return @template.expand(model, context)
+    end
+  end
+end
+
 module AsWiki 
   class Node
     @@template_cache = {}
     def initialize(template)
       @node = []
       tmplfile = File.join('template', 'Node', template + '.html')
-      Amrita::TemplateFileWithCache::set_cache_dir('cache')
-      # @template = Amrita::TemplateFileWithCache[tmplfile]
       @template = Amrita::TemplateFile.new(tmplfile)
-      # @template.pre_format = true
-      # @template.use_compiler = true
     end
+    attr_reader :tree
     def <<(item)
       @node << item
     end
-    def to_s
-      # s = ''
+    def expand
       data = {:data => @node}
-      # @template.expand(s, data)
-      # return Amrita::noescape{s}
-      return Amrita::noescape{@template.expand('', data)}
+      @tree = @template.expand_tree(data)
+    end
+    def to_s
+      @tree.to_s
     end
   end
 end

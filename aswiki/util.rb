@@ -33,7 +33,7 @@ module AsWiki
 	    raise 'not match 1'
 	  end
 	  r << Amrita::e(:div){
-	    Amrita::e(:code){"#{bi} =1 #{b[bi]}".chomp}} << "\n"
+	    Amrita::e(:code){"#{bi} = #{b[bi]}".chomp}} << "\n"
 	  ai += 1
 	  bi += 1
 	end

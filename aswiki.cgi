@@ -65,12 +65,10 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       else
 	if MetaPages.key?(name)
 	  p = AsWiki::Parser.new(MetaPages[name])
-	  data = {:title => name, :contents => p.tree.to_s, }
+	  data = {:title => name, :contents => p.tree }
 	  page  = AsWiki::Page.new('Ro',data)
 	elsif repository.exist?(name)
 	  pd = AsWiki::PageData.new(name)
-	  pd.contents = Amrita::noescape{pd.tree.to_s}
-	  pd.lastmodified = repository.mtime(name)
 	  page = AsWiki::Page.new('View', pd)
 	else
 	  page = AsWiki::editpage(name, '')

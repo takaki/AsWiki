@@ -2,3 +2,5 @@
 
 AsWikiはWikiEngineの一つです。
 
+* ruby-1.6.7
+* libdb-ruby

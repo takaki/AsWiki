@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 1.1 11)
+(Project-Version aswiki 1.1 12)
 ;; PRCS note: this project vaersion was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 1.1 10)
+(Parent-Version aswiki 1.1 11)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Wed, 12 Mar 2003 23:44:33 +0900")
+(Checkin-Time "Sun, 23 Mar 2003 22:07:02 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$" "COPYING" "CVS/"))
 (Project-Keywords)
@@ -31,7 +31,7 @@
 ;; to version 0.2(w), by takaki:
 
   
-  (ChangeLog (aswiki/4_ChangeLog 1.66 664))
+  (ChangeLog (aswiki/4_ChangeLog 1.67 664))
   (aswiki/node.rb (aswiki/5_node.rb 1.37 664))
   (aswiki/scanner.rb (aswiki/6_scanner.rb 1.22 664))
 
@@ -97,7 +97,7 @@
 
   (plugin/demo.rb (aswiki/40_demo.rb 1.19 664))
   (aswiki/plugin.rb (aswiki/41_plugin.rb 1.18 664))
-  (aswiki/util.rb (aswiki/42_util.rb 1.34 664))
+  (aswiki/util.rb (aswiki/42_util.rb 1.35 664))
 
 ;; Files added by populate at Sat, 18 May 2002 23:38:58 +0900,
 ;; to version 0.16(w), by takaki:
@@ -196,7 +196,7 @@
 ;; Files added by populate at Thu, 07 Nov 2002 01:08:59 +0900,
 ;; to version 0.60(w), by takaki:
 
-  (aswiki/handler.rb (aswiki/b/20_handler.rb 1.16 664))
+  (aswiki/handler.rb (aswiki/b/20_handler.rb 1.17 664))
 
 ;; Files added by populate at Sun, 24 Nov 2002 00:58:47 +0900,
 ;; to version 0.64(w), by takaki:

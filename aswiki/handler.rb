@@ -279,7 +279,6 @@ module AsWiki
       template.xml = true
       template.asxml = true
 
-
       count = 15
       data = {
 	:title => $TITLE,

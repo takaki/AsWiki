@@ -164,7 +164,8 @@ module AsWiki
       return "#{dif}d"
     end
     def cgiurl(arg, path=nil)
-      return $CGIURL + (path and ("/" + path)).to_s + 
+      return $CGIURL + (path and ("/" + path.split('/').collect{|s|
+				    AsWiki::escape(s)}.join('/'))).to_s + 
 	(arg.empty? ? '' : "?" + 
 	 arg.map{|k,v| AsWiki::escape(k) + '=' + AsWiki::escape(v.to_s)}.join(';'))
     end

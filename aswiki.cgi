@@ -35,7 +35,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
     require p.untaint  
   }
 
-  cgi = FCGI.new
+  cgi = CGI::new # XXX
   c    = (cgi.value('c')[0] or 'v')
   name = (cgi.value('p')[0] or $TOPPAGENAME)
   begin

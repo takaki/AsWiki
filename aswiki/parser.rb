@@ -19,7 +19,8 @@ module AsWiki
     include AsWiki::Util
     include AsWiki::I18N
     WORD  = [:SPACE, :OTHER, :WORD]
-    TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF]
+    TAG = [:ENDPERIOD, :INTERWIKINAME, :WIKINAME1, :WIKINAME2, :URI,:MOINHREF,
+    :MOINHREFIMG]
     DECORATION = [:EM, :STRONG]
     ESCAPE = [:ESCAPE_BEGIN, :ESCAPE_END]
     TEXTLINE = WORD + TAG + [:EOL] + ESCAPE
@@ -312,11 +313,9 @@ module AsWiki
 	when :ESCAPE_BEGIN
 	  next_token
 	  ret  = textblock(:ESCAPE_END)
-	  # next_token
 	  node << ret
 	when :ESCAPE_END
 	  node << @token[1]
-	  next_token
 	when :OTHER, :SPACE, :WORD
 	  node << @token[1]
 	when :WIKINAME1,:INTERWIKINAME
@@ -332,17 +331,21 @@ module AsWiki
 	  tn = Node.new('Url')
 	  tn << {:url=>@token[1],:text=>@token[1]}
 	  node << tn
+	when :MOINHREFIMG
+	  tn = Node.new('MoinhrefImg')
+	  urlt, key = @token[1][1..-2].split(/\s+/, 2)
+	  url = Amrita::Sanitizer::sanitize_url(urlt[4..-1], {'http' => true, 'https' => true})
+ 	  tn << {:url => url, :alt => key}
+	  node << tn
 	when :MOINHREF
+	  allowedscheme = {'http' => true, 'https' => true, 'file' => true, 
+	    'news' => true, 'ftp' => true, 'mailto' => true }
+	  tn = Node.new('Moinhref')
 	  url, key = @token[1][1..-2].split(/\s+/, 2)
-	  if /\Aimg:(http|https)/ =~ url  # XXX
-	    tn = Node.new('MoinhrefImg')
-	    tn << {:url => $1 + $', :alt => key}
-	    node << tn
-	  else
-	    tn = Node.new('Moinhref')
-	    tn << {:url => url, :text => key}
-	    node << tn
-	  end
+	  url = Amrita::Sanitizer::sanitize_url(url,allowedscheme)
+
+	  tn << {:url => url, :text => key }
+	  node << tn
 	when :ENDPERIOD
 	  node << Node.new('Br')
 	when :EOL
@@ -382,7 +385,7 @@ module AsWiki
     def preblock
       next_token
       ret = Amrita::e(:pre, :class=>"code") { Amrita::CompactSpace.new(false) { textblock(:PRE_END).join  } } # XXX use template ???
-      next_token # XXX
+      next_token
       return ret 
     end
     def eol

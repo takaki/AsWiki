@@ -26,8 +26,12 @@ module AsWiki
       @historypage = cgiurl([['c', 'h'], ['p', pname]])
       @diffpage    = cgiurl([['c', 'd'], ['p', pname]])
       @helppage    = cgiurl([['c', 'v'], ['p', 'HelpPage']])
+
+      # @theme = { :href => "#$THEME/#$THEME.css" }
     end
+    # attr_reader :theme
     attr_accessor :sb
+    attr_reader :theme
     attr_reader :edit,:recentpages,:toppage,:allpages,:rawpage,
       :diffpage,:helppage, :historypage
     attr_reader :tree, :wikinames,:name

@@ -3,8 +3,11 @@
 * High
 
 * Low
+  - search
+  - tdiary theme
+  - PATH_INFO
+  - extention of InterWikiName
   - rewrite orphand page plugin
-  - sanitize img: by amrita feature
   - attach ; attachment -> pathname
   - automatic img link?
   - rcs keyword proble
@@ -12,14 +15,14 @@
   - session_id を渡す目的でCGI.newをしない
   - page initialize and publish
   - ci でtextname Backupをmoduleにしてしまえばいい。include
-  - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
   - mod_ruby
   - w3m-elでpostできない?
   - UnitTestを手抜きするな。とくに日本語。
 
 * idea
+  - MetaPage をrepositoryで。無理矢理セーブするのに対抗。
+  - XML-RPC?
   - subsubsection toc?
-  - partial edit link bug
   - -w
   - Nora or CGIKit
   - moinhref; rel uri?
@@ -31,6 +34,10 @@
   - graphviz 用出力(趣味やね)
 
 * done
+  - save error const???
+  - partial edit link bug
+  - sanitize img: by amrita feature
+  - img: 
   - pre pre bug ???
   - type -> class
   - attach display bug gsub

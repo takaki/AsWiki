@@ -3,7 +3,7 @@
 
 require 'cgi'
 
-class FCGI < CGI
+class CGI
   def multipart?
     if ENV['CONTENT_TYPE'].nil? or
 	ENV['CONTENT_TYPE'].index(%r|\Amultipart/form-data|).nil?

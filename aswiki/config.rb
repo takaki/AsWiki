@@ -6,7 +6,7 @@
 $TOPPAGENAME = ($TOPPAGENAME or 'IndexPage')
 $TITLE       = ($TITLE       or 'AsWiki')
 $BASEDIR     = ($BASEDIR     or '.')
-$WIKINAMERE  = ($WIKINAMERE  or Regexp.new(/\A([A-Z][a-z]+){2,}\b/))
+$WIKINAMERE  = ($WIKINAMERE  or Regexp.new(/\A(?:[A-Z][a-z]+){2,}\b/))
 $LANG        = ($LANG        or 'ja')
 $TIMEFORMAT  = ($TIMEFORMAT  or "%Y-%m-%d/%H:%M:%S %z")
 

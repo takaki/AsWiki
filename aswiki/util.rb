@@ -14,8 +14,7 @@ module AsWiki
   end
   def AsWiki::redirectpage(cgi, url)
     cgi.out({'Status' => '302 REDIRECT',
-	      'Location' => url}){ (Node.new('Url') << 
-				    {:url => url, :text => url}).to_s}
+	      'Location' => url}){Amrita::e(:a,Amrita::a(:href, url)){url}.to_s}
   end
 
   def AsWiki::merge(a,b, tag=true)

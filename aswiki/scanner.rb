@@ -13,7 +13,7 @@ module AsWiki
       ps = PStore.new(pspath.untaint)
       r = Repository.new
       ps.transaction do |s| 
-	if r.mtime(pname) > File.mtime(pspath) or not s.root?('scan')
+	if r.mtime(pname) > File.mtime(pspath) or not s.root?('scan') # XXX 
 	  scan = Scanner.new(r.load(pname).to_s)
 	  s['scan'] = scan
 	  # STDERR.puts "NOT #{pname}"
@@ -33,7 +33,7 @@ module AsWiki
       @q = scan(str)
     end
     def next_token
-      return @q.shift
+      return (@q.shift or [:EOF, nil]) # XXX raise??
     end
     private
     def scan(f)
@@ -97,6 +97,8 @@ module AsWiki
 	  q.push [:TABLE_END, tmp]
 	elsif tmp = sc.scan(/\A\|\|/)
 	  q.push [:TABLE, tmp]
+	elsif tmp = sc.scan(/\A\[img:#{URI::REGEXP::PATTERN::X_ABS_URI}\s+[^]]+?\]/xn)
+	  q.push [:MOINHREFIMG, tmp]
 	# elsif tmp = sc.scan(/\A\[\S+ +\S+?\]/)
 	# elsif tmp = sc.scan(/\A\[\S+ +[^]]+?\]/)
 	elsif tmp = sc.scan(/\A\[#{URI::REGEXP::PATTERN::X_ABS_URI}\s+[^]]+?\]/xn)

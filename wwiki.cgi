@@ -49,11 +49,11 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
 	  p = WWiki::Parser.new(CGI::escapeHTML(c.to_s))
 	  data = {:title => name, 
 	    :content => p.tree.to_s,
-	    :edit => "#{$CGIURL}?c=e&p=#{name}",
-	    :recentpages => "#{$CGIURL}?c=v&p=RecentPages",
-	    :allpages => "#{$CGIURL}?c=v&p=AllPages",
-	    :rawpage => "#{$CGIURL}?c=r&p=#{name}",
-	    :diffpage => "#{$CGIURL}?c=d&p=#{name}",
+	    :edit => "#{$CGIURL}?c=e;p=#{name}",
+	    :recentpages => "#{$CGIURL}?c=v;p=RecentPages",
+	    :allpages => "#{$CGIURL}?c=v;p=AllPages",
+	    :rawpage => "#{$CGIURL}?c=r;p=#{name}",
+	    :diffpage => "#{$CGIURL}?c=d;p=#{name}",
 	    :lastmodified => repository.mtime(name),
 	    :wikilinks => p.wikilinks,
 	  }
@@ -103,7 +103,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       rescue Errno::ENOENT
       end
       repository.save(name, content)
-      cgi.out({'Status' => '302 REDIRECT', 'Location' => "#{$CGIURL}?c=v&p=#{name}"}){''}
+      cgi.out({'Status' => '302 REDIRECT', 'Location' => "#{$CGIURL}?c=v;p=#{name}"}){''}
     when 'post'
       session = CGI::Session.new(cgi ,{'tmpdir' => 'attr'})
       if cgi['md5sum'][0] != 
@@ -114,7 +114,7 @@ if $0 == __FILE__ or defined?(MOD_RUBY)
       plugin = eval(session['plugin'] + '.new')
       plugin.onpost(session)
       cgi.out({'Status' => '302 REDIRECT', 'Location' => 
-		"#{$CGIURL}?c=v&p=#{session['pname']}"}){''}
+		"#{$CGIURL}?c=v;p=#{session['pname']}"}){''}
     else
       raise "Unknown Command '#{c}'"
     end

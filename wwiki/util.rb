@@ -84,14 +84,15 @@ module WWiki
       end
     end
     def wikilink(name)
-      link = WWiki::escape(expandwikiname(name, $pname))
+      ename = expandwikiname(name, $pname)
       repository = WWiki::Repository.new
-      if repository.exist?(name) || name =~ /[^:]+:[^:]+/
-	return e(:a, {:href =>"#{$CGIURL}?c=v&p=#{link}"}){
+      link = WWiki::escape(ename)
+      if repository.exist?(ename) || name =~ /[^:]+:[^:]+/
+	return e(:a, {:href =>"#{$CGIURL}?c=v;p=#{link}"}){
 	  WWiki::unescape(name)}
       else
 	return WWiki::unescape(name) + 
-	  e(:a, {:href, "#{$CGIURL}?c=v&p=#{link}"}){%q|?|}.to_s
+	  e(:a, {:href, "#{$CGIURL}?c=v;p=#{link}"}){%q|?|}.to_s
       end
     end
   end

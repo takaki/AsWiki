@@ -13,8 +13,8 @@ module WWiki
     TEXTLINE = WORD + TAG + [:EOL]
     PARAGRAPH = TEXTLINE + DECORATION 
     TEXT = PARAGRAPH + [:UL, :OL]
-    D_TAG = {:EM => EmNode,  :STRONG => StrongNode}
-
+    D_TAG = {:EM => 'Em' ,  :STRONG => 'Strong'}
+    
     def initialize(str)
       @s = Scanner.new(str)
       @tree = parse
@@ -26,7 +26,7 @@ module WWiki
     end
     def parse
       @line = 1
-      node = RootNode.new()
+      node = Node.new('Root')
       next_token
       while true
 	case @token[0]
@@ -42,7 +42,7 @@ module WWiki
 	when :HN_BEGIN    
 	  node << hn
 	when :HR          
-	  node << HrNode.new
+	  node << Node.new('Hr')
 	  next_token
 	when :PLUGIN  
 	  node << plugin
@@ -72,11 +72,11 @@ module WWiki
 	  break
 	end
       end
-      return nil
+      return "<p>" # XXX
     end
     def hn
       level = @token[1].size
-      node = HNNode.new(level)
+      node = Node.new("H#{level}")
       next_token
       node << textline
       return  node
@@ -110,21 +110,21 @@ module WWiki
     end
 
     def dl
-      node = nil << "<dl>" 
+      node = Node.new('Dl')
       while true
 	next_token
-	node << "<dt>" << textline << "</dt>" <<"<dd>" << text  << "</dd>"
+	node << { :title => textline,  :doc => text}
 	case @token[0]
 	when :DL 
 	  next
-	else node << "</dl>"
+	else
 	  break
 	end
       end
       return node 
     end
     def ul
-      node = UlNode.new
+      node = Node.new('Ul')
       indent = @token[1].size
       next_token
       node << catch(:ulend) do
@@ -140,7 +140,7 @@ module WWiki
       return node 
     end
     def ol
-      node = OlNode.new
+      node = Node.new('Ol')
       indent = @token[1].size
       next_token
       while true
@@ -154,7 +154,7 @@ module WWiki
       return node
     end
     def table
-      node = nil << "<table>" 
+      node = Node.new('Table')
       while true
 	case @token[0]
 	when :TABLE_BEGIN
@@ -168,40 +168,27 @@ module WWiki
 	  break
 	end
       end
-      node << '</table>'
       return node
     end
     def table_tr
-      node = nil
-      node << "<tr>"
+      col = []
       while true
-	node << table_td
+	col << paragraph
 	case @token[0]
 	when :TABLE_END
 	  eol
 	  break  # XXX
+	when :TABLE
+	  next_token
+	  next
 	else 
 	  break
 	end
       end
-      return node << "</tr>\n"
+      return {:col => col}
     end
-    def table_td
-      node = nil
-      while true
-	node << "<td>" << text << "</td>"
-	case @token[0]
-	when :TABLE
-	  next_token
-	when :TABLE_END
-	  break
-	else  break
-	end
-      end
-      return node
-    end    
     def paragraph
-      node = ParagraphNode.new
+      node = Node.new('Paragraph')
       while true
 	case @token[0]
 	when *TEXTLINE
@@ -217,7 +204,7 @@ module WWiki
       return node
     end
     def text(indent=0)
-      node = TextNode.new
+      node = Node.new('Text')
       while true
 	case @token[0]
 	when *PARAGRAPH
@@ -252,7 +239,7 @@ module WWiki
     end
     def decorate(tag)
       next_token
-      node = D_TAG[tag].new
+      node = Node.new(D_TAG[tag])
       node  << textline
       if @token[0] == tag 
 	next_token
@@ -263,7 +250,7 @@ module WWiki
     end
 
     def textline
-      node = TextlineNode.new
+      node = []
       while true
 	case @token[0]
 	when :OTHER, :SPACE, :WORD
@@ -292,7 +279,7 @@ module WWiki
 	end
 	next_token
       end
-      return node
+      return node.to_s
     end
     def textblock(endtag)
       node = []
@@ -316,7 +303,7 @@ module WWiki
       return node
     end
     def preblock
-      node = PreNode.new
+      node = Node.new('Pre')
       next_token
       node << textblock(:PRE_END).to_s
       return node 

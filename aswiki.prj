@@ -1,14 +1,14 @@
 ;; -*- Prcs -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "")
-(Project-Version aswiki 0 7)
+(Project-Version aswiki 0 8)
 ;; PRCS note: this project version was originally checked in when
 ;; the project was named `wwiki'.
 
-(Parent-Version aswiki 0 6)
+(Parent-Version aswiki 0 7)
 (Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Tue, 09 Apr 2002 23:06:40 +0900")
+(Checkin-Time "Wed, 10 Apr 2002 00:15:47 +0900")
 (Checkin-Login takaki)
 (Populate-Ignore ("obsolete/" "~$" "\\.log$"))
 (Project-Keywords)
@@ -20,7 +20,7 @@
 ;; to version 0.0(w), by takaki:
 
   (test/testWWiki__Parser.rb (aswiki/0_testWWiki_ 1.7 664))
-  (wwiki/parser.rb (aswiki/1_parser.rb 1.7 664))
+  (wwiki/parser.rb (aswiki/1_parser.rb 1.8 664))
 
 ;; Files added by populate at Mon, 01 Apr 2002 23:24:12 +0900,
 ;; to version 0.1(w), by takaki:
@@ -32,7 +32,7 @@
 
   (template/LiNode.html (aswiki/3_LiNode.htm 1.4 664))
   (ChangeLog (aswiki/4_ChangeLog 1.2 664))
-  (wwiki/node.rb (aswiki/5_node.rb 1.4 664))
+  (wwiki/node.rb (aswiki/5_node.rb 1.5 664))
   (wwiki/scanner.rb (aswiki/6_scanner.rb 1.4 664))
 
 ;; Files added by populate at Thu, 04 Apr 2002 10:35:33 +0900,
@@ -44,10 +44,10 @@
 ;; to version 0.4(w), by takaki:
 
   (template/OlNode.html (aswiki/8_OlNode.htm 1.2 664))
-  (template/RootNode.html (aswiki/9_RootNode.h 1.2 664))
+  (template/RootNode.html (aswiki/9_RootNode.h 1.3 664))
   (template/UlNode.html (aswiki/10_UlNode.htm 1.2 664))
   (template/ParagraphNode.html (aswiki/11_ParagraphN 1.2 664))
-  (template/TextNode.html (aswiki/12_TextNode.h 1.2 664))
+  (template/TextNode.html (aswiki/12_TextNode.h 1.3 664))
   (test/testWWiki__Backup.rb (aswiki/13_testWWiki_ 1.3 664))
   (wwiki/backup.rb (aswiki/14_backup.rb 1.2 664))
 
@@ -60,18 +60,27 @@
 ;; Files added by populate at Tue, 09 Apr 2002 23:06:21 +0900,
 ;; to version 0.6(w), by takaki:
 
-  (wwiki.cgi (aswiki/17_wwiki.cgi 1.1 664))
-  (text/SampleText (aswiki/18_SampleText 1.1 664))
+  (wwiki.cgi (aswiki/17_wwiki.cgi 1.2 755))
+  (text/SamplePage (aswiki/18_SampleText 1.2 664))
   (template/HrNode.html (aswiki/19_HrNode.htm 1.1 664))
   (template/PreNode.html (aswiki/20_PreNode.ht 1.1 664))
-  (template/HN6Node.html (aswiki/21_HN6Node.ht 1.1 664))
-  (template/HN5Node.html (aswiki/22_HN5Node.ht 1.1 664))
-  (template/HN4Node.html (aswiki/23_HN4Node.ht 1.1 664))
-  (template/HN3Node.html (aswiki/24_HN3Node.ht 1.1 664))
-  (template/HN2Node.html (aswiki/25_HN2Node.ht 1.1 664))
-  (template/HN1Node.html (aswiki/26_HN1Node.ht 1.1 664))
+  (template/H6Node.html (aswiki/21_HN6Node.ht 1.1 664))
+  (template/H5Node.html (aswiki/22_HN5Node.ht 1.1 664))
+  (template/H4Node.html (aswiki/23_HN4Node.ht 1.1 664))
+  (template/H3Node.html (aswiki/24_HN3Node.ht 1.1 664))
+  (template/H2Node.html (aswiki/25_HN2Node.ht 1.1 664))
+  (template/H1Node.html (aswiki/26_HN1Node.ht 1.1 664))
   (template/StrongNode.html (aswiki/27_StrongNode 1.1 664))
   (template/EmNode.html (aswiki/28_EmNode.htm 1.1 664))
+
+;; Files added by populate at Wed, 10 Apr 2002 00:15:12 +0900,
+;; to version 0.7(w), by takaki:
+
+  (TODO (aswiki/29_TODO 1.1 664))
+  (template/TableNode.html (aswiki/30_TableNode. 1.1 664))
+  (template/DlNode.html (aswiki/31_DlNode.htm 1.1 664))
+  (template/ViewPage.html (aswiki/32_ViewPage.h 1.1 664))
+  (wwiki/page.rb (aswiki/33_page.rb 1.1 664))
 )
 (Merge-Parents)
 (New-Merge-Parents)

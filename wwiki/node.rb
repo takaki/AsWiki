@@ -8,12 +8,10 @@ require 'obaq/htmlgen'
 require 'obaq/htmlparser'
 
 module WWiki 
-  # class Node< SimpleDelegator
   class Node< DelegateClass(Array)
-    def initialize
+    def initialize(template)
       super([])
-      @tmplfile = File.join('template',self.type.to_s.split('::')[-1] +
-			    '.html')
+      @tmplfile=File.join('template', template + 'Node.html')
     end
     def to_s
       template = Obaq::HtmlParser.parse_file(@tmplfile)
@@ -22,13 +20,12 @@ module WWiki
       f = Obaq::HtmlGen::Formatter.new
       f.escape = false
       f.deleteln = false
-      return f.format(tree).gsub("\n+","\n")
+      return f.format(tree)
     end
     def parsetree
       if self == []
 	return self.type
       else
-	# return {self.type => self.select{|n| n.is_a? Node }.map{|n| n.parsetree}}
 	return {self.type => self.map{|n| 
 	    if n.is_a? Node
 	      n.parsetree
@@ -39,49 +36,6 @@ module WWiki
 	}
 
       end
-    end
-  end
-
-  class ParagraphNode < Node
-  end
-  class TextlineNode < Node
-    def to_s
-      return self.to_a.to_s
-    end
-  end
-  class TextNode < Node
-    def to_s
-      return self.to_a.to_s
-    end
-  end
-  class RootNode < Node
-  end
-  class EmNode < Node
-  end
-  class StrongNode < Node
-  end
-  class WordNode < Node
-  end
-  class OlNode <Node
-  end
-  class UlNode <Node
-  end
-  class LiNode <Node
-  end
-  class HrNode < Node
-  end
-  class WikinameNode < Node
-  end
-  class PreNode < Node
-  end
-  class DlNode < Node
-  end
-  class HrNode < Node
-  end
-  class HNNode < Node
-    def initialize(level)
-      super()
-      @tmplfile = File.join('template',"HN#{level}Node.html")
     end
   end
 end

@@ -17,18 +17,21 @@ plain text
 
 ====== h6
 
+== table
+|| abc     || ''em'' ||
+|| '''st''' || plain  ||
+
 == pre
 {{{
-pre block
-desu 
+this 
+ is 
+  pre
+   block
 }}}
-
-blank
 
 == ul
  * a
  * a
-
 
  * a
   * aa
@@ -41,8 +44,8 @@ blank
  2. 2
 
 == dl
- + dt
- dd
+ + dt text
+ dd text
 
 == hr
 ----
@@ -51,7 +54,3 @@ blank
 plugin_block
 
 plugin
-
-dl
-
-table

@@ -179,7 +179,7 @@ module AsWiki
       begin
 	c = @repository.load(pname) 
       rescue Errno::ENOENT
-	c = ''
+	c = true 
       end
       pd = AsWiki::PageData.new(pname)
       pd.md5sum = Digest::MD5::new(c.to_s).to_s
